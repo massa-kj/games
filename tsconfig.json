@@ -1,0 +1,21 @@
+{
+    // TypeScriptコンパイラのオプション設定
+    "compilerOptions": {
+        "target": "es5", // コンパイルされるJavaScriptのバージョン
+        "lib": ["dom", "dom.iterable", "esnext"], // 使用するライブラリのリスト
+        "jsx": "react-jsx", // ReactのJSXのサポート
+        "allowJs": true, // JavaScriptファイルのコンパイルを許可するかどうか
+        "skipLibCheck": true, // ライブラリの型チェックをスキップするかどうか
+        "esModuleInterop": true, // CommonJSとESモジュールの相互運用性を有効にするかどうか
+        "allowSyntheticDefaultImports": true, // デフォルトのインポートを合成するかどうか
+        "strict": true, // 厳格な型チェックを有効にするかどうか
+        "forceConsistentCasingInFileNames": true, // ファイル名の一貫性を強制するかどうか
+        "module": "esnext", // モジュールのコード生成方法
+        "moduleResolution": "node", // モジュールの解決方法
+        "resolveJsonModule": true, // JSONモジュールの解決を有効にするかどうか
+        "isolatedModules": true, // 個別のモジュールをコンパイルするかどうか
+        "noEmit": true // コンパイル結果の出力を行わないかどうか
+    },
+    // コンパイル対象のファイルのリスト
+    "include": ["src"]
+}
