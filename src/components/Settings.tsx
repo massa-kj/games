@@ -1,8 +1,11 @@
 import React from 'react';
+import Board from './Board';
 
 function Settings() {
     return (
-        <h1>Settings</h1>
+        <Board>
+            <h1>Settings</h1>
+        </Board>
     );
 }
 
