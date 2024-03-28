@@ -11,6 +11,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, '/dist'),
         filename: 'bundle.js', // 出力ファイル名
+        publicPath: '/',
     },
 
     // ファイル変換
@@ -33,7 +34,16 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']
-            }
+            },
+            {
+                test: /\.(jpe?g|png)$/i,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: '[path][name].[ext]'
+                    }
+                }
+            },
         ],
     },
 
@@ -43,9 +53,12 @@ module.exports = {
     },
 
     devServer: {
-        static: path.join(__dirname, '/dist'), //  webpackの出力先
+        static: {
+            directory: path.join(__dirname, '/'), //  webpackの出力先
+        },
         compress: true,
         port: 3000,
+        historyApiFallback: true, // react-router用
         open: false, //ブラウザ自動起動
     },
 
