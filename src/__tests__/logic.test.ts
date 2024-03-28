@@ -1,4 +1,4 @@
-import { judgeMultiChoices, judgeOneChoice } from '../logic';
+import { judgeMultiChoices, judgeOneChoice } from '../utils/logic';
 
 test('renders without crashing', () => {
     expect(judgeOneChoice('aaa', 'aaa')).toBeTruthy();

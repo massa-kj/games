@@ -26,6 +26,5 @@ export function extractRandomElements<T>(
         }
     }
 
-    console.log(array, result);
     return result;
 }
