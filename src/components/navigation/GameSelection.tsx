@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 // import './Menu.css';
 import './GameSelection.css';
-import Board from '../Board';
+import GameContainer from '../GameContainer';
 
 function GameSelection() {
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ function GameSelection() {
     };
 
     return (
-        <Board>
+        <GameContainer>
             <ul className="nav-links">
                 <button className="menu-button" onClick={startGame('which-is-correct')}>
                     Which is correct?
@@ -35,7 +35,7 @@ function GameSelection() {
                     Which is correct?
                 </button>
             </ul>
-        </Board>
+        </GameContainer>
     );
 }
 

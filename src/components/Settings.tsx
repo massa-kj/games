@@ -1,11 +1,11 @@
 import React from 'react';
-import Board from './Board';
+import GameContainer from './GameContainer';
 
 function Settings() {
     return (
-        <Board>
+        <GameContainer>
             <h1>Settings</h1>
-        </Board>
+        </GameContainer>
     );
 }
 

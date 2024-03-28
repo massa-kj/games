@@ -1,7 +1,11 @@
-.board {
+.game-container {
     height: 90%;
     width: 90%;
+    padding: 5px;
+}
+
+.board {
     /* padding: 5px; */
     background-color: antiquewhite;
-    border-radius: 20px;
+    border-radius: 10px;
 }

@@ -1,0 +1,57 @@
+.question {
+    /* 中央 */
+    text-align: center;
+    padding-top: 20px;
+    font-size: 30px;
+}
+
+.image-button.selected {
+    width: auto;
+    height: auto;
+    border-color: #ff69b4;
+    background-color: #fffacd;
+}
+
+.left-choice {
+    position: absolute;
+    top: 200px;
+    left: 200px;
+}
+
+.center-choice {
+    position: absolute;
+    top: 200px;
+    left: 500px;
+}
+
+.right-choice {
+    position: absolute;
+    top: 200px;
+    left: 800px;
+}
+
+.judge-button {
+    position: absolute;
+    top: 400px;
+    left: 500px;
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+}
+
+.clear-button {
+    position: absolute;
+    top: 400px;
+    left: 500px;
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #69d5ff;
+    color: white;
+    border: none;
+}

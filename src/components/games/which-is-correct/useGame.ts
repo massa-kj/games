@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { extractRandomElements, getRandomInt, judgeOneChoice } from '../../logic';
-import { MediaButton, icons } from './Icons';
+import { extractRandomElements, getRandomInt, judgeOneChoice } from '../../../utils/logic';
+import { MediaComponent, icons } from './Icons';
 
 export type Choice = {
     image: any,
@@ -31,7 +31,7 @@ function useGame(settings: GameSettings): [Choice[], string, (choice: string) =>
     );
     const choices: Choice[] = icons2.map((icon, index) => {
         return {
-            image: MediaButton,
+            image: MediaComponent,
             name: icon.name,
             value: icon.value,
             color: colors[index],

@@ -1,8 +1,8 @@
-import monkey from '../../assets/monkey.PNG';
-import koala from '../../assets/koala.PNG';
-import penguin from '../../assets/penguin.PNG';
-import ImageButton from '../common/ImageButton';
+import ImageComponent from '../../common/ImageComponent';
 import { Circle, Hexagon, Pentagon, Rectangle, Star, Triangle } from './figures';
+import monkey from '../../../assets/monkey.PNG';
+import koala from '../../../assets/koala.PNG';
+import penguin from '../../../assets/penguin.PNG';
 
 const ICON_NAMES = {
     RECTANGLE: 'rectangle',
@@ -99,7 +99,7 @@ interface MediaButtonProps {
         ((event: React.MouseEvent<HTMLButtonElement>) => void);
 }
 
-export function MediaButton(props: MediaButtonProps) {
+export function MediaComponent(props: MediaButtonProps) {
     const {
         type,
         className = '',
@@ -174,7 +174,7 @@ export function MediaButton(props: MediaButtonProps) {
     case ICON_NAMES.KOALA:
     case ICON_NAMES.PENGUIN:
         return (
-            <ImageButton
+            <ImageComponent
                 className={className}
                 width={width}
                 height={height}

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../common/ImageButton.css';
+import '../../common/ImageComponent.css';
 
 interface PolygonProps {
     className?: string,
@@ -9,13 +9,8 @@ interface PolygonProps {
     onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
 }
 
-interface TriangleProps {
-    className?: string,
-    width: number,
-    height: number,
-    color: string,
+type TriangleProps = PolygonProps & {
     direction: 'up' | 'down' | 'left' | 'right',
-    onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
 }
 
 interface CircleProps {

@@ -2,10 +2,10 @@ import React, {
     useState,
 } from 'react';
 
-import './ImageButton.css';
-import '../which-is-correct/figures.css';
+import './ImageComponent.css';
+import '../games/which-is-correct/figures.css';
 
-interface ImageButtonProps {
+interface ImageComponentProps {
     className?: string;
     width?: number;
     height?: number;
@@ -14,7 +14,7 @@ interface ImageButtonProps {
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-function ImageButton(props: ImageButtonProps) {
+function ImageComponent(props: ImageComponentProps) {
     const {
         className = '',
         width = 'auto',
@@ -50,4 +50,4 @@ function ImageButton(props: ImageButtonProps) {
     );
 }
 
-export default ImageButton;
+export default ImageComponent;

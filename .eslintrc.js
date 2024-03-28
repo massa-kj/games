@@ -12,10 +12,10 @@ module.exports = {
     'overrides': [
         {
             'env': {
-                'node': true,
+                'node': true, // Node.js environment for .eslintrc.js and .eslintrc.cjs files
             },
             'files': [
-                '.eslintrc.{js,cjs}',
+                '.eslintrc.{js,cjs}', // Apply overrides to .eslintrc.js and .eslintrc.cjs files
             ],
             'parserOptions': {
                 'sourceType': 'script',

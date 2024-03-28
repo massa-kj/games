@@ -10,12 +10,13 @@ import {
 
 import Home from './components/Home';
 import GameSelection from './components/navigation/GameSelection';
-import WhichIsCorrectGame from './components/which-is-correct/WhichIsCorrectGame';
+import WhichIsCorrectGame from './components/games/which-is-correct/WhichIsCorrectGame';
 import Settings from './components/Settings';
 import NotFound from './components/NotFound';
 
 import background from './assets/background.png';
 import './index.css';
+import GameContainer from './components/GameContainer';
 
 // const router = createBrowserRouter([
 //     { path: '/', element: <Home /> },
@@ -37,7 +38,14 @@ function App() {
                             <Route path="/" element={<Home />} />
                             <Route path="games" >
                                 <Route index={true} element={<GameSelection />} />
-                                <Route path="which-is-correct" element={<WhichIsCorrectGame />} />
+                                <Route
+                                    path="which-is-correct"
+                                    element={
+                                        <GameContainer>
+                                            <WhichIsCorrectGame />
+                                        </GameContainer>
+                                    }
+                                />
                             </Route>
                             <Route path="settings" element={<Settings />} />
                             <Route path="*" element={<NotFound />} />

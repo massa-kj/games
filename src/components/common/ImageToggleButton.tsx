@@ -2,7 +2,7 @@ import React, {
     useState,
 } from 'react';
 
-import ImageButton from './ImageButton';
+import ImageComponent from './ImageComponent';
 
 interface ImageToggleButtonProps {
     className?: string;
@@ -22,7 +22,7 @@ function ImageToggleButton(props: ImageToggleButtonProps) {
     };
 
     return (
-        <ImageButton
+        <ImageComponent
             className={`image-toggle-button ${isSelected ? 'selected' : ''} ${className} `}
             image={image}
             alt={alt}

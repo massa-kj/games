@@ -1,13 +1,13 @@
 import React from 'react';
-import Board from './Board';
+import GameContainer from './GameContainer';
 
 function Home() {
     return (
-        <Board>
+        <GameContainer>
             <div>
                 <h1>Play Games!</h1>
             </div>
-        </Board>
+        </GameContainer>
     );
 }
 
