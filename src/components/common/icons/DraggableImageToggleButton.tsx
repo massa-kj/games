@@ -2,8 +2,8 @@ import React, {
     useState,
 } from 'react';
 
-import ImageToggleButton from '../common/ImageToggleButton';
-import { useDraggable } from '../hooks/useDraggable';
+import ImageToggleButton from './ImageToggleButton';
+import { useDraggable } from '../../hooks/useDraggable';
 
 interface DraggableImageToggleButtonProps {
     image: string;

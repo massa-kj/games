@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 
 import './ImageComponent.css';
-import '../games/which-is-correct/figures.css';
+import './figures.css';
 
 interface ImageComponentProps {
     className?: string;

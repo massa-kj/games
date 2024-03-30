@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../common/ImageComponent.css';
+import './ImageComponent.css';
 
 interface PolygonProps {
     className?: string,

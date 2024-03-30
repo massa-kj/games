@@ -1,8 +1,8 @@
-import ImageComponent from '../../common/ImageComponent';
+import ImageComponent from './ImageComponent';
 import { Circle, Hexagon, Pentagon, Rectangle, Star, Triangle } from './figures';
-import monkey from '../../../assets/monkey.PNG';
-import koala from '../../../assets/koala.PNG';
-import penguin from '../../../assets/penguin.PNG';
+import monkey from '../../../../src/assets/monkey.PNG';
+import koala from '../../../../src/assets/koala.PNG';
+import penguin from '../../../../src/assets/penguin.PNG';
 
 const ICON_NAMES = {
     RECTANGLE: 'rectangle',
@@ -88,7 +88,7 @@ export const images = {
     }
 };
 
-interface MediaButtonProps {
+interface IconProps {
     className?: string;
     width: number;
     height: number;
@@ -99,7 +99,7 @@ interface MediaButtonProps {
         ((event: React.MouseEvent<HTMLButtonElement>) => void);
 }
 
-export function MediaComponent(props: MediaButtonProps) {
+export function Icon(props: IconProps) {
     const {
         type,
         className = '',

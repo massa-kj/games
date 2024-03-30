@@ -3,7 +3,7 @@ import GameContainer from '../../GameContainer';
 import useGame from './useGame';
 import './WhichIsCorrectGame.css';
 import { extractRandomElements, getRandomInt, judgeOneChoice } from '../../../utils/logic';
-import { MediaComponent, icons } from './Icons';
+import { Icon, icons } from '../../common/icons/Icon';
 
 export type Choice = {
     image: any,
@@ -20,7 +20,7 @@ const GAME_STEP = {
 };
 
 function WhichIsCorrectGame() {
-    const gameGenrus = ['shape', 'animal'];
+    const gameGenrus = ['shape', 'color', 'animal'];
     const allColors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange'];
     const allDirections = ['up'];
     const positionClasses = ['left-choice', 'center-choice', 'right-choice'];
@@ -35,7 +35,7 @@ function WhichIsCorrectGame() {
         const directions = extractRandomElements(allDirections, choicesNumber, true);
         const choices: Choice[] = icons2.map((icon, index) => {
             return {
-                image: MediaComponent,
+                image: Icon,
                 name: icon.name,
                 value: icon.value,
                 color: colors[index],
@@ -66,9 +66,9 @@ function WhichIsCorrectGame() {
 
     const handleJudgeClick = useCallback(() => {
         if (judge(selected)) {
-            alert('Correct!');
+            alert('せいかい！！');
         } else {
-            alert('Incorrect...');
+            alert('ざんねん...');
         }
         setGameStep(GAME_STEP.JUDGED);
     }, [selected, judge]);
