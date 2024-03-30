@@ -22,8 +22,8 @@ function GameSelection() {
                 <button className="menu-button" onClick={startGame('which-is-correct')}>
                     Which is correct?
                 </button>
-                <button className="menu-button" onClick={startGame('which-is-correct')}>
-                    Which is correct?
+                <button className="menu-button" onClick={startGame('follow-you')}>
+                    Follow you!
                 </button>
                 <button className="menu-button" onClick={startGame('which-is-correct')}>
                     Which is correct?

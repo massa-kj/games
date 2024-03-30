@@ -17,6 +17,7 @@ import NotFound from './components/NotFound';
 import background from './assets/background.png';
 import './index.css';
 import GameContainer from './components/GameContainer';
+import FollowYouGame from './components/games/follow-you/FollowYouGame';
 
 // const router = createBrowserRouter([
 //     { path: '/', element: <Home /> },
@@ -43,6 +44,14 @@ function App() {
                                     element={
                                         <GameContainer>
                                             <WhichIsCorrectGame />
+                                        </GameContainer>
+                                    }
+                                />
+                                <Route
+                                    path="follow-you"
+                                    element={
+                                        <GameContainer>
+                                            <FollowYouGame />
                                         </GameContainer>
                                     }
                                 />
