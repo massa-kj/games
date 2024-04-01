@@ -11,7 +11,14 @@ function GameContainer(props: GameContainerProps) {
     const width = size.width ? size.width * 0.8 : 0;
 
     return (
-        <div style={{ width: width, height: height }} className="game-container board">
+        <div
+            style={{
+                position: 'absolute',
+                width: width,
+                height: height
+            }}
+            className="game-container board"
+        >
             {props.children}
         </div>
     );
