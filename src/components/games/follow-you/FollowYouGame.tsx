@@ -1,50 +1,69 @@
-import React, { useEffect, useRef, useState } from 'react';
-import MovableIcon, { Position } from './MovableIcon';
+import React, { useRef } from 'react';
+import MovableIcon from '../../common/icons/MovableIcon';
 import useDimensions from '../../hooks/useDimensions';
+import useFollowCursor from '../../hooks/useFollowCursor';
+import { Icon } from '../../common/icons/Icon';
 
 function FollowYouGame() {
-    const icons = ['penguin'];
-    // const icons = ['monkey', 'koala', 'penguin'];
-    // const icons = ['monkey', 'monkey', 'monkey', 'monkey', 'monkey', 'monkey', 'monkey'];
+    // const icons = ['penguin'];
+    const icons = [
+        'monkey', 'koala', 'penguin',
+    ];
+    // const icons = [
+    //     'monkey', 'monkey', 'monkey', 'monkey', 'monkey', 'monkey', 'monkey',
+    // ];
 
-    const initialPositions: Position[] = new Array(icons.length).fill({ x: -1000, y: -1000 });
-    const [positions, setPositions] = useState<Position[]>(initialPositions);
+    const delays = icons.map((_, index) => index * 200);
 
     const ref = useRef(null);
-    const dimensions = useDimensions(ref);
+    const area = useDimensions(ref);
 
-    useEffect(() => {
-        const handleMouseMove = (event: MouseEvent) => {
-            positions.map((_, i) => {
-                return setTimeout(() => {
-                    setPositions((prev) => {
-                        const newPositions = [...prev];
-                        newPositions[i] = {
-                            x: event.clientX > 100 ? event.clientX - 100 : 0,
-                            y: event.clientY > 200 ? event.clientY - 200 : 0,
-                        };
-                        return newPositions;
-                    });
-                }, 200 * (i + 1));
-            });
+    const positions = useFollowCursor(delays.length, delays);
+
+    const objs = positions.map((position, index) => {
+        const iconSize = { width: 150, height: 150 };
+        const calcX = (position, iconSize, area) => {
+            const iconLeft = position.x - iconSize.width / 2;
+            const iconRight = position.x + iconSize.width / 2;
+            if (iconLeft < area.left) {
+                return area.left + iconSize.width / 2;
+            }
+            if (iconRight > area.right) {
+                return area.right - iconSize.width / 2;
+            }
+            return position.x;
         };
-
-        window.addEventListener('mousemove', handleMouseMove);
-
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-        };
-    }, [positions]);
-
-    const objs = positions.map((position, i) => (
-        <MovableIcon key={i} iconName={icons[i]} position={position} />
-    ));
+        const calcY = (position, iconSize, area) => {
+            const iconTop = position.y - iconSize.height / 2;
+            const iconBottom = position.y + iconSize.height / 2;
+            if (iconTop < area.top) {
+                return area.top + iconSize.height / 2;
+            }
+            if (iconBottom > area.bottom) {
+                return area.bottom - iconSize.height / 2;
+            }
+            return position.y;
+        }
+        return (
+            <Icon
+                key={index}
+                type={icons[index]}
+                style={{
+                    position: 'absolute',
+                    left: `${calcX(position, iconSize, area) - area.left - iconSize.width / 2}px`,
+                    top: `${calcY(position, iconSize, area) - area.top - iconSize.height / 2}px`,
+                }}
+                width={iconSize.width}
+                height={iconSize.height}
+            />
+        );
+    });
 
     return (
         <div ref={ref} style={{ width: '100%', height: '100%' }}>
             {objs}
         </div>
-    )
+    );
 }
 
 export default FollowYouGame;

@@ -25,7 +25,7 @@ function WhichIsCorrectGame() {
     const allDirections = ['up'];
     const positionClasses = ['left-choice', 'center-choice', 'right-choice'];
     const choicesNumber = positionClasses.length;
-    const [gameGenru, setGameGenru] = useState(gameGenrus[0]);
+    const [gameGenru, setGameGenru] = useState(gameGenrus[2]);
     const iconFilter = (icon) => icon.genru === gameGenru;
 
     function generateChoices(choicesNumber: number): Choice[] {

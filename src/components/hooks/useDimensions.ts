@@ -1,22 +1,24 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-function useDimensions(ref){
+function useDimensions(ref: React.RefObject<HTMLElement>) {
     const [dimensions, setDimensions] = useState({
-        x: 0,
-        y: 0,
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
         width: 0,
         height: 0,
     });
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (ref.current) {
-            const element = ref.current;
             const updateDimensions = () => {
-                const rect = element.getBoundingClientRect();
-                console.log(rect)
+                const rect = ref.current!.getBoundingClientRect();
                 setDimensions({
-                    x: rect.left,
-                    y: rect.top,
+                    left: rect.left,
+                    top: rect.top,
+                    right: rect.right,
+                    bottom: rect.bottom,
                     width: rect.width,
                     height: rect.height,
                 });
@@ -27,7 +29,7 @@ function useDimensions(ref){
             window.addEventListener('resize', updateDimensions);
             return () => window.removeEventListener('resize', updateDimensions);
         }
-    }, [ref]);
+    }, [ref.current]);
 
     return dimensions;
 }
