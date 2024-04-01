@@ -92,9 +92,10 @@ interface IconProps {
     className?: string;
     width: number;
     height: number;
+    style?: React.CSSProperties;
     type: string;
-    color: string;
-    direction: string;
+    color?: string;
+    direction?: string;
     onClick?: ((event: React.MouseEvent<HTMLDivElement>) => void) |
         ((event: React.MouseEvent<HTMLButtonElement>) => void);
 }
@@ -105,17 +106,19 @@ export function Icon(props: IconProps) {
         className = '',
         width,
         height,
-        color,
-        direction,
+        style = {},
+        color = 'black',
+        direction = 'up',
         onClick,
     } = props;
+    style.width = width;
+    style.height = height;
     switch (type) {
     case ICON_NAMES.RECTANGLE:
         return (
             <Rectangle
                 className={className}
-                width={width}
-                height={height}
+                style={style}
                 color={color}
                 onClick={onClick as ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined}
             />
@@ -124,8 +127,7 @@ export function Icon(props: IconProps) {
         return (
             <Star 
                 className={className}
-                width={width}
-                height={height}
+                style={style}
                 color={color}
                 onClick={onClick as ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined}
             />
@@ -134,8 +136,7 @@ export function Icon(props: IconProps) {
         return (
             <Pentagon
                 className={className}
-                width={width}
-                height={height}
+                style={style}
                 color={color}
                 onClick={onClick as ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined}
             />
@@ -144,8 +145,7 @@ export function Icon(props: IconProps) {
         return (
             <Hexagon
                 className={className}
-                width={width}
-                height={height}
+                style={style}
                 color={color}
                 onClick={onClick as ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined}
             />
@@ -154,8 +154,7 @@ export function Icon(props: IconProps) {
         return (
             <Triangle 
                 className={className}
-                width={width}
-                height={height}
+                style={style}
                 color={color}
                 direction={direction as 'up' | 'down' | 'left' | 'right'}
                 onClick={onClick as ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined}
@@ -165,7 +164,7 @@ export function Icon(props: IconProps) {
         return (
             <Circle 
                 className={className}
-                r={width / 2}
+                r={style.width / 2}
                 color={color}
                 onClick={onClick as ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined}
             />
@@ -174,14 +173,16 @@ export function Icon(props: IconProps) {
     case ICON_NAMES.KOALA:
     case ICON_NAMES.PENGUIN:
         return (
-            <ImageComponent
-                className={className}
-                width={width}
-                height={height}
-                onClick={onClick as ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined}
-                image={images[type].image}
-                alt={images[type].alt}
-            />
+            <div style={style}>
+                <ImageComponent
+                    className={className}
+                    width={style.width}
+                    height={style.height}
+                    onClick={onClick as ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined}
+                    image={images[type].image}
+                    alt={images[type].alt}
+                />
+            </div>
         );
     default:
         return null;

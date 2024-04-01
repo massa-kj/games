@@ -1,10 +1,8 @@
 import React from 'react';
-import './ImageComponent.css';
 
 interface PolygonProps {
     className?: string,
-    width: number,
-    height: number,
+    style: React.CSSProperties,
     color: string,
     onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
 }
@@ -24,19 +22,18 @@ interface CircleProps {
 export function Rectangle(props: PolygonProps): React.ReactElement {
     const {
         className = '',
-        width,
-        height,
+        style,
         color,
         onClick,
     } = props;
     return (
         <div
             className={`${className} figure-container`}
-            style={{ width: width, height: height }}
+            style={style}
             onClick={onClick}
         >
             <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <rect width={width} height={height} fill={color} />
+                <rect width={style.width} height={style.height} fill={color} />
             </svg>
         </div>
     );
@@ -61,15 +58,14 @@ function getTrianglePoints(width: number, height: number, direction: 'up' | 'dow
 export function Star(props: PolygonProps): React.ReactElement {
     const {
         className,
-        width,
-        height,
+        style,
         color,
         onClick,
     } = props;
     return (
         <div
             className={`${className} figure-container`}
-            style={{ width: width, height: height }}
+            style={style}
             onClick={onClick}
         >
             <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -83,15 +79,14 @@ export function Star(props: PolygonProps): React.ReactElement {
 export function Pentagon(props: PolygonProps): React.ReactElement {
     const {
         className,
-        width,
-        height,
+        style,
         color,
         onClick,
     } = props;
     return (
         <div
             className={`${className} figure-container`}
-            style={{ width: width, height: height }}
+            style={style}
             onClick={onClick}
         >
             <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -105,15 +100,14 @@ export function Pentagon(props: PolygonProps): React.ReactElement {
 export function Hexagon(props: PolygonProps): React.ReactElement {
     const {
         className,
-        width,
-        height,
+        style,
         color,
         onClick,
     } = props;
     return (
         <div
             className={`${className} figure-container`}
-            style={{ width: width, height: height }}
+            style={style}
             onClick={onClick}
         >
             <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -127,17 +121,16 @@ export function Hexagon(props: PolygonProps): React.ReactElement {
 export function Triangle(props: TriangleProps): React.ReactElement {
     const {
         className = '',
-        width,
-        height,
+        style,
         color,
         direction,
         onClick,
     } = props;
-    const points = getTrianglePoints(width, height, direction);
+    const points = getTrianglePoints(style.width, style.height, direction);
     return (
         <div
             className={`${className} figure-container`}
-            style={{ width: width, height: height }}
+            style={style}
             onClick={onClick}
         >
             <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
