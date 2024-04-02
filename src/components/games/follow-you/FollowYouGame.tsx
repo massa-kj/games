@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import MovableIcon from '../../common/icons/MovableIcon';
 import useDimensions from '../../hooks/useDimensions';
 import useFollowCursor from '../../hooks/useFollowCursor';
 import { Icon } from '../../common/icons/Icon';
