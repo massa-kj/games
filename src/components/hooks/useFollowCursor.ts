@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 /**
  * カーソルに追従する要素の位置を管理するカスタムフック
  */
-function useFollowCursor(numberOfElements: number, delays: number[]) {
+function useFollowCursor(numberOfElements: number, delays: number[], areaRef?: React.RefObject<HTMLElement>) {
     const [positions, setPositions] = useState(
         Array(numberOfElements).fill({ x: 0, y: 0 })
     );
@@ -33,12 +33,22 @@ function useFollowCursor(numberOfElements: number, delays: number[]) {
     };
 
     useEffect(() => {
-        document.addEventListener('mousemove', handleMouseMove, { passive: false });
-        document.addEventListener('touchmove', handleTouchMove, { passive: false });
+        if (areaRef && areaRef.current) {
+            areaRef.current.addEventListener('mousemove', handleMouseMove, { passive: false });
+            areaRef.current.addEventListener('touchmove', handleTouchMove, { passive: false });
+        } else {
+            document.addEventListener('mousemove', handleMouseMove, { passive: false });
+            document.addEventListener('touchmove', handleTouchMove, { passive: false });
+        }
 
         return () => {
-            document.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('touchmove', handleTouchMove);
+            if (areaRef && areaRef.current) {
+                areaRef.current.removeEventListener('mousemove', handleMouseMove);
+                areaRef.current.removeEventListener('touchmove', handleTouchMove);
+            } else {
+                document.removeEventListener('mousemove', handleMouseMove);
+                document.removeEventListener('touchmove', handleTouchMove);
+            }
             timers.current.forEach(clearTimeout);
         };
     }, []);
