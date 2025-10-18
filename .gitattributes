@@ -1,0 +1,14 @@
+# Set default behavior to automatically normalize line endings
+* text=auto eol=lf
+
+# Auto-generated files
+pnpm-lock.yaml linguist-generated
+
+# Binary files (images and audio for games)
+*.{png,jpg,jpeg,gif,ico} binary
+*.{mp3,wav,ogg,m4a} binary
+*.{woff,woff2,ttf,otf} binary
+*.svg text eol=lf
+
+# Archives and other binaries
+*.{zip,tar,gz,pdf} binary
