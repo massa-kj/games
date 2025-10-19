@@ -1,0 +1,24 @@
+{
+  "title": "Animal Memory Cards",
+  "description": "Flip the cards and find the matching animals!",
+  "start": "Start",
+  "restart": "Try Again",
+  "congratulations": "Congratulations!",
+  "allMatched": "You found all the pairs!",
+  "clickToStart": "Press the Start button to begin the game!",
+  "matches": "Pairs Found",
+  "attempts": "Attempts",
+  "difficulty": {
+    "easy": "Easy (2×2)",
+    "medium": "Medium (3×2)",
+    "hard": "Hard (2×4)",
+    "expert": "Expert (3×4)"
+  },
+  "selectDifficulty": "Select Difficulty",
+  "wellDone": "Well Done!",
+  "playAgain": "Play Again",
+  "readyToPlay": "Ready to play?",
+  "checking": "Checking...",
+  "close": "Close",
+  "efficiency": "efficiency"
+}

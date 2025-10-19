@@ -1,0 +1,24 @@
+{
+  "title": "どうぶつカードめくり",
+  "description": "カードをめくっておなじ動物を見つけよう！",
+  "start": "スタート",
+  "restart": "もう一度",
+  "congratulations": "おめでとう！",
+  "allMatched": "すべてのペアを見つけました！",
+  "clickToStart": "スタートボタンを押してゲームを始めよう！",
+  "matches": "見つけたペア",
+  "attempts": "めくった回数",
+  "difficulty": {
+    "easy": "かんたん (2×2)",
+    "medium": "ふつう (3×2)",
+    "hard": "むずかしい (2×4)",
+    "expert": "とてもむずかしい (3×4)"
+  },
+  "selectDifficulty": "難易度を選んでね",
+  "wellDone": "よくできました！",
+  "playAgain": "もう一度あそぶ",
+  "readyToPlay": "準備はいい？",
+  "checking": "確認中...",
+  "close": "とじる",
+  "efficiency": "せいかいりつ"
+}

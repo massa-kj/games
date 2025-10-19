@@ -17,7 +17,7 @@ export function Card({ card, onFlip, disabled = false }: CardProps) {
     }
   };
 
-  const animalName = card.animal[currentLang] || card.animal.ja;
+  const animalName = card.animal[currentLang] || card.animal.en;
 
   return (
     <div

@@ -1,0 +1,58 @@
+[
+  {
+    "key": "dog",
+    "ja": "いぬ",
+    "en": "Dog",
+    "image": "/assets/images/dog.svg",
+    "sound": "/assets/sounds/dog.mp3"
+  },
+  {
+    "key": "cat",
+    "ja": "ねこ",
+    "en": "Cat",
+    "image": "/assets/images/cat.svg",
+    "sound": "/assets/sounds/cat.mp3"
+  },
+  {
+    "key": "elephant",
+    "ja": "ぞう",
+    "en": "Elephant",
+    "image": "/assets/images/elephant.svg",
+    "sound": "/assets/sounds/elephant.mp3"
+  },
+  {
+    "key": "lion",
+    "ja": "らいおん",
+    "en": "Lion",
+    "image": "/assets/images/lion.svg",
+    "sound": "/assets/sounds/lion.mp3"
+  },
+  {
+    "key": "rabbit",
+    "ja": "うさぎ",
+    "en": "Rabbit",
+    "image": "/assets/images/rabbit.svg",
+    "sound": "/assets/sounds/rabbit.mp3"
+  },
+  {
+    "key": "bear",
+    "ja": "くま",
+    "en": "Bear",
+    "image": "/assets/images/bear.svg",
+    "sound": "/assets/sounds/bear.mp3"
+  },
+  {
+    "key": "monkey",
+    "ja": "さる",
+    "en": "Monkey",
+    "image": "/assets/images/monkey.svg",
+    "sound": "/assets/sounds/monkey.mp3"
+  },
+  {
+    "key": "penguin",
+    "ja": "ペンギン",
+    "en": "Penguin",
+    "image": "/assets/images/penguin.svg",
+    "sound": "/assets/sounds/penguin.mp3"
+  }
+]
