@@ -1,7 +1,44 @@
 {
   "site": {
+    "title": "Let's Play Together!",
+    "subtitle": "Fun games for everyone",
     "nav": {
       "home": "Home",
+      "settings": "Settings",
+      "about": "About"
+    },
+    "settings": {
+      "title": "Settings",
+      "language": "Language",
+      "sound": "Sound",
+      "soundEnabled": "Sound Enabled"
+    },
+    "about": {
+      "title": "About This App",
+      "description": "A collection of fun learning games for young children. Learn about animals, colors, shapes, numbers and more in an engaging way.",
+      "version": "Version",
+      "license": "License",
+      "aboutSite": {
+        "title": "About This Site",
+        "description1": "\"Let's Play Together!\" is a platform that brings together educational mini-games for young children. We support your child's growth through fun and engaging learning games.",
+        "description2": "All games have safe and educational content, designed for parents and children to enjoy together."
+      },
+      "targetAge": {
+        "title": "Target Age",
+        "description": "Primarily designed for children aged 3 to 8, but game difficulty varies. Each game displays a recommended age, so please choose games appropriate for your child."
+      },
+      "features": {
+        "title": "Key Features",
+        "item1": "Bilingual support (Japanese & English)",
+        "item2": "Sound on/off toggle",
+        "item3": "Responsive design for various devices",
+        "item4": "Ad-free safe environment",
+        "item5": "Available offline"
+      },
+      "techInfo": {
+        "title": "Technical Information",
+        "description": "This site is built using the following technologies:"
+      }
     },
     "common": {
       "play": "Play",
@@ -12,7 +49,10 @@
       "great": "Great!",
       "wellDone": "Well Done!",
       "tryAgain": "Try Again!",
-      "loading": "Loading..."
+      "loading": "Loading...",
+      "ageFrom": "{{age}}+ years",
+      "error": "An error occurred",
+      "noGamesFound": "No games found"
     }
   },
   "games": {

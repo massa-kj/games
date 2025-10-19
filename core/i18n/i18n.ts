@@ -11,8 +11,8 @@ i18n
       ja: { translation: ja },
       en: { translation: en },
     },
-    lng: localStorage.getItem('lang') ?? 'ja',
-    fallbackLng: 'ja',
+    lng: localStorage.getItem('lang') ?? 'en',
+    fallbackLng: 'en',
     interpolation: {
       escapeValue: false, // React already escapes
     },
@@ -24,12 +24,12 @@ i18n
 export default i18n;
 
 // Helper function to change language
-export function changeLanguage(lang: 'ja' | 'en') {
+export function changeLanguage(lang: 'en' | 'ja') {
   localStorage.setItem('lang', lang);
   i18n.changeLanguage(lang);
 }
 
 // Helper function to get current language
-export function getCurrentLanguage(): 'ja' | 'en' {
-  return (i18n.language as 'ja' | 'en') || 'ja';
+export function getCurrentLanguage(): 'en' | 'ja' {
+  return (i18n.language as 'en' | 'ja') || 'en';
 }
