@@ -1,0 +1,19 @@
+{
+  "id": "memory-cards",
+  "title": {
+    "en": "Animal Memory Cards",
+    "ja": "どうぶつカードめくり"
+  },
+  "icon": "/images/icons/memory.png",
+  "category": "memory",
+  "description": {
+    "en": "Flip the cards and find the matching animals!",
+    "ja": "カードをめくっておなじ動物を見つけよう！"
+  },
+  "entry": "/apps/memory-cards/",
+  "languages": [
+    "en",
+    "ja"
+  ],
+  "minAge": 3
+}
