@@ -8,6 +8,8 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
+      "@core/*": ["./core/*"]
     }
   },
+  "include": ["vite.config.ts", "scripts/**/*", "core/**/*"]
 }

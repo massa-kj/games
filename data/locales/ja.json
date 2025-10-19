@@ -1,0 +1,26 @@
+{
+  "site": {
+    "nav": {
+      "home": "ホーム",
+    },
+    "common": {
+      "play": "あそぶ",
+      "back": "もどる",
+      "next": "つぎ",
+      "retry": "もういちど",
+      "finish": "おわり",
+      "great": "すごい！",
+      "wellDone": "よくできました！",
+      "tryAgain": "がんばって！",
+      "loading": "よみこみちゅう..."
+    }
+  },
+  "games": {
+    "categories": {
+      "memory": "きおく",
+      "puzzle": "パズル",
+      "learning": "がくしゅう",
+      "music": "おんがく"
+    }
+  }
+}

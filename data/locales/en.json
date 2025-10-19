@@ -1,0 +1,26 @@
+{
+  "site": {
+    "nav": {
+      "home": "Home",
+    },
+    "common": {
+      "play": "Play",
+      "back": "Back",
+      "next": "Next",
+      "retry": "Try Again",
+      "finish": "Finish",
+      "great": "Great!",
+      "wellDone": "Well Done!",
+      "tryAgain": "Try Again!",
+      "loading": "Loading..."
+    }
+  },
+  "games": {
+    "categories": {
+      "memory": "Memory",
+      "puzzle": "Puzzle",
+      "learning": "Learning",
+      "music": "Music"
+    }
+  }
+}

@@ -4,6 +4,9 @@
   "description": "Mini-game platform for toddlers",
   "type": "module",
   "scripts": {
+    "dev:site": "vite --config site/vite.config.ts",
+    "build:site": "vite build --config site/vite.config.ts",
+    "preview": "vite preview --config site/vite.config.ts",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "format": "prettier --write .",
     "test": "vitest"
