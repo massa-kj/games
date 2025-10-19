@@ -6,6 +6,8 @@ export default {
   content: [
     "./site/index.html",
     "./site/src/**/*.{js,ts,jsx,tsx}",
+    "./apps/*/index.html",
+    "./apps/*/src/**/*.{js,ts,jsx,tsx}",
     "./core/**/*.{js,ts,jsx,tsx}",
   ],
   presets: [

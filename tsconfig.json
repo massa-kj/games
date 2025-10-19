@@ -26,6 +26,7 @@
   "include": [
     "core/**/*",
     "site/src/**/*",
+    "apps/*/src/**/*",
     "scripts/**/*",
     "data/**/*"
   ],

@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev:site": "vite --config site/vite.config.ts",
+    "dev:memory-cards": "vite --config apps/memory-cards/vite.config.ts",
     "build:registry": "tsx scripts/build-games-registry.ts",
+    "build:apps": "pnpm -r --filter ./apps/* run build",
     "build:site": "vite build --config site/vite.config.ts",
-    "build": "pnpm build:registry && pnpm build:site",
+    "build": "pnpm build:registry && pnpm build:apps && pnpm build:site",
     "cleanbuild": "rm -rf dist && pnpm build",
     "preview": "vite preview --config site/vite.config.ts",
     "validate": "tsx scripts/validate-manifests.ts",
@@ -15,6 +17,9 @@
     "format": "prettier --write .",
     "test": "vitest"
   },
+  "workspaces": [
+    "apps/*"
+  ],
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
