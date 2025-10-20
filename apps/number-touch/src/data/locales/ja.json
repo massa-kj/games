@@ -1,0 +1,34 @@
+{
+  "game": {
+    "title": "ナンバータッチ",
+    "subtitle": "数字を順番にタッチして、クリアタイムを競おう！",
+    "startGame": "ゲーム開始",
+    "playAgain": "もう一度プレイ",
+    "restart": "リスタート",
+    "difficulty": {
+      "label": "難易度",
+      "easy": "かんたん (1-10)",
+      "hard": "むずかしい (1-20)"
+    },
+    "ready": "準備はいいですか？",
+    "instructions": "1から{{count}}まで順番にタッチしてください",
+    "time": "タイム",
+    "next": "次",
+    "target": "目標",
+    "progress": "進捗",
+    "mistakes": "ミス",
+    "showTargetHint": "目標ヒントを表示"
+  },
+  "results": {
+    "gameComplete": "ゲームクリア！",
+    "numbersCompleted": "1-{{count}}の数字をクリア",
+    "performance": {
+      "excellent": "すばらしい！",
+      "great": "いいね！",
+      "good": "よくできました！",
+      "tryAgain": "もう一度がんばろう！"
+    },
+    "close": "閉じる",
+    "playAgain": "もう一度プレイ"
+  }
+}

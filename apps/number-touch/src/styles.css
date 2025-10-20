@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Shake animation */
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translate(-50%, -50%) translateX(-2px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translate(-50%, -50%) translateX(2px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Custom pulse animation */
+@keyframes custom-pulse {
+
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+}
+
+.animate-custom-pulse {
+  animation: custom-pulse 1.5s infinite;
+}
+
+/* Success animation */
+@keyframes success-bounce {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+
+.animate-success {
+  animation: success-bounce 0.3s ease-out;
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Custom utility classes */
+.game-container {
+  @apply min-h-screen p-4;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+}
+
+/* Game board background */
+.game-board-container {
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.game-header {
+  @apply text-center mb-8;
+}
+
+.game-title {
+  @apply text-4xl font-bold text-gray-800 mb-2;
+}
+
+.game-subtitle {
+  @apply text-lg text-gray-600;
+}
+
+.control-panel {
+  @apply flex flex-col sm:flex-row items-center justify-center gap-6 mb-8;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.difficulty-selector {
+  @apply flex gap-2;
+}
+
+.difficulty-button {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+}
+
+.difficulty-button.active {
+  @apply bg-blue-500 text-white shadow-lg;
+}
+
+.difficulty-button.inactive {
+  @apply bg-gray-200 text-gray-700 hover:bg-gray-300;
+}
+
+.start-button {
+  @apply px-8 py-3 bg-green-500 text-white rounded-lg font-bold text-lg hover:bg-green-600 active:scale-95 transition-all duration-200 shadow-lg;
+}
+
+.start-button:disabled {
+  @apply bg-gray-300 text-gray-500 cursor-not-allowed hover:bg-gray-300 active:scale-100;
+}
+
+.restart-button {
+  @apply px-6 py-2 bg-orange-500 text-white rounded-lg font-medium hover:bg-orange-600 active:scale-95 transition-all duration-200;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .game-board {
+    width: 350px;
+    height: 280px;
+  }
+
+  .number-button {
+    font-size: 14px;
+  }
+
+  .control-panel {
+    @apply flex-col gap-4;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+  .animate-shake,
+  .animate-custom-pulse,
+  .animate-success,
+  .animate-fade-in {
+    animation: none;
+  }
+}

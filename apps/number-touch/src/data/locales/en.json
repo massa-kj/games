@@ -1,0 +1,34 @@
+{
+  "game": {
+    "title": "Number Touch",
+    "subtitle": "Touch the numbers in order as fast as you can!",
+    "startGame": "Start Game",
+    "playAgain": "Play Again",
+    "restart": "Restart",
+    "difficulty": {
+      "label": "Difficulty",
+      "easy": "Easy (1-10)",
+      "hard": "Hard (1-20)"
+    },
+    "ready": "Ready to start?",
+    "instructions": "Touch numbers in order from 1 to {{count}}",
+    "time": "Time",
+    "next": "Next",
+    "target": "Target",
+    "progress": "Progress",
+    "mistakes": "Mistakes",
+    "showTargetHint": "Show target hint"
+  },
+  "results": {
+    "gameComplete": "Game Complete!",
+    "numbersCompleted": "Numbers 1-{{count}} completed",
+    "performance": {
+      "excellent": "Excellent!",
+      "great": "Great!",
+      "good": "Good!",
+      "tryAgain": "Try again!"
+    },
+    "close": "Close",
+    "playAgain": "Play Again"
+  }
+}

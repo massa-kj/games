@@ -1,0 +1,19 @@
+{
+  "id": "number-touch",
+  "title": {
+    "en": "Number Touch",
+    "ja": "ナンバータッチ"
+  },
+  "icon": "/images/icons/numbers.png",
+  "category": "puzzle",
+  "description": {
+    "en": "Touch the numbers in order as fast as you can!",
+    "ja": "数字を順番にタッチして、クリアタイムを競おう！"
+  },
+  "entry": "/apps/number-touch/",
+  "languages": [
+    "en",
+    "ja"
+  ],
+  "minAge": 5
+}
