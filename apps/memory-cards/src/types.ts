@@ -40,3 +40,12 @@ export const DIFFICULTY_CONFIGS: Record<Difficulty, DifficultyConfig> = {
   hard: { rows: 2, cols: 4, pairs: 4 },
   expert: { rows: 3, cols: 4, pairs: 6 }
 };
+
+export type GameAction =
+  | { type: 'START_GAME'; difficulty: Difficulty; cards: Card[] }
+  | { type: 'FLIP_CARD'; cardId: string }
+  | { type: 'CHECK_MATCH' }
+  | { type: 'RESET_CARDS' }
+  | { type: 'MARK_MATCHED'; cardIds: [string, string] }
+  | { type: 'RESTART_GAME' }
+  | { type: 'SET_DIFFICULTY'; difficulty: Difficulty };
