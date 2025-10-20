@@ -147,17 +147,41 @@
 
 /* Responsive design */
 @media (max-width: 640px) {
-  .game-board {
-    width: 350px;
-    height: 280px;
-  }
-
-  .number-button {
-    font-size: 14px;
+  .game-board-container {
+    width: calc(100vw - 2rem);
+    max-width: 400px;
   }
 
   .control-panel {
     @apply flex-col gap-4;
+  }
+
+  .game-title {
+    @apply text-2xl;
+  }
+
+  .game-subtitle {
+    @apply text-base;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-board-container {
+    width: calc(100vw - 1rem);
+    max-width: 350px;
+    padding: 0.75rem;
+  }
+
+  .game-title {
+    @apply text-xl;
+  }
+}
+
+/* Ensure minimum touch target size for better mobile UX */
+@media (max-width: 640px) {
+  .game-board-container>div>div {
+    min-height: 60px;
+    min-width: 60px;
   }
 }
 

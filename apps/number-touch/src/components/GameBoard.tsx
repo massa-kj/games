@@ -82,24 +82,24 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full px-2 sm:px-4">
       {/* Game info display */}
-      <div className="mb-6 text-center">
+      <div className="mb-4 sm:mb-6 text-center px-2">
         {gameStarted && (
-          <div className="flex items-center gap-6 text-lg">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-base sm:text-lg">
             <div className="font-mono">
               {t('game.time')}: <span className="font-bold text-blue-600">{currentTime}s</span>
             </div>
             <div>
-              {t('game.next')}: <span className="font-bold text-green-600">{currentTarget}</span>
+              {t('game.next')}: <span className="font-bold text-green-600 text-xl sm:text-2xl">{currentTarget}</span>
             </div>
           </div>
         )}
       </div>
 
       {/* Game board */}
-      <div className="relative w-[500px] h-[400px] rounded-xl border-2 border-white/30 p-4 game-board-container">
-        <div style={gridStyle}>
+      <div className="relative w-full max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-2xl rounded-xl border-2 border-white/30 p-3 sm:p-4 md:p-6 game-board-container aspect-[5/4]">
+        <div style={gridStyle} className="w-full h-full">
           {numbers.map((number) => (
             <NumberButton
               key={number.id}
@@ -115,11 +115,11 @@ export const GameBoard: React.FC<GameBoardProps> = ({
 
         {!gameStarted && (
           <div className="absolute inset-0 flex items-center justify-center bg-white/95 rounded-xl">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-gray-700 mb-2">
+            <div className="text-center px-4">
+              <div className="text-xl sm:text-2xl font-bold text-gray-700 mb-2">
                 {t('game.ready')}
               </div>
-              <div className="text-gray-600">
+              <div className="text-sm sm:text-base text-gray-600">
                 {t('game.instructions').replace('{{count}}', numbers.length.toString())}
               </div>
             </div>
