@@ -20,6 +20,7 @@ export interface MemoryGameState {
   secondCard: Card | null;
   isLocked: boolean;
   cleared: boolean;
+  justCleared: boolean;
   matches: number;
   attempts: number;
   gameStarted: boolean;
@@ -48,4 +49,5 @@ export type GameAction =
   | { type: 'RESET_CARDS' }
   | { type: 'MARK_MATCHED'; cardIds: [string, string] }
   | { type: 'RESTART_GAME' }
-  | { type: 'SET_DIFFICULTY'; difficulty: Difficulty };
+  | { type: 'SET_DIFFICULTY'; difficulty: Difficulty }
+  | { type: 'CLEAR_JUST_CLEARED' };

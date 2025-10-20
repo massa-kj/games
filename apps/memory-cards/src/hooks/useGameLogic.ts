@@ -19,6 +19,7 @@ const initialState: MemoryGameState = {
   secondCard: null,
   isLocked: false,
   cleared: false,
+  justCleared: false,
   matches: 0,
   attempts: 0,
   gameStarted: false,
@@ -34,6 +35,7 @@ function gameReducer(state: MemoryGameState, action: GameAction): MemoryGameStat
         difficulty: action.difficulty,
         gameStarted: true,
         cleared: false,
+        justCleared: false,
         matches: 0,
         attempts: 0,
         firstCard: null,
@@ -88,6 +90,7 @@ function gameReducer(state: MemoryGameState, action: GameAction): MemoryGameStat
           cards: matchedCards,
           matches: newMatches,
           cleared: isCleared,
+          justCleared: isCleared,
           firstCard: null,
           secondCard: null,
           isLocked: false
@@ -121,6 +124,12 @@ function gameReducer(state: MemoryGameState, action: GameAction): MemoryGameStat
       return {
         ...state,
         difficulty: action.difficulty
+      };
+
+    case 'CLEAR_JUST_CLEARED':
+      return {
+        ...state,
+        justCleared: false
       };
 
     default:
@@ -176,6 +185,10 @@ export function useGameLogic() {
     dispatch({ type: 'SET_DIFFICULTY', difficulty });
   }, []);
 
+  const clearJustCleared = useCallback(() => {
+    dispatch({ type: 'CLEAR_JUST_CLEARED' });
+  }, []);
+
   // Handle match checking and card reset logic
   useEffect(() => {
     if (state.firstCard && state.secondCard && state.isLocked) {
@@ -200,6 +213,7 @@ export function useGameLogic() {
     startGame,
     flipCard,
     restartGame,
-    setDifficulty
+    setDifficulty,
+    clearJustCleared
   };
 }

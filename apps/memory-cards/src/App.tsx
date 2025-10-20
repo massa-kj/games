@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Button } from '../../../core/ui/Button.js';
 import { useSettings } from '../../../core/hooks/useSettings.js';
 import { GameBoard } from './components/GameBoard.js';
@@ -13,8 +12,7 @@ import jaTranslations from './data/locales/ja.json';
 
 export default function MemoryCardsApp() {
   const { settings } = useSettings();
-  const { state, startGame, flipCard, restartGame, setDifficulty } = useGameLogic();
-  const [showResultModal, setShowResultModal] = useState(false);
+  const { state, startGame, flipCard, restartGame, setDifficulty, clearJustCleared } = useGameLogic();
   const currentLang = settings.lang;
   const translations = currentLang === 'en' ? enTranslations : jaTranslations;
 
@@ -24,16 +22,11 @@ export default function MemoryCardsApp() {
   };
 
   const handlePlayAgain = () => {
-    setShowResultModal(false);
     restartGame();
   };
 
-
-
-  // Check if game was just cleared
-  if (state.cleared && !showResultModal) {
-    setTimeout(() => setShowResultModal(true), 500);
-  }
+  // Show result modal when game is just cleared
+  const isResultModalOpen = state.justCleared;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 p-4 no-select">
@@ -110,10 +103,10 @@ export default function MemoryCardsApp() {
 
         {/* Result Modal */}
         <ResultModal
-          isOpen={showResultModal}
+          isOpen={isResultModalOpen}
           gameState={state}
           onPlayAgain={handlePlayAgain}
-          onClose={() => setShowResultModal(false)}
+          onClose={clearJustCleared}
         />
       </div>
     </div>
