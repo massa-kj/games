@@ -12,7 +12,12 @@ export default {
     require('../../core/themes/tailwind.preset.cjs')
   ],
   theme: {
-    extend: {},
+    extend: {
+      // Custom utilities for child-friendly interactions
+      touchAction: {
+        'manipulation': 'manipulation',
+      }
+    },
   },
   plugins: [],
 }

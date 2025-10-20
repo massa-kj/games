@@ -22,12 +22,17 @@ export function Card({ card, onFlip, disabled = false }: CardProps) {
   return (
     <div
       className={`
+        card-container
         relative w-full aspect-square cursor-pointer
         transition-transform duration-300 hover:scale-105
+        select-none touch-manipulation
         ${disabled || card.isMatched ? 'cursor-not-allowed' : ''}
         ${card.isMatched ? 'opacity-75' : ''}
       `}
       onClick={handleClick}
+      onContextMenu={(e) => e.preventDefault()}
+      onTouchStart={(e) => e.preventDefault()}
+      onDragStart={(e) => e.preventDefault()}
     >
       <div
         className={`
@@ -43,10 +48,10 @@ export function Card({ card, onFlip, disabled = false }: CardProps) {
             bg-gradient-to-br from-blue-400 to-blue-600
             rounded-2xl shadow-lg border-2 border-white
             flex items-center justify-center
-            backface-hidden
+            backface-hidden no-select
           "
         >
-          <div className="text-4xl">❓</div>
+          <div className="text-4xl no-select">❓</div>
         </div>
 
         {/* Card Front (showing when flipped) */}
@@ -56,13 +61,13 @@ export function Card({ card, onFlip, disabled = false }: CardProps) {
             bg-gradient-to-br from-yellow-100 to-yellow-200
             rounded-2xl shadow-lg border-2 border-yellow-300
             flex flex-col items-center justify-center
-            backface-hidden rotate-y-180
+            backface-hidden rotate-y-180 no-select
           "
         >
-          <div className="text-6xl mb-2" role="img" aria-label={animalName}>
+          <div className="text-6xl mb-2 no-select" role="img" aria-label={animalName}>
             {getAnimalEmoji(card.animal.key)}
           </div>
-          <div className="text-sm font-bold text-center text-gray-700">
+          <div className="text-sm font-bold text-center text-gray-700 no-select">
             {animalName}
           </div>
         </div>

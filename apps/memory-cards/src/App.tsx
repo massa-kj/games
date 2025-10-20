@@ -36,7 +36,7 @@ export default function MemoryCardsApp() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 p-4 no-select">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <header className="text-center mb-8">
