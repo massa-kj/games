@@ -7,7 +7,7 @@
     "dev:site": "vite --config site/vite.config.ts",
     "dev:memory-cards": "vite --config apps/memory-cards/vite.config.ts",
     "build:registry": "tsx scripts/build-games-registry.ts",
-    "build:apps": "pnpm -r --filter ./apps/* run build",
+    "build:apps": "pnpm -r --filter '{apps/**}' run build",
     "build:site": "vite build --config site/vite.config.ts",
     "build": "pnpm build:registry && pnpm build:apps && pnpm build:site",
     "cleanbuild": "rm -rf dist && pnpm build",

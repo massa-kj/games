@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useSettings } from "./useSettings";
 
 export function useLocale() {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { settings, setLanguage } = useSettings();
 
   const switchLang = (lang: "en" | "ja") => {
@@ -10,5 +10,5 @@ export function useLocale() {
     setLanguage(lang);
   };
 
-  return { lang: settings.lang, switchLang };
+  return { t, lang: settings.lang, switchLang };
 }
