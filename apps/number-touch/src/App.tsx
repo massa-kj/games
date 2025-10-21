@@ -74,14 +74,26 @@ export default function App() {
     setShowResults(false);
   };
 
-  const getDifficultyConfig = () => {
-    return {
-      easy: { label: t('game.difficulty.easy'), maxNumber: 10 },
-      hard: { label: t('game.difficulty.hard'), maxNumber: 20 }
-    };
-  };
-
   const gameSettings = [
+    {
+      id: 'difficulty',
+      type: 'button-group' as const,
+      label: t('game.difficulty.label'),
+      value: difficulty,
+      onChange: (d: Difficulty) => setDifficulty(d),
+      options: [
+        {
+          value: 'easy',
+          label: t('game.difficulty.easy'),
+          description: t('game.difficulty.easyDescription')
+        },
+        {
+          value: 'hard',
+          label: t('game.difficulty.hard'),
+          description: t('game.difficulty.hardDescription')
+        }
+      ]
+    },
     {
       id: 'showTargetHint',
       type: 'checkbox' as const,
@@ -89,11 +101,6 @@ export default function App() {
       value: settings.showTargetHint,
       onChange: toggleTargetHint
     }
-  ];
-
-  const difficulties = [
-    { key: 'easy', label: t('game.difficulty.easy'), description: t('game.difficulty.easyDescription') },
-    { key: 'hard', label: t('game.difficulty.hard'), description: t('game.difficulty.hardDescription') }
   ];
 
   return (
@@ -122,12 +129,8 @@ export default function App() {
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
         title={t('settings.title')}
-        difficulties={difficulties}
-        currentDifficulty={difficulty}
-        onDifficultyChange={(d) => setDifficulty(d as Difficulty)}
         gameSettings={gameSettings}
         texts={{
-          difficultyLabel: t('game.difficulty.label'),
           close: t('settings.close')
         }}
       />

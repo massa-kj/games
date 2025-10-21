@@ -1,20 +1,14 @@
 import React from 'react';
 import { Modal } from './Modal';
 
-export interface GameDifficultyOption {
-  key: string;
-  label: string;
-  description?: string;
-}
-
 export interface GameSettingControl {
   id: string;
-  type: 'checkbox' | 'select' | 'radio';
+  type: 'checkbox' | 'select' | 'radio' | 'button-group';
   label: string;
   description?: string;
   value: any;
   onChange: (value: any) => void;
-  options?: { value: any; label: string }[];
+  options?: { value: any; label: string; description?: string }[];
   disabled?: boolean;
 }
 
@@ -23,12 +17,7 @@ export interface GameSettingsModalProps {
   onClose: () => void;
   title: string;
 
-  // Difficulty settings
-  difficulties?: GameDifficultyOption[];
-  currentDifficulty?: string;
-  onDifficultyChange?: (difficulty: string) => void;
-
-  // Custom game settings
+  // All game settings (including difficulty if needed)
   gameSettings?: GameSettingControl[];
 
   // Action buttons
@@ -36,7 +25,6 @@ export interface GameSettingsModalProps {
 
   // Text overrides for internationalization
   texts?: {
-    difficultyLabel?: string;
     resetSettings?: string;
     close?: string;
   };
@@ -46,45 +34,14 @@ export function GameSettingsModal({
   isOpen,
   onClose,
   title,
-  difficulties = [],
-  currentDifficulty,
-  onDifficultyChange,
   gameSettings = [],
   onResetSettings,
   texts = {}
 }: GameSettingsModalProps) {
   const defaultTexts = {
-    difficultyLabel: 'Difficulty',
     resetSettings: 'Reset Settings',
     close: 'Close',
     ...texts
-  };
-
-  const renderDifficultySection = () => {
-    if (difficulties.length === 0) return null;
-
-    return (
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-3">
-          {defaultTexts.difficultyLabel}
-        </h3>
-        <div className="flex gap-2 flex-wrap">
-          {difficulties.map((difficulty) => (
-            <button
-              key={difficulty.key}
-              onClick={() => onDifficultyChange?.(difficulty.key)}
-              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${currentDifficulty === difficulty.key
-                ? 'bg-blue-500 text-white shadow-lg'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              title={difficulty.description}
-            >
-              {difficulty.label}
-            </button>
-          ))}
-        </div>
-      </div>
-    );
   };
 
   const renderGameSettings = () => {
@@ -164,6 +121,26 @@ export function GameSettingsModal({
           </div>
         );
 
+      case 'button-group':
+        return (
+          <div className="flex gap-2 flex-wrap">
+            {setting.options?.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => setting.onChange(option.value)}
+                disabled={setting.disabled}
+                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${setting.value === option.value
+                    ? 'bg-blue-500 text-white shadow-lg'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  } ${setting.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                title={option.description}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        );
+
       default:
         return null;
     }
@@ -172,7 +149,6 @@ export function GameSettingsModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} size="lg">
       <div className="space-y-6">
-        {renderDifficultySection()}
         {renderGameSettings()}
 
         {/* Action buttons */}
