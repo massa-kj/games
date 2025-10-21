@@ -3,6 +3,7 @@ import { useGameLogic } from './hooks';
 import { GameBoard, ResultModal } from './components';
 import { Difficulty } from './types';
 import { useSettings } from '@core/hooks';
+import { GameSettingsModal } from '@core/ui';
 import './styles.css';
 
 // Import locale data
@@ -16,6 +17,7 @@ const locales = {
 
 export default function App() {
   const { settings: appSettings } = useSettings();
+  const [showSettings, setShowSettings] = useState(false);
 
   // Simple translation function
   const t = (key: string): string => {
@@ -79,104 +81,56 @@ export default function App() {
     };
   };
 
+  const gameSettings = [
+    {
+      id: 'showTargetHint',
+      type: 'checkbox' as const,
+      label: t('game.showTargetHint'),
+      value: settings.showTargetHint,
+      onChange: toggleTargetHint
+    }
+  ];
+
+  const difficulties = [
+    { key: 'easy', label: t('game.difficulty.easy'), description: t('game.difficulty.easyDescription') },
+    { key: 'hard', label: t('game.difficulty.hard'), description: t('game.difficulty.hardDescription') }
+  ];
+
   return (
-    <div className="game-container">
-      {/* Header */}
-      <div className="game-header">
-        <h1 className="text-5xl font-bold text-gray-800 mb-3">{t('game.title')}</h1>
-        <p className="text-xl text-gray-600">
-          {t('game.subtitle')}
-        </p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-4">
+      {/* Game board - now contains everything */}
+      <GameBoard
+        numbers={numbers}
+        currentTarget={currentTarget}
+        onNumberClick={clickNumber}
+        isGameActive={isGameActive}
+        gameStarted={gameStarted}
+        gameCompleted={gameCompleted}
+        getFormattedTime={getFormattedTime}
+        lastClickedNumber={lastClickedNumber}
+        isMistake={isMistake}
+        onMistakeAnimationEnd={clearMistake}
+        difficulty={difficulty}
+        showTargetHint={settings.showTargetHint}
+        onStartGame={handleStartGame}
+        onRestartGame={handleRestartGame}
+        onOpenSettings={() => setShowSettings(true)}
+      />
 
-      {/* Control panel */}
-      <div className="control-panel">
-        {/* Difficulty selection */}
-        <div className="difficulty-selector">
-          {Object.entries(getDifficultyConfig()).map(([key, config]) => (
-            <button
-              key={key}
-              onClick={() => setDifficulty(key as Difficulty)}
-              className={`difficulty-button ${difficulty === key ? 'active' : 'inactive'
-                }`}
-              disabled={gameStarted && isGameActive}
-            >
-              {config.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Settings options */}
-        <div className="flex items-center gap-4">
-          <label className="flex items-center gap-2 text-sm text-gray-700">
-            <input
-              type="checkbox"
-              checked={settings.showTargetHint}
-              onChange={toggleTargetHint}
-              className="w-4 h-4 rounded accent-blue-500"
-            />
-            {t('game.showTargetHint')}
-          </label>
-        </div>
-
-        {/* Start/Restart game buttons */}
-        <div className="flex gap-2">
-          {!gameStarted || gameCompleted ? (
-            <button
-              onClick={handleStartGame}
-              className="start-button"
-            >
-              {gameCompleted ? t('game.playAgain') : t('game.startGame')}
-            </button>
-          ) : (
-            <button
-              onClick={handleRestartGame}
-              className="restart-button"
-            >
-              {t('game.restart')}
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Game board */}
-      <div className="flex justify-center">
-        <GameBoard
-          numbers={numbers}
-          currentTarget={currentTarget}
-          onNumberClick={clickNumber}
-          isGameActive={isGameActive}
-          gameStarted={gameStarted}
-          getFormattedTime={getFormattedTime}
-          lastClickedNumber={lastClickedNumber}
-          isMistake={isMistake}
-          onMistakeAnimationEnd={clearMistake}
-          difficulty={difficulty}
-          showTargetHint={settings.showTargetHint}
-        />
-      </div>
-
-      {/* Statistics */}
-      {gameStarted && (
-        <div className="mt-8 text-center">
-          <div className="inline-flex items-center gap-6 bg-white rounded-xl p-4 shadow-md border border-gray-200">
-            <div>
-              <span className="text-gray-600">{t('game.mistakes')}: </span>
-              <span className="font-bold text-red-500">{mistakes}</span>
-            </div>
-            <div>
-              <span className="text-gray-600">{t('game.target')}: </span>
-              <span className="font-bold text-green-600">{currentTarget}</span>
-            </div>
-            <div>
-              <span className="text-gray-600">{t('game.progress')}: </span>
-              <span className="font-bold text-blue-600">
-                {currentTarget - 1}/{numbers.length}
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Settings modal */}
+      <GameSettingsModal
+        isOpen={showSettings}
+        onClose={() => setShowSettings(false)}
+        title={t('settings.title')}
+        difficulties={difficulties}
+        currentDifficulty={difficulty}
+        onDifficultyChange={(d) => setDifficulty(d as Difficulty)}
+        gameSettings={gameSettings}
+        texts={{
+          difficultyLabel: t('game.difficulty.label'),
+          close: t('settings.close')
+        }}
+      />
 
       {/* Result modal */}
       <ResultModal

@@ -89,6 +89,7 @@
 .game-container {
   @apply min-h-screen p-4;
   background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  overflow: hidden;
 }
 
 /* Game board background */

@@ -19,6 +19,10 @@
     "mistakes": "ミス",
     "showTargetHint": "目標ヒントを表示"
   },
+  "settings": {
+    "title": "設定",
+    "close": "とじる"
+  },
   "results": {
     "gameComplete": "ゲームクリア！",
     "numbersCompleted": "1-{{count}}の数字をクリア",
@@ -28,7 +32,7 @@
       "good": "よくできました！",
       "tryAgain": "もう一度がんばろう！"
     },
-    "close": "閉じる",
+    "close": "とじる",
     "playAgain": "もう一度プレイ"
   }
 }
