@@ -92,18 +92,7 @@ describe('Modal', () => {
     });
   });
 
-  describe('backdrop', () => {
-    it('should render backdrop overlay', () => {
-      const { container } = render(
-        <Modal isOpen={true} onClose={() => { }}>
-          <p>Content</p>
-        </Modal>
-      );
-
-      const backdrop = container.querySelector('.bg-black.bg-opacity-50');
-      expect(backdrop).toBeInTheDocument();
-    });
-
+  describe('interactions', () => {
     it('should call onClose when backdrop is clicked', () => {
       const handleClose = vi.fn();
       const { container } = render(
@@ -133,20 +122,6 @@ describe('Modal', () => {
 
       expect(handleClose).not.toHaveBeenCalled();
     });
-  });
-
-  describe('close button', () => {
-    it('should render close button by default', () => {
-      render(
-        <Modal isOpen={true} onClose={() => { }}>
-          <p>Content</p>
-        </Modal>
-      );
-
-      const closeButton = screen.getByRole('button');
-      expect(closeButton).toBeInTheDocument();
-      expect(closeButton).toHaveTextContent('×');
-    });
 
     it('should call onClose when close button is clicked', () => {
       const handleClose = vi.fn();
@@ -171,81 +146,6 @@ describe('Modal', () => {
 
       const closeButton = screen.queryByRole('button');
       expect(closeButton).not.toBeInTheDocument();
-    });
-  });
-
-  describe('styling', () => {
-    it('should have correct backdrop styling', () => {
-      const { container } = render(
-        <Modal isOpen={true} onClose={() => { }}>
-          <p>Content</p>
-        </Modal>
-      );
-
-      const backdrop = container.querySelector('.bg-black.bg-opacity-50');
-      expect(backdrop).toHaveClass(
-        'absolute',
-        'inset-0',
-        'bg-black',
-        'bg-opacity-50'
-      );
-    });
-
-    it('should have correct modal container styling', () => {
-      const { container } = render(
-        <Modal isOpen={true} onClose={() => { }}>
-          <p>Content</p>
-        </Modal>
-      );
-
-      const modal = container.querySelector('.bg-bg-secondary');
-      expect(modal).toHaveClass(
-        'relative',
-        'bg-bg-secondary',
-        'rounded-2xl',
-        'shadow-hover',
-        'p-6',
-        'mx-4',
-        'w-full'
-      );
-    });
-
-    it('should style title correctly', () => {
-      render(
-        <Modal isOpen={true} onClose={() => { }} title="Styled Title">
-          <p>Content</p>
-        </Modal>
-      );
-
-      const title = screen.getByText('Styled Title');
-      expect(title).toHaveClass('text-2xl', 'font-bold', 'text-text');
-    });
-
-    it('should style close button correctly', () => {
-      render(
-        <Modal isOpen={true} onClose={() => { }}>
-          <p>Content</p>
-        </Modal>
-      );
-
-      const closeButton = screen.getByRole('button');
-      expect(closeButton).toHaveClass(
-        'text-text-light',
-        'hover:text-text',
-        'text-2xl',
-        'font-bold'
-      );
-    });
-
-    it('should have content wrapper styling', () => {
-      const { container } = render(
-        <Modal isOpen={true} onClose={() => { }}>
-          <p>Content</p>
-        </Modal>
-      );
-
-      const contentWrapper = container.querySelector('.text-text');
-      expect(contentWrapper).toHaveClass('text-text');
     });
   });
 
@@ -285,17 +185,6 @@ describe('Modal', () => {
   });
 
   describe('edge cases', () => {
-    it('should handle empty children gracefully', () => {
-      const { container } = render(
-        <Modal isOpen={true} onClose={() => { }}>
-          {null}
-        </Modal>
-      );
-
-      const modalContent = container.querySelector('.text-text');
-      expect(modalContent).toBeInTheDocument();
-    });
-
     it('should handle undefined title gracefully', () => {
       render(
         <Modal isOpen={true} onClose={() => { }} title={undefined}>

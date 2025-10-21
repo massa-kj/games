@@ -35,17 +35,17 @@ export function Modal({
       />
 
       {/* Modal */}
-      <div className={`relative bg-bg-secondary rounded-2xl shadow-hover p-6 mx-4 w-full ${sizeClasses[size]} animate-bounce-in`}>
+      <div className={`relative bg-white rounded-2xl shadow-xl p-6 mx-4 w-full ${sizeClasses[size]} animate-bounce-in`}>
         {/* Header */}
         {(title || showCloseButton) && (
           <div className="flex items-center justify-between mb-4">
             {title && (
-              <h2 className="text-2xl font-bold text-text">{title}</h2>
+              <h2 className="text-2xl font-bold text-gray-800">{title}</h2>
             )}
             {showCloseButton && (
               <button
                 onClick={onClose}
-                className="text-text-light hover:text-text text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"
+                className="text-gray-500 hover:text-gray-800 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"
               >
                 ×
               </button>
@@ -54,7 +54,7 @@ export function Modal({
         )}
 
         {/* Content */}
-        <div className="text-text">
+        <div className="text-gray-800">
           {children}
         </div>
       </div>
