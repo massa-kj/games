@@ -6,7 +6,7 @@ import {
   DIFFICULTY_CONFIGS,
   createGridPositions,
   NumberButton
-} from '../types';
+} from '@/types';
 
 const initialState: NumberTouchGameState = {
   numbers: [],

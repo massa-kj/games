@@ -1,10 +1,10 @@
 import React from 'react';
-import { calculateStars, Difficulty } from '../types';
+import { calculateStars, Difficulty } from '@/types';
 import { useSettings } from '@core/hooks';
 
 // Import locale data
-import enLocale from '../data/locales/en.json';
-import jaLocale from '../data/locales/ja.json';
+import enLocale from '@/data/locales/en.json';
+import jaLocale from '@/data/locales/ja.json';
 
 const locales = {
   en: enLocale,

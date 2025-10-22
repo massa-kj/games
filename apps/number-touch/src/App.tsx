@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { useGameLogic } from './hooks';
-import { GameBoard, ResultModal } from './components';
-import { Difficulty } from './types';
+import { useGameLogic } from '@/hooks';
+import { GameBoard, ResultModal } from '@/components';
+import { Difficulty } from '@/types';
 import { useSettings } from '@core/hooks';
 import { GameSettingsModal } from '@core/ui';
-import './styles.css';
+import '@/styles.css';
 
 // Import locale data
-import enLocale from './data/locales/en.json';
-import jaLocale from './data/locales/ja.json';
+import enLocale from '@/data/locales/en.json';
+import jaLocale from '@/data/locales/ja.json';
 
 const locales = {
   en: enLocale,

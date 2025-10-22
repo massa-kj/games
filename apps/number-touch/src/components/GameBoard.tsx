@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { NumberButton } from './NumberButton';
-import { NumberButton as NumberButtonType, DIFFICULTY_CONFIGS, Difficulty } from '../types';
+import { NumberButton } from '@/components/NumberButton';
+import { NumberButton as NumberButtonType, DIFFICULTY_CONFIGS, Difficulty } from '@/types';
 import { useSettings } from '@core/hooks';
 
 // Import locale data
-import enLocale from '../data/locales/en.json';
-import jaLocale from '../data/locales/ja.json';
+import enLocale from '@/data/locales/en.json';
+import jaLocale from '@/data/locales/ja.json';
 
 const locales = {
   en: enLocale,

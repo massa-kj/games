@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { NumberButton as NumberButtonType } from '../types';
+import { NumberButton as NumberButtonType } from '@/types';
 
 interface NumberButtonProps {
   number: NumberButtonType;
