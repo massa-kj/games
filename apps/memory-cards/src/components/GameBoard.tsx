@@ -1,11 +1,11 @@
-import { Card } from './Card.js';
-import type { MemoryGameState, Difficulty } from '../types.js';
-import { DIFFICULTY_CONFIGS } from '../types.js';
-import { useSettings } from '../../../../core/hooks/useSettings.js';
+import { useSettings } from '@core/hooks/useSettings';
+import { Card } from '@/components/Card';
+import type { MemoryGameState, Difficulty } from '@/types';
+import { DIFFICULTY_CONFIGS } from '@/types';
 
 // Import translations
-import enTranslations from '../data/locales/en.json';
-import jaTranslations from '../data/locales/ja.json';
+import enTranslations from '@/data/locales/en.json';
+import jaTranslations from '@/data/locales/ja.json';
 
 interface GameBoardProps {
   gameState: MemoryGameState;

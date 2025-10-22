@@ -1,15 +1,15 @@
 import { useReducer, useCallback, useEffect } from 'react';
-import { shuffle } from '../../../../core/utils/array.js';
-import { delay } from '../../../../core/utils/time.js';
+import { shuffle } from '@core/utils/array';
+import { delay } from '@core/utils/time';
 import type {
   MemoryGameState,
   GameAction,
   Card,
   Animal,
   Difficulty
-} from '../types.js';
-import { DIFFICULTY_CONFIGS } from '../types.js';
-import animalsData from '../data/animals.json';
+} from '@/types';
+import { DIFFICULTY_CONFIGS } from '@/types';
+import animalsData from '@/data/animals.json';
 
 const animals = animalsData as Animal[];
 

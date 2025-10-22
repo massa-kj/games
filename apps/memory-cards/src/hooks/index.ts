@@ -1,1 +1,1 @@
-export { useGameLogic } from './useGameLogic.js';
+export { useGameLogic } from './useGameLogic';

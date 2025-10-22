@@ -1,3 +1,3 @@
-export { Card } from './Card.js';
-export { GameBoard } from './GameBoard.js';
-export { ResultModal } from './ResultModal.js';
+export { Card } from './Card';
+export { GameBoard } from './GameBoard';
+export { ResultModal } from './ResultModal';

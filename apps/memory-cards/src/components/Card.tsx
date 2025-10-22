@@ -1,5 +1,5 @@
-import { useSettings } from '../../../../core/hooks/useSettings.js';
-import type { Card as CardType } from '../types.js';
+import { useSettings } from '@core/hooks/useSettings';
+import type { Card as CardType } from '@/types';
 
 interface CardProps {
   card: CardType;

@@ -1,14 +1,14 @@
-import { Button } from '../../../core/ui/Button.js';
-import { useSettings } from '../../../core/hooks/useSettings.js';
-import { GameBoard } from './components/GameBoard.js';
-import { ResultModal } from './components/ResultModal.js';
-import { useGameLogic } from './hooks/useGameLogic.js';
-import type { Difficulty } from './types.js';
-import './styles.css';
+import { Button } from '@core/ui';
+import { useSettings } from '@core/hooks';
+import { GameBoard } from '@/components/GameBoard';
+import { ResultModal } from '@/components/ResultModal';
+import { useGameLogic } from '@/hooks/useGameLogic';
+import type { Difficulty } from '@/types';
+import '@/styles.css';
 
 // Import translations
-import enTranslations from './data/locales/en.json';
-import jaTranslations from './data/locales/ja.json';
+import enTranslations from '@/data/locales/en.json';
+import jaTranslations from '@/data/locales/ja.json';
 
 export default function MemoryCardsApp() {
   const { settings } = useSettings();

@@ -1,12 +1,12 @@
-import { Modal } from '../../../../core/ui/Modal.js';
-import { Button } from '../../../../core/ui/Button.js';
-import { useSettings } from '../../../../core/hooks/useSettings.js';
 import { useMemo } from 'react';
-import type { MemoryGameState, Difficulty } from '../types.js';
+import { Modal } from '@core/ui/Modal';
+import { Button } from '@core/ui/Button';
+import { useSettings } from '@core/hooks/useSettings';
+import type { MemoryGameState, Difficulty } from '@/types';
 
 // Import the translations - we'll use them directly for now
-import jaTranslations from '../data/locales/ja.json';
-import enTranslations from '../data/locales/en.json';
+import jaTranslations from '@/data/locales/ja.json';
+import enTranslations from '@/data/locales/en.json';
 
 interface ResultModalProps {
   isOpen: boolean;
