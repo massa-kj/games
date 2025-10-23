@@ -5,6 +5,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Memory Cards specific FlipCard styling */
+.memory-card .core-flip-card-back {
+  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+  border-color: white;
+  color: white;
+}
+
+.memory-card .core-flip-card-front {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-color: #fcd34d;
+  color: #374151; /* gray-700 equivalent */
+}
+
 /* Card 3D flip animation styles */
 .transform-style-preserve-3d {
   transform-style: preserve-3d;

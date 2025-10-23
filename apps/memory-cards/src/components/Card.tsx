@@ -1,4 +1,5 @@
 import { useSettings } from '@core/hooks/useSettings';
+import { FlipCard } from '@core/ui';
 import type { Card as CardType } from '@/types';
 
 interface CardProps {
@@ -12,74 +13,42 @@ export function Card({ card, onFlip, disabled = false }: CardProps) {
   const currentLang = settings.lang;
 
   const handleClick = () => {
-    if (!disabled && !card.isFlipped && !card.isMatched) {
+    if (!card.isFlipped && !card.isMatched) {
       onFlip(card.id);
     }
   };
 
   const animalName = card.animal[currentLang] || card.animal.en;
 
-  return (
-    <div
-      className={`
-        card-container
-        relative w-full aspect-square cursor-pointer
-        transition-transform duration-300 hover:scale-105
-        select-none touch-manipulation
-        ${disabled || card.isMatched ? 'cursor-not-allowed' : ''}
-        ${card.isMatched ? 'opacity-75' : ''}
-      `}
-      onClick={handleClick}
-      onContextMenu={(e) => e.preventDefault()}
-      onTouchStart={(e) => e.preventDefault()}
-      onDragStart={(e) => e.preventDefault()}
-    >
-      <div
-        className={`
-          relative w-full h-full
-          transition-transform duration-500 transform-style-preserve-3d
-          ${card.isFlipped || card.isMatched ? 'rotate-y-180' : ''}
-        `}
-      >
-        {/* Card Back (showing when not flipped) */}
-        <div
-          className="
-            absolute inset-0 w-full h-full
-            bg-gradient-to-br from-blue-400 to-blue-600
-            rounded-2xl shadow-lg border-2 border-white
-            flex items-center justify-center
-            backface-hidden no-select
-          "
-        >
-          <div className="text-4xl no-select">❓</div>
-        </div>
+  const backContent = (
+    <div className="text-4xl">❓</div>
+  );
 
-        {/* Card Front (showing when flipped) */}
-        <div
-          className="
-            absolute inset-0 w-full h-full
-            bg-gradient-to-br from-yellow-100 to-yellow-200
-            rounded-2xl shadow-lg border-2 border-yellow-300
-            flex flex-col items-center justify-center
-            backface-hidden rotate-y-180 no-select
-          "
-        >
-          <div className="text-6xl mb-2 no-select" role="img" aria-label={animalName}>
-            {getAnimalEmoji(card.animal.key)}
-          </div>
-          <div className="text-sm font-bold text-center text-gray-700 no-select">
-            {animalName}
-          </div>
-        </div>
-
-        {/* Matched indicator */}
-        {card.isMatched && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-            <div className="text-6xl animate-bounce">✨</div>
-          </div>
-        )}
+  const frontContent = (
+    <>
+      <div className="text-6xl mb-2" role="img" aria-label={animalName}>
+        {getAnimalEmoji(card.animal.key)}
       </div>
-    </div>
+      <div className="text-sm font-bold text-center text-gray-700">
+        {animalName}
+      </div>
+    </>
+  );
+
+  const overlayContent = card.isMatched ? (
+    <div className="text-6xl animate-bounce">✨</div>
+  ) : undefined;
+
+  return (
+    <FlipCard
+      isFlipped={card.isFlipped || card.isMatched}
+      backContent={backContent}
+      frontContent={frontContent}
+      overlayContent={overlayContent}
+      onClick={handleClick}
+      disabled={disabled || card.isMatched}
+      className={`memory-card ${card.isMatched ? 'opacity-75' : ''}`}
+    />
   );
 }
 
