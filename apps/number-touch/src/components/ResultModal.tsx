@@ -1,6 +1,7 @@
 import React from 'react';
 import { calculateStars, Difficulty } from '@/types';
 import { useSettings } from '@core/hooks';
+import { Modal } from '@core/ui';
 
 // Import locale data
 import enLocale from '@/data/locales/en.json';
@@ -68,12 +69,15 @@ export const ResultModal: React.FC<ResultModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4 text-center">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={t('results.gameComplete')}
+      size="md"
+      showCloseButton={false}
+    >
+      <div className="text-center">
         <div className="mb-6">
-          <h2 className="text-3xl font-bold text-gray-800 mb-2">
-            {t('results.gameComplete')}
-          </h2>
           <div className="text-lg text-gray-600">
             {t('results.numbersCompleted').replace('{{count}}', maxNumber.toString())}
           </div>
@@ -127,6 +131,6 @@ export const ResultModal: React.FC<ResultModalProps> = ({
           </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 };
