@@ -44,14 +44,18 @@ export interface StarRating {
 
 export const STAR_THRESHOLDS: Record<Difficulty, StarRating[]> = {
   easy: [
-    { stars: 3, time: 3.0 },   // 3 stars for 3 seconds or less
-    { stars: 2, time: 5.0 },   // 2 stars for 5 seconds or less
-    { stars: 1, time: 10.0 }   // 1 star for 10 seconds or less
+    { stars: 5, time: 8.0 },
+    { stars: 4, time: 10.0 },
+    { stars: 3, time: 15.0 },
+    { stars: 2, time: 20.0 },
+    { stars: 1, time: 30.0 },
   ],
   hard: [
-    { stars: 3, time: 8.0 },   // 3 stars for 8 seconds or less
-    { stars: 2, time: 12.0 },  // 2 stars for 12 seconds or less
-    { stars: 1, time: 20.0 }   // 1 star for 20 seconds or less
+    { stars: 5, time: 15.0 },
+    { stars: 4, time: 20.0 },
+    { stars: 3, time: 30.0 },
+    { stars: 2, time: 40.0 },
+    { stars: 1, time: 60.0 },
   ]
 };
 

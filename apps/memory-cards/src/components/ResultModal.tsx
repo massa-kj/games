@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Modal } from '@core/ui/Modal';
 import { Button } from '@core/ui/Button';
+import { StarsRating } from '@core/ui';
 import { useSettings } from '@core/hooks/useSettings';
 import type { MemoryGameState, Difficulty } from '@/types';
 
@@ -36,14 +37,6 @@ export function ResultModal({ isOpen, gameState, onPlayAgain, onClose }: ResultM
     return translations.difficulty[difficulty] || difficulty;
   };
 
-  const renderStars = (count: number) => {
-    return Array.from({ length: 3 }, (_, i) => (
-      <span key={i} className={`text-4xl ${i < count ? 'text-yellow-400' : 'text-gray-300'}`}>
-        ⭐
-      </span>
-    ));
-  };
-
   if (!isOpen || !gameState.cleared) return null;
 
   return (
@@ -66,8 +59,12 @@ export function ResultModal({ isOpen, gameState, onPlayAgain, onClose }: ResultM
 
         {/* Stars Rating */}
         <div className="mb-6">
-          <div className="flex justify-center gap-1 mb-2">
-            {renderStars(score.stars)}
+          <div className="flex justify-center mb-2">
+            <StarsRating
+              rating={score.stars}
+              maxStars={3}
+              size="lg"
+            />
           </div>
           <p className="text-sm text-gray-600">
             {score.efficiency}% {translations.efficiency}

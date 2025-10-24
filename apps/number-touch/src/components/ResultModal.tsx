@@ -1,7 +1,7 @@
 import React from 'react';
 import { calculateStars, Difficulty } from '@/types';
 import { useSettings } from '@core/hooks';
-import { Modal } from '@core/ui';
+import { Modal, StarsRating } from '@core/ui';
 
 // Import locale data
 import enLocale from '@/data/locales/en.json';
@@ -49,21 +49,9 @@ export const ResultModal: React.FC<ResultModalProps> = ({
   const stars = calculateStars(time, difficulty);
   const maxNumber = difficulty === 'easy' ? 10 : 20;
 
-  const renderStars = () => {
-    return Array.from({ length: 3 }, (_, index) => (
-      <span
-        key={index}
-        className={`text-4xl ${index < stars ? 'text-yellow-400' : 'text-gray-300'
-          }`}
-      >
-        ★
-      </span>
-    ));
-  };
-
   const getPerformanceMessage = () => {
-    if (stars === 3) return t('results.performance.excellent');
-    if (stars === 2) return t('results.performance.great');
+    if (stars === 5) return t('results.performance.excellent');
+    if (2 <= stars && stars <= 4) return t('results.performance.great');
     if (stars === 1) return t('results.performance.good');
     return t('results.performance.tryAgain');
   };
@@ -86,7 +74,11 @@ export const ResultModal: React.FC<ResultModalProps> = ({
         {/* Star rating */}
         <div className="mb-6">
           <div className="flex justify-center mb-2">
-            {renderStars()}
+            <StarsRating
+              rating={stars}
+              maxStars={5}
+              size="lg"
+            />
           </div>
           <div className="text-xl font-semibold text-gray-700">
             {getPerformanceMessage()}
