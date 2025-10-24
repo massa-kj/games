@@ -30,7 +30,7 @@ export const NumberButton: React.FC<NumberButtonProps> = ({
   };
 
   const getButtonClass = () => {
-    let baseClass = "w-full h-full rounded-lg flex items-center justify-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold transition-all duration-200 cursor-pointer select-none border-2";
+    let baseClass = "w-full h-full min-w-0 min-h-0 rounded-lg flex items-center justify-center text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold transition-all duration-200 cursor-pointer select-none border-2 overflow-hidden";
 
     if (number.isCompleted) {
       return `${baseClass} bg-green-500 text-white border-green-600 scale-95 opacity-80`;

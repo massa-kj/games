@@ -92,7 +92,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
 
   return (
     <GameContainer preventScroll>
-      <div className="flex flex-col items-center w-full px-2 sm:px-4">
+      <div className="flex flex-col items-center w-full px-2 sm:px-4 min-w-0">
         {/* Header with settings button */}
         <div className="flex justify-between items-center w-full max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-2xl mb-4">
           <div /> {/* Spacer */}
@@ -123,8 +123,8 @@ export const GameBoard: React.FC<GameBoardProps> = ({
         </div>
 
         {/* Game board */}
-        <div className="relative w-full max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-2xl rounded-xl border-2 border-white/30 p-3 sm:p-4 md:p-6 game-board-container aspect-[5/4]">
-          <div style={gridStyle} className="w-full h-full">
+        <div className="relative w-full max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-2xl rounded-xl border-2 border-white/30 p-3 sm:p-4 md:p-6 game-board-container aspect-[5/4] min-w-0">
+          <div style={gridStyle} className="w-full h-full min-w-0 min-h-0">
             {numbers.map((number) => (
               <NumberButton
                 key={number.id}
