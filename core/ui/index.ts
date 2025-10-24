@@ -15,3 +15,6 @@ export type { ModalProps } from './Modal.js';
 
 export { GameSettingsModal } from './GameSettingsModal.js';
 export type { GameSettingsModalProps, GameSettingControl } from './GameSettingsModal.js';
+
+export { StarsRating } from './game/StarsRating.js';
+export type { StarsRatingProps } from './game/StarsRating.js';
