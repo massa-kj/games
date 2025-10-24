@@ -1,3 +1,4 @@
+import { GameContainer } from '@core/ui/GameContainer';
 import { useSettings } from '@core/hooks/useSettings';
 import { Card } from '@/components/Card';
 import type { MemoryGameState, Difficulty } from '@/types';
@@ -61,16 +62,18 @@ export function GameBoard({ gameState, onCardFlip }: GameBoardProps) {
       </div>
 
       {/* Game Grid */}
-      <div className={`game-grid ${getGridClassName(difficulty)}`}>
-        {cards.map((card) => (
-          <Card
-            key={card.id}
-            card={card}
-            onFlip={onCardFlip}
-            disabled={isLocked}
-          />
-        ))}
-      </div>
+      <GameContainer preventScroll>
+        <div className={`game-grid ${getGridClassName(difficulty)}`}>
+          {cards.map((card) => (
+            <Card
+              key={card.id}
+              card={card}
+              onFlip={onCardFlip}
+              disabled={isLocked}
+            />
+          ))}
+        </div>
+      </GameContainer>
 
       {/* Game Status */}
       {isLocked && (
