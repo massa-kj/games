@@ -17,6 +17,8 @@ export interface FlipCardProps {
   className?: string;
   /** Animation duration in milliseconds */
   flipDuration?: number;
+  /** Border radius for the card (CSS value) */
+  borderRadius?: string;
 }
 
 export function FlipCard({
@@ -28,6 +30,7 @@ export function FlipCard({
   disabled = false,
   className = '',
   flipDuration = 500,
+  borderRadius,
 }: FlipCardProps) {
   const handleClick = () => {
     if (!disabled && onClick) {
@@ -45,6 +48,7 @@ export function FlipCard({
       onClick={handleClick}
       style={{
         '--flip-duration': `${flipDuration}ms`,
+        '--border-radius': borderRadius,
       } as React.CSSProperties}
     >
       <div
