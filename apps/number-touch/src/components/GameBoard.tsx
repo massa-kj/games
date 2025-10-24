@@ -128,6 +128,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
             relative
             w-full max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-2xl
             rounded-xl border-2 border-white/30
+            game-board-container
             overflow-hidden
           "
         >

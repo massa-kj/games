@@ -173,7 +173,6 @@
   .game-board-container {
     width: calc(100vw - 1rem);
     max-width: 350px;
-    padding: 0.75rem;
   }
 
   .game-title {
