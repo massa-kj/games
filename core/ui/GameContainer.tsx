@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { usePreventScroll } from "@core/hooks/usePreventScroll";
 
 interface GameContainerProps {
@@ -11,11 +12,13 @@ export const GameContainer: React.FC<GameContainerProps> = ({
   preventScroll = true,
   className,
 }) => {
-  usePreventScroll(preventScroll);
+  const ref = useRef<HTMLDivElement>(null);
+  usePreventScroll(preventScroll, ref);
 
   return (
     <div
-      className={`relative w-full h-full overflow-hidden ${
+      ref={ref}
+      className={`w-full h-full overflow-hidden ${
         preventScroll ? "touch-none select-none" : ""
       } ${className}`}
     >

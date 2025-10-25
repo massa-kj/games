@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 
-export function usePreventScroll(enabled: boolean = true) {
+export function usePreventScroll(enabled: boolean = true, ref?: React.RefObject<HTMLElement>) {
   useEffect(() => {
-    if (!enabled) return;
+    const target = ref?.current ?? document.body;
+    if (!enabled || !target) return;
 
     const preventScroll = (e: TouchEvent) => {
       if (e.target && (e.target as HTMLElement).closest('.allow-scroll')) {
@@ -10,10 +11,10 @@ export function usePreventScroll(enabled: boolean = true) {
       }
       e.preventDefault();
     };
-    document.body.addEventListener('touchmove', preventScroll, { passive: false });
+    target.addEventListener("touchmove", preventScroll, { passive: false });
 
     return () => {
-      document.body.removeEventListener('touchmove', preventScroll);
+      target.removeEventListener('touchmove', preventScroll);
     };
-  }, [enabled]);
+  }, [enabled, ref]);
 }
