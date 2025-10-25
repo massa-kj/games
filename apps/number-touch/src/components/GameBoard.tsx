@@ -122,8 +122,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
       </div>
 
       {/* Game board */}
-      <div
-        className="
+      <GameContainer preventScroll className="
           relative
           w-full max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-2xl
           rounded-xl border-2 border-white/30
@@ -131,23 +130,21 @@ export const GameBoard: React.FC<GameBoardProps> = ({
           overflow-hidden
         "
       >
-        <GameContainer preventScroll>
-          <div className="aspect-[5/4] p-3 sm:p-4 md:p-6 w-full h-auto">
-            <div style={gridStyle} className="w-full h-full">
-              {numbers.map((number) => (
-                <NumberButton
-                  key={number.id}
-                  number={number}
-                  onClick={onNumberClick}
-                  isTarget={number.value === currentTarget}
-                  isMistake={isMistake && lastClickedNumber === number.value}
-                  onMistakeAnimationEnd={onMistakeAnimationEnd}
-                  showTargetHint={showTargetHint}
-                />
-              ))}
-            </div>
+        <div className="aspect-[5/4] p-3 sm:p-4 md:p-6 w-full h-auto">
+          <div style={gridStyle} className="w-full h-full">
+            {numbers.map((number) => (
+              <NumberButton
+                key={number.id}
+                number={number}
+                onClick={onNumberClick}
+                isTarget={number.value === currentTarget}
+                isMistake={isMistake && lastClickedNumber === number.value}
+                onMistakeAnimationEnd={onMistakeAnimationEnd}
+                showTargetHint={showTargetHint}
+              />
+            ))}
           </div>
-        </GameContainer>
+        </div>
 
         {!gameStarted && (
           <div className="absolute inset-0 flex items-center justify-center bg-white/95 rounded-xl">
@@ -164,7 +161,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
             </div>
           </div>
         )}
-      </div>
+      </GameContainer>
 
       {/* Control buttons during game */}
       {gameStarted && isGameActive && (
