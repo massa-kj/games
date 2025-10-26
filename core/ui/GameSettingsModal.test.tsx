@@ -23,7 +23,7 @@ describe('GameSettingsModal', () => {
 
     it('should render close button with default text', () => {
       render(<GameSettingsModal {...defaultProps} />);
-      expect(screen.getByText('Close')).toBeInTheDocument();
+      expect(screen.getByText('core.settings.close')).toBeInTheDocument();
     });
 
     it('should render close button with custom text', () => {
@@ -144,7 +144,7 @@ describe('GameSettingsModal', () => {
       const onClose = vi.fn();
       render(<GameSettingsModal {...defaultProps} onClose={onClose} />);
 
-      fireEvent.click(screen.getByText('Close'));
+      fireEvent.click(screen.getByText('core.settings.close'));
       expect(onClose).toHaveBeenCalledTimes(1);
     });
 
@@ -216,14 +216,14 @@ describe('GameSettingsModal', () => {
       const onResetSettings = vi.fn();
       render(<GameSettingsModal {...defaultProps} onResetSettings={onResetSettings} />);
 
-      expect(screen.getByText('Reset Settings')).toBeInTheDocument();
+      expect(screen.getByText('core.settings.reset')).toBeInTheDocument();
     });
 
     it('should call onResetSettings when reset button is clicked', () => {
       const onResetSettings = vi.fn();
       render(<GameSettingsModal {...defaultProps} onResetSettings={onResetSettings} />);
 
-      fireEvent.click(screen.getByText('Reset Settings'));
+      fireEvent.click(screen.getByText('core.settings.reset'));
       expect(onResetSettings).toHaveBeenCalledTimes(1);
     });
 
@@ -232,7 +232,7 @@ describe('GameSettingsModal', () => {
         <GameSettingsModal
           {...defaultProps}
           onResetSettings={vi.fn()}
-          texts={{ resetSettings: 'Custom Reset' }}
+          texts={{ reset: 'Custom Reset' }}
         />
       );
 

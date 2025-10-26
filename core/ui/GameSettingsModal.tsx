@@ -1,4 +1,5 @@
 import { Modal } from './Modal';
+import { useTranslation } from 'react-i18next';
 
 export interface GameSettingControl {
   id: string;
@@ -24,7 +25,7 @@ export interface GameSettingsModalProps {
 
   // Text overrides for internationalization
   texts?: {
-    resetSettings?: string;
+    reset?: string;
     close?: string;
   };
 }
@@ -37,11 +38,7 @@ export function GameSettingsModal({
   onResetSettings,
   texts = {}
 }: GameSettingsModalProps) {
-  const defaultTexts = {
-    resetSettings: 'Reset Settings',
-    close: 'Close',
-    ...texts
-  };
+  const { t } = useTranslation();
 
   const renderGameSettings = () => {
     if (gameSettings.length === 0) return null;
@@ -146,7 +143,13 @@ export function GameSettingsModal({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={title} size="lg">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={title}
+      size="lg"
+      showCloseButton={false}
+    >
       <div className="space-y-6">
         {renderGameSettings()}
 
@@ -157,7 +160,7 @@ export function GameSettingsModal({
               onClick={onResetSettings}
               className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
             >
-              {defaultTexts.resetSettings}
+              {texts.reset || t('core.settings.reset')}
             </button>
           )}
           <div className="flex-1" />
@@ -165,7 +168,7 @@ export function GameSettingsModal({
             onClick={onClose}
             className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
           >
-            {defaultTexts.close}
+            {texts.close || t('core.settings.close')}
           </button>
         </div>
       </div>
