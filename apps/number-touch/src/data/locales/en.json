@@ -20,8 +20,6 @@
     "showTargetHint": "Show target hint"
   },
   "settings": {
-    "title": "Settings",
-    "close": "Close"
   },
   "results": {
     "gameComplete": "Game Complete!",

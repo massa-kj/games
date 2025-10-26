@@ -20,8 +20,6 @@
     "showTargetHint": "目標ヒントを表示"
   },
   "settings": {
-    "title": "設定",
-    "close": "とじる"
   },
   "results": {
     "gameComplete": "ゲームクリア！",

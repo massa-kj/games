@@ -3,7 +3,6 @@ import { useGameLogic } from '@/hooks';
 import { GameBoard, ResultModal } from '@/components';
 import { Difficulty } from '@/types';
 import { useSettings } from '@core/hooks';
-import { GameSettingsModal } from '@core/ui';
 import '@/styles.css';
 
 // Import locale data
@@ -17,7 +16,6 @@ const locales = {
 
 export default function App() {
   const { settings: appSettings } = useSettings();
-  const [showSettings, setShowSettings] = useState(false);
 
   // Simple translation function
   const t = (key: string): string => {
@@ -105,7 +103,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-100 to-green-100">
-      {/* Game board - now contains everything */}
       <GameBoard
         numbers={numbers}
         currentTarget={currentTarget}
@@ -121,22 +118,8 @@ export default function App() {
         showTargetHint={settings.showTargetHint}
         onStartGame={handleStartGame}
         onRestartGame={handleRestartGame}
-        onOpenSettings={() => setShowSettings(true)}
         gameSettings={gameSettings}
       />
-
-      {/* Settings modal */}
-      <GameSettingsModal
-        isOpen={showSettings}
-        onClose={() => setShowSettings(false)}
-        title={t('settings.title')}
-        gameSettings={gameSettings}
-        texts={{
-          close: t('settings.close')
-        }}
-      />
-
-      {/* Result modal */}
       <ResultModal
         isOpen={showResults}
         onClose={handleCloseResults}

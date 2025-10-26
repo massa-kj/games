@@ -29,7 +29,6 @@ interface GameBoardProps {
   showTargetHint: boolean;
   onStartGame: () => void;
   onRestartGame: () => void;
-  onOpenSettings: () => void;
   gameSettings: GameSettingControl[];
 }
 
@@ -48,7 +47,6 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   showTargetHint,
   onStartGame,
   onRestartGame,
-  onOpenSettings,
   gameSettings,
 }) => {
   const { settings } = useSettings();
