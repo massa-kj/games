@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { modalVariants } from "./variants";
-import { transitions, ModalAnimationType } from "./transitions";
+import { ModalAnimationType, getCssMotionValue, getDurationFromSpeed } from "./transitions";
 
 export interface ModalMotionProps {
   isOpen: boolean;
@@ -12,6 +12,8 @@ export interface ModalMotionProps {
   disableBackdropClose?: boolean;
   onAnimationEnd?: () => void;
   animationType?: ModalAnimationType;
+  /** Animation speed preset: 'fast' | 'normal' | 'slow' or custom duration in seconds */
+  speed?: 'fast' | 'normal' | 'slow' | number;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
   backdropClassName?: string;
@@ -26,6 +28,7 @@ export function ModalMotion({
   disableBackdropClose = false,
   onAnimationEnd,
   animationType = "modal",
+  speed = 'normal',
   size = 'md',
   className,
   backdropClassName,
@@ -52,9 +55,20 @@ export function ModalMotion({
   const contentVariant = modalVariants[animationType];
   const backdropVariant = modalVariants.backdrop;
 
-  // Get transitions based on type
-  const contentTransition = animationType === "modal" ? transitions.modal : transitions[animationType];
-  const backdropTransition = transitions.modalBackdrop;
+  // Get transitions based on type with custom speed
+  const baseDuration = getDurationFromSpeed(speed, 'seconds');
+  const contentTransition = animationType === "modal"
+    ? {
+        type: "spring" as const,
+        duration: baseDuration,
+        bounce: getCssMotionValue("--motion-spring-bounce", 0.25)
+      }
+    : {
+        duration: baseDuration,
+        ease: "easeInOut" as const
+      };
+
+  const backdropTransition = { duration: baseDuration * 0.6 }; // Backdrop is slightly faster
 
   return (
     <AnimatePresence initial={false} mode="wait">

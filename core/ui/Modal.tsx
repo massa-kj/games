@@ -8,6 +8,8 @@ export interface ModalProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   showCloseButton?: boolean;
   animationType?: ModalAnimationType;
+  /** Animation speed preset: 'fast' | 'normal' | 'slow' or custom duration in seconds */
+  speed?: 'fast' | 'normal' | 'slow' | number;
   /** Disable backdrop click to close */
   disableBackdropClose?: boolean;
   /** Modal z-index */
@@ -26,6 +28,7 @@ export function Modal({
   size = 'md',
   showCloseButton = true,
   animationType = 'modal',
+  speed = 'slow',
   disableBackdropClose = false,
   zIndex = 50,
   onAnimationEnd,
@@ -51,6 +54,7 @@ export function Modal({
       disableBackdropClose={disableBackdropClose}
       zIndex={zIndex}
       size={size}
+      speed={speed}
       onAnimationEnd={onAnimationEnd}
     >
       {/* <div className={`core-modal-content size-${size}`}> */}

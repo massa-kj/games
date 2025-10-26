@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { getDurationFromSpeed } from "./transitions";
 
 export type MotionVariant = "fade" | "scale" | "slideUp";
 
@@ -24,17 +25,8 @@ export function Motion({
   const [isVisible, setIsVisible] = useState(show);
   const [shouldRender, setShouldRender] = useState(show);
 
-  // Convert speed preset to duration (in milliseconds for CSS)
-  const getDuration = () => {
-    if (typeof speed === 'number') return speed * 1000;
-    switch (speed) {
-      case 'fast': return 150;
-      case 'slow': return 600;
-      default: return 300; // normal
-    }
-  };
-
-  const duration = getDuration();
+  // Convert speed preset to duration (in milliseconds for CSS) using CSS variables
+  const duration = getDurationFromSpeed(speed, 'milliseconds');
 
   // Handle show/hide transitions
   useEffect(() => {

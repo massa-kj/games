@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "motion/react";
 import { variants } from "./variants";
+import { getDurationFromSpeed } from "./transitions";
 
 export type MotionVariant = "fade" | "scale" | "slideUp";
 
@@ -24,15 +25,8 @@ export function Motion({
 }: MotionProps) {
   const v = variants[type];
 
-  // Convert speed preset to duration
-  const getDuration = () => {
-    if (typeof speed === 'number') return speed;
-    switch (speed) {
-      case 'fast': return 0.15;
-      case 'slow': return 0.6;
-      default: return 0.3; // normal
-    }
-  };
+  // Convert speed preset to duration using CSS variables
+  const duration = getDurationFromSpeed(speed, 'seconds');
 
   return (
     <AnimatePresence>
@@ -41,7 +35,7 @@ export function Motion({
           initial={v.initial}
           animate={v.animate}
           exit={v.exit}
-          transition={{ duration: getDuration() }}
+          transition={{ duration }}
           className={className}
           onAnimationComplete={(definition) => {
             if (definition === "exit" && onAnimationEnd) onAnimationEnd();

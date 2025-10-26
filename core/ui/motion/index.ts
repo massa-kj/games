@@ -21,5 +21,5 @@ export type { ModalMotionProps } from './ModalMotion';
 
 // Export variants and transitions from their respective modules
 export { variants, modalVariants } from './variants';
-export { transitions, getModalTransition } from './transitions';
+export { transitions, getModalTransition, getCssMotionValue, getDurationFromSpeed } from './transitions';
 export type { ModalAnimationType } from './transitions';
