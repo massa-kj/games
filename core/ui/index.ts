@@ -19,5 +19,8 @@ export type { GameSettingsModalProps, GameSettingControl } from './GameSettingsM
 export { HomeButton } from './HomeButton.js';
 export type { HomeButtonProps } from './HomeButton.js';
 
+export { GameHeader } from './GameHeader.js';
+export type { GameHeaderProps, GameHeaderAction } from './GameHeader.js';
+
 export { StarsRating } from './game/StarsRating.js';
 export type { StarsRatingProps } from './game/StarsRating.js';
