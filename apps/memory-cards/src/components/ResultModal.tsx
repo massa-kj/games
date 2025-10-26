@@ -37,11 +37,9 @@ export function ResultModal({ isOpen, gameState, onPlayAgain, onClose }: ResultM
     return translations.difficulty[difficulty] || difficulty;
   };
 
-  if (!isOpen || !gameState.cleared) return null;
-
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={isOpen && gameState.cleared}
       onClose={onClose}
       size="md"
     >

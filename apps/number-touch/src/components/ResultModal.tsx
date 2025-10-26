@@ -44,8 +44,6 @@ export const ResultModal: React.FC<ResultModalProps> = ({
     return value || key;
   };
 
-  if (!isOpen) return null;
-
   const stars = calculateStars(time, difficulty);
   const maxNumber = difficulty === 'easy' ? 10 : 20;
 
