@@ -1,4 +1,4 @@
-import React from 'react';
+import { Motion, ModalAnimationType } from "./motion";
 
 export interface ModalProps {
   isOpen: boolean;
@@ -7,6 +7,17 @@ export interface ModalProps {
   children: React.ReactNode;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   showCloseButton?: boolean;
+  animationType?: ModalAnimationType;
+  /** Disable backdrop click to close */
+  disableBackdropClose?: boolean;
+  /** Custom animation duration (seconds) */
+  animationDuration?: number;
+  /** Modal z-index */
+  zIndex?: number;
+  /** Open/close callback */
+  onAnimationComplete?: () => void;
+  /** Disable close on ESC key */
+  disableEscapeClose?: boolean;
 }
 
 export function Modal({
@@ -16,19 +27,40 @@ export function Modal({
   children,
   size = 'md',
   showCloseButton = true,
+  animationType = 'modal',
+  disableBackdropClose = false,
+  animationDuration,
+  zIndex = 50,
+  onAnimationComplete,
+  disableEscapeClose = false,
 }: ModalProps) {
-  if (!isOpen) return null;
+  const customTransition = animationDuration
+    ? { duration: animationDuration }
+    : undefined;
+  // if (!isOpen) return null;
 
   return (
-    <div className="core-modal">
-      {/* Backdrop */}
-      <div
-        className="core-modal-backdrop"
-        onClick={onClose}
-      />
+    // <div className="core-modal">
+    //   {/* Backdrop */}
+    //   <div
+    //     className="core-modal-backdrop"
+    //     onClick={onClose}
+    //   />
 
-      {/* Modal */}
-      <div className={`core-modal-content size-${size} animate-bounce-in`}>
+    //   {/* Modal */}
+    //   <div className={`core-modal-content size-${size} animate-bounce-in`}>
+    <Motion
+      type={animationType}
+      show={isOpen}
+      onClose={onClose}
+      disableEscapeClose={disableEscapeClose}
+      disableBackdropClose={disableBackdropClose}
+      zIndex={zIndex}
+      onAnimationComplete={onAnimationComplete}
+      includeModalBackdrop={true}
+      customTransition={customTransition}
+    >
+      <div className={`core-modal-content size-${size}`}>
         {/* Header */}
         {(title || showCloseButton) && (
           <div className="core-modal-header">
@@ -39,6 +71,7 @@ export function Modal({
               <button
                 onClick={onClose}
                 className="core-modal-close"
+                aria-label="Close modal"
               >
                 ×
               </button>
@@ -51,6 +84,6 @@ export function Modal({
           {children}
         </div>
       </div>
-    </div>
+    </Motion>
   );
 }
