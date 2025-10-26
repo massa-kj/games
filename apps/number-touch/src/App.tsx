@@ -104,7 +104,7 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-100 to-green-100">
       {/* Game board - now contains everything */}
       <GameBoard
         numbers={numbers}
@@ -122,6 +122,7 @@ export default function App() {
         onStartGame={handleStartGame}
         onRestartGame={handleRestartGame}
         onOpenSettings={() => setShowSettings(true)}
+        gameSettings={gameSettings}
       />
 
       {/* Settings modal */}

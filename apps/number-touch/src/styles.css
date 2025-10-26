@@ -101,10 +101,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.game-header {
-  @apply text-center mb-8;
-}
-
 .game-title {
   @apply text-4xl font-bold text-gray-800 mb-2;
 }

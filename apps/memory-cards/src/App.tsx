@@ -1,4 +1,4 @@
-import { Button } from '@core/ui';
+import { Button, GameHeader } from '@core/ui';
 import { useSettings } from '@core/hooks';
 import { GameBoard } from '@/components/GameBoard';
 import { ResultModal } from '@/components/ResultModal';
@@ -29,26 +29,24 @@ export default function MemoryCardsApp() {
   const isResultModalOpen = state.justCleared;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 p-4 no-select">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            {translations.title}
-          </h1>
-          <p className="text-gray-600">
-            {translations.description}
-          </p>
-        </header>
-
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 no-select">
+      <GameHeader
+        title={translations.title}
+        showHomeButton={true}
+        showSettingsButton={true}
+        className='bg-gradient-to-br from-blue-200 to-purple-200'
+      />
+      <div className="max-w-4xl p-4 mx-auto">
         {/* Game Content */}
         {!state.gameStarted ? (
           /* Start Screen */
           <div className="text-center">
-            <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 max-w-md mx-auto">
+            <div className="bg-white rounded-2xl shadow-lg p-4 mb-8 max-w-md mx-auto">
               <div className="text-6xl mb-4">🎮</div>
               <p className="text-lg text-gray-700 mb-6">
                 {translations.clickToStart}
+                <br />
+                {translations.description}
               </p>
 
               {/* Difficulty Selection */}
@@ -76,12 +74,6 @@ export default function MemoryCardsApp() {
             {/* Game Controls */}
             <div className="flex justify-center mb-6">
               <div className="flex gap-4">
-                <Button
-                  onClick={restartGame}
-                  className="bg-gray-500 hover:bg-gray-600 text-white"
-                >
-                  {translations.restart}
-                </Button>
                 <Button
                   onClick={() => {
                     restartGame();
