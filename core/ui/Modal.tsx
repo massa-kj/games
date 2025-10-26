@@ -1,4 +1,4 @@
-import { Motion, ModalAnimationType } from "./motion";
+import { ModalMotion, ModalAnimationType } from "./motion";
 
 export interface ModalProps {
   isOpen: boolean;
@@ -10,12 +10,10 @@ export interface ModalProps {
   animationType?: ModalAnimationType;
   /** Disable backdrop click to close */
   disableBackdropClose?: boolean;
-  /** Custom animation duration (seconds) */
-  animationDuration?: number;
   /** Modal z-index */
   zIndex?: number;
   /** Open/close callback */
-  onAnimationComplete?: () => void;
+  onAnimationEnd?: () => void;
   /** Disable close on ESC key */
   disableEscapeClose?: boolean;
 }
@@ -29,14 +27,10 @@ export function Modal({
   showCloseButton = true,
   animationType = 'modal',
   disableBackdropClose = false,
-  animationDuration,
   zIndex = 50,
-  onAnimationComplete,
+  onAnimationEnd,
   disableEscapeClose = false,
 }: ModalProps) {
-  const customTransition = animationDuration
-    ? { duration: animationDuration }
-    : undefined;
   // if (!isOpen) return null;
 
   return (
@@ -49,18 +43,17 @@ export function Modal({
 
     //   {/* Modal */}
     //   <div className={`core-modal-content size-${size} animate-bounce-in`}>
-    <Motion
-      type={animationType}
-      show={isOpen}
+    <ModalMotion
+      animationType={animationType}
+      isOpen={isOpen}
       onClose={onClose}
       disableEscapeClose={disableEscapeClose}
       disableBackdropClose={disableBackdropClose}
       zIndex={zIndex}
-      onAnimationComplete={onAnimationComplete}
-      includeModalBackdrop={true}
-      customTransition={customTransition}
+      size={size}
+      onAnimationEnd={onAnimationEnd}
     >
-      <div className={`core-modal-content size-${size}`}>
+      {/* <div className={`core-modal-content size-${size}`}> */}
         {/* Header */}
         {(title || showCloseButton) && (
           <div className="core-modal-header">
@@ -83,7 +76,7 @@ export function Modal({
         <div className="core-modal-body">
           {children}
         </div>
-      </div>
-    </Motion>
+      {/* </div> */}
+    </ModalMotion>
   );
 }

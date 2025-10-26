@@ -1,111 +1,38 @@
 import { motion, AnimatePresence } from "motion/react";
-import { useEffect } from "react";
 import { variants } from "./variants";
-import { transitions } from "./transitions";
 
-export type MotionVariant = "fade" | "scale" | "slideUp" | "modal" | "modalBackdrop";
+export type MotionVariant = "fade" | "scale" | "slideUp";
 
 export interface MotionProps {
   type?: MotionVariant;
   show?: boolean;
   children: React.ReactNode;
-  duration?: number;
-  customTransition?: any;
+  /** Animation speed preset: 'fast' | 'normal' | 'slow' or custom duration in seconds */
+  speed?: 'fast' | 'normal' | 'slow' | number;
   className?: string;
-  // Modal Props
-  onClose?: () => void;
-  disableEscapeClose?: boolean;
-  disableBackdropClose?: boolean;
-  zIndex?: number;
-  onAnimationComplete?: () => void;
-  includeModalBackdrop?: boolean;
+  /** Called when exit animation completes */
+  onAnimationEnd?: () => void;
 }
 
 export function Motion({
   type = "fade",
   show = true,
   children,
-  duration = 0.3,
-  customTransition,
+  speed = 'normal',
   className,
-  onClose,
-  disableEscapeClose = false,
-  disableBackdropClose = false,
-  zIndex = 50,
-  onAnimationComplete,
-  includeModalBackdrop = false,
+  onAnimationEnd,
 }: MotionProps) {
-  // Close on Escape key (for modals only)
-  useEffect(() => {
-    if (!show || !onClose || disableEscapeClose || !includeModalBackdrop) return;
-
-    const handleEscapeKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
-
-    document.addEventListener('keydown', handleEscapeKey);
-    return () => document.removeEventListener('keydown', handleEscapeKey);
-  }, [show, onClose, disableEscapeClose, includeModalBackdrop]);
-
   const v = variants[type];
 
-  // Use custom transition or type-based transition
-  const getTransition = () => {
-    if (customTransition) return customTransition;
-    if (type === "modal") return transitions.modal;
-    if (type === "modalBackdrop") return transitions.modalBackdrop;
-    return { duration };
-  };
-
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget && !disableBackdropClose && onClose) {
-      onClose();
+  // Convert speed preset to duration
+  const getDuration = () => {
+    if (typeof speed === 'number') return speed;
+    switch (speed) {
+      case 'fast': return 0.15;
+      case 'slow': return 0.6;
+      default: return 0.3; // normal
     }
   };
-
-  // Modal Props
-  if (includeModalBackdrop) {
-    const backdropVariant = variants.modalBackdrop;
-
-    return (
-      <AnimatePresence>
-        {show && (
-          <motion.div
-            className={`core-modal ${className || ''}`}
-            style={{ zIndex }}
-            initial={backdropVariant.initial}
-            animate={backdropVariant.animate}
-            exit={backdropVariant.exit}
-            transition={transitions.modalBackdrop}
-          >
-            {/* Backdrop */}
-            <div
-              className="core-modal-backdrop"
-              onClick={handleBackdropClick}
-            />
-
-            {/* Modal Content */}
-            <motion.div
-              initial={v.initial}
-              animate={v.animate}
-              exit={v.exit}
-              transition={{
-                ...getTransition(),
-                reducedMotion: "user" // Respect prefers-reduced-motion
-              }}
-              onAnimationComplete={(definition) => {
-                if (definition === "exit" && onAnimationComplete) onAnimationComplete();
-              }}
-            >
-              {children}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    );
-  }
 
   return (
     <AnimatePresence>
@@ -114,8 +41,11 @@ export function Motion({
           initial={v.initial}
           animate={v.animate}
           exit={v.exit}
-          transition={getTransition()}
+          transition={{ duration: getDuration() }}
           className={className}
+          onAnimationComplete={(definition) => {
+            if (definition === "exit" && onAnimationEnd) onAnimationEnd();
+          }}
         >
           {children}
         </motion.div>
