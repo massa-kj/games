@@ -74,7 +74,7 @@ describe('HomeButton', () => {
       const button = screen.getByRole('button');
       fireEvent.click(button);
 
-      expect(mockLocation.href).toBe('/');
+      expect(mockLocation.href).toBe('/games/');
     });
 
     it('should call custom onClick handler when provided', () => {

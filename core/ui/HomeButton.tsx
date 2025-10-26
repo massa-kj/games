@@ -28,8 +28,8 @@ export function HomeButton({
     if (onClick) {
       onClick();
     } else {
-      // Navigate to the site root (adjust this URL based on your deployment structure)
-      window.location.href = '/';
+      // Navigate to the site root
+      window.location.href = '/games/';
     }
   };
 
