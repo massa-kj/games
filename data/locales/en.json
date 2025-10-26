@@ -1,4 +1,14 @@
 {
+  "core": {
+    "settings": {
+      "title": "Settings",
+      "language": "Language",
+      "sound": "Sound",
+      "soundEnabled": "Sound Enabled",
+      "reset": "Reset to Default",
+      "close": "Close"
+    }
+  },
   "site": {
     "title": "Let's Play Together!",
     "subtitle": "Fun games for everyone",
@@ -43,6 +53,7 @@
     "common": {
       "play": "Play",
       "back": "Back",
+      "home": "Home",
       "next": "Next",
       "retry": "Try Again",
       "finish": "Finish",

@@ -1,4 +1,14 @@
 {
+  "core": {
+    "settings": {
+      "title": "せってい",
+      "language": "ことば",
+      "sound": "おと",
+      "soundEnabled": "おとをだす",
+      "reset": "デフォルトにリセット",
+      "close": "とじる"
+    }
+  },
   "site": {
     "title": "みんなであそぼう！",
     "subtitle": "楽しいゲームがいっぱい",
@@ -43,6 +53,7 @@
     "common": {
       "play": "あそぶ",
       "back": "もどる",
+      "home": "ホーム",
       "next": "つぎ",
       "retry": "もういちど",
       "finish": "おわり",
