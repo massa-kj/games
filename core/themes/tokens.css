@@ -47,6 +47,14 @@
   --transition-fast: 150ms ease-in-out;
   --transition-normal: 250ms ease-in-out;
   --transition-slow: 350ms ease-in-out;
+
+  /* Motion System Variables */
+  --motion-duration-fast: 0.15;
+  --motion-duration-normal: 0.3;
+  --motion-duration-slow: 0.6;
+  --motion-spring-bounce: 0.25;
+  --motion-spring-stiffness: 400;
+  --motion-spring-damping: 25;
 }
 
 /* Child-friendly animations */
