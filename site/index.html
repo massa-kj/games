@@ -2,13 +2,26 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Let's Play!</title>
     <meta name="description" content="A fun collection of educational games for toddlers to learn about animals, colors, shapes, numbers and more.">
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // GitHub Pages SPA support
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) {
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
     <script type="module" src="./src/main.tsx"></script>
   </body>
 </html>
