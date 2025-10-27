@@ -90,7 +90,7 @@ describe('GameHeader', () => {
     const homeButton = screen.getByTitle('Home');
     fireEvent.click(homeButton);
 
-    expect(mockLocation.href).toBe('/');
+    expect(mockLocation.href).toBe('/games/');
   });
 
   it('opens settings modal when settings button is clicked', () => {

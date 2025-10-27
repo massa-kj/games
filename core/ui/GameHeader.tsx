@@ -113,7 +113,7 @@ export function GameHeader({
       onHomeClick();
     } else {
       // Default behavior - navigate to root
-      window.location.href = '/';
+      window.location.href = '/games/';
     }
   };
 

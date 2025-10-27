@@ -6,19 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Let's Play!</title>
     <meta name="description" content="A fun collection of educational games for toddlers to learn about animals, colors, shapes, numbers and more.">
-    <script>
-      // GitHub Pages SPA redirect
-      // This script takes the current URL and redirects to the index page with the full path in the query string
-      var segmentCount = 1; // Number of segments in the path (for /games/)
-      var l = window.location;
-      l.replace(
-        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        l.pathname.split('/').slice(0, 1 + segmentCount).join('/') + '/?/' +
-        l.pathname.slice(1).split('/').slice(segmentCount).join('/').replace(/&/g, '~and~') +
-        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-        l.hash
-      );
-    </script>
   </head>
   <body>
   </body>
