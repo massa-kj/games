@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Game Definition",
+  "description": "Definition file for creating new games in the games platform",
+  "type": "object",
+  "required": [
+    "gameId",
+    "gameTitle",
+    "gameDescription",
+    "category",
+    "author",
+    "minAge"
+  ],
+  "properties": {
+    "gameId": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Unique game identifier (lowercase, numbers, hyphens only)"
+    },
+    "gameTitle": {
+      "type": "object",
+      "required": ["en", "ja"],
+      "properties": {
+        "en": {
+          "type": "string",
+          "description": "Game title in English"
+        },
+        "ja": {
+          "type": "string",
+          "description": "Game title in Japanese"
+        }
+      }
+    },
+    "gameDescription": {
+      "type": "object",
+      "required": ["en", "ja"],
+      "properties": {
+        "en": {
+          "type": "string",
+          "description": "Game description in English"
+        },
+        "ja": {
+          "type": "string",
+          "description": "Game description in Japanese"
+        }
+      }
+    },
+    "category": {
+      "type": "string",
+      "enum": ["memory", "puzzle", "action", "strategy", "educational", "arcade", "adventure"],
+      "description": "Game category"
+    },
+    "author": {
+      "type": "string",
+      "description": "Game author name"
+    },
+    "minAge": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 18,
+      "description": "Minimum age for players"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "description": "Semantic version"
+        },
+        "created": {
+          "type": "string",
+          "format": "date",
+          "description": "Creation date (YYYY-MM-DD)"
+        },
+        "license": {
+          "type": "string",
+          "description": "License type"
+        }
+      }
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of game features"
+    },
+    "techStack": {
+      "type": "object",
+      "properties": {
+        "framework": {
+          "type": "string",
+          "description": "Frontend framework"
+        },
+        "language": {
+          "type": "string",
+          "description": "Programming language"
+        },
+        "styling": {
+          "type": "string",
+          "description": "CSS framework or approach"
+        },
+        "bundler": {
+          "type": "string",
+          "description": "Build tool"
+        }
+      }
+    }
+  }
+}

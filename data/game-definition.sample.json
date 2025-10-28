@@ -1,0 +1,32 @@
+{
+  "$schema": "./game-definition.schema.json",
+  "gameId": "my-awesome-game",
+  "gameTitle": {
+    "en": "My Awesome Game",
+    "ja": "私の素晴らしいゲーム"
+  },
+  "gameDescription": {
+    "en": "An amazing game for kids that teaches and entertains!",
+    "ja": "子供たちが学びながら楽しめる素晴らしいゲーム！"
+  },
+  "category": "puzzle",
+  "author": "Your Name",
+  "minAge": 4,
+  "metadata": {
+    "version": "1.0.0",
+    "created": "2025-10-28",
+    "license": "MIT"
+  },
+  "features": [
+    "Multi-language support",
+    "Sound effects",
+    "Progressive difficulty",
+    "Score tracking"
+  ],
+  "techStack": {
+    "framework": "React",
+    "language": "TypeScript",
+    "styling": "Tailwind CSS",
+    "bundler": "Vite"
+  }
+}

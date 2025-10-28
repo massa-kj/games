@@ -13,6 +13,7 @@
     "cleanbuild": "rm -rf dist && pnpm build",
     "preview": "vite preview --config site/vite.config.ts",
     "validate": "tsx scripts/validate-manifests.ts",
+    "create-game": "tsx scripts/create-game.ts",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "test": "vitest"
   },
