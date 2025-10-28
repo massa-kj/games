@@ -1,0 +1,19 @@
+{
+  "id": "{{GAME_ID}}",
+  "title": {
+    "en": "{{GAME_TITLE_EN}}",
+    "ja": "{{GAME_TITLE_JA}}"
+  },
+  "icon": "/images/icons/{{GAME_ID}}.png",
+  "category": "{{GAME_CATEGORY}}",
+  "description": {
+    "en": "{{GAME_DESCRIPTION_EN}}",
+    "ja": "{{GAME_DESCRIPTION_JA}}"
+  },
+  "entry": "/apps/{{GAME_ID}}/",
+  "languages": [
+    "en",
+    "ja"
+  ],
+  "minAge": {{MIN_AGE}}
+}

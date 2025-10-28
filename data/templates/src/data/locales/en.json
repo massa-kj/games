@@ -1,0 +1,11 @@
+{
+  "title": "{{GAME_TITLE_EN}}",
+  "description": "{{GAME_DESCRIPTION_EN}}",
+  "startGame": "Start Game",
+  "playAgain": "Play Again",
+  "score": "Score",
+  "gameOver": "Game Over",
+  "congratulations": "Congratulations!",
+  "loading": "Loading...",
+  "error": "Something went wrong. Please try again."
+}
