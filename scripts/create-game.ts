@@ -36,7 +36,8 @@ interface GameDefinition {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PROJECT_ROOT = path.resolve(__dirname, '..');
-const TEMPLATES_DIR = path.join(PROJECT_ROOT, 'data', 'templates');
+const GAME_CREATION_DIR = path.join(PROJECT_ROOT, 'data', 'game-creation');
+const TEMPLATES_DIR = path.join(GAME_CREATION_DIR, 'templates');
 const APPS_DIR = path.join(PROJECT_ROOT, 'apps');
 
 function validateGameId(gameId: string): boolean {
@@ -117,7 +118,7 @@ function loadGameDefinition(definitionPath: string): GameDefinition {
     const definition = JSON.parse(definitionContent) as GameDefinition;
 
     // Validate against schema
-    const schemaPath = path.join(PROJECT_ROOT, 'data', 'game-definition.schema.json');
+    const schemaPath = path.join(GAME_CREATION_DIR, 'game-definition.schema.json');
     if (fs.existsSync(schemaPath)) {
       const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf-8'));
       const ajv = new Ajv();
@@ -144,40 +145,36 @@ function loadGameDefinition(definitionPath: string): GameDefinition {
 
 function createSampleDefinition(gameId: string): string {
   const samplePath = path.join(PROJECT_ROOT, `${gameId}-definition.json`);
-  const sampleDefinition: GameDefinition = {
-    gameId,
-    gameTitle: {
-      en: "My Awesome Game",
-      ja: "私の素晴らしいゲーム"
-    },
-    gameDescription: {
-      en: "An amazing game for kids that teaches and entertains!",
-      ja: "子供たちが学びながら楽しめる素晴らしいゲーム！"
-    },
-    category: "puzzle",
-    author: "Your Name",
-    minAge: 4,
-    metadata: {
-      version: "1.0.0",
-      created: new Date().toISOString().split('T')[0],
-      license: "MIT"
-    },
-    features: [
-      "Multi-language support",
-      "Sound effects",
-      "Progressive difficulty",
-      "Score tracking"
-    ],
-    techStack: {
-      framework: "React",
-      language: "TypeScript",
-      styling: "Tailwind CSS",
-      bundler: "Vite"
-    }
-  };
+  const sampleDefinitionPath = path.join(GAME_CREATION_DIR, 'game-definition.sample.json');
 
-  fs.writeFileSync(samplePath, JSON.stringify(sampleDefinition, null, 2), 'utf-8');
-  return samplePath;
+  // Load sample definition from file
+  if (!fs.existsSync(sampleDefinitionPath)) {
+    throw new Error(`Sample definition file not found: ${sampleDefinitionPath}`);
+  }
+
+  try {
+    const sampleContent = fs.readFileSync(sampleDefinitionPath, 'utf-8');
+    const sampleDefinition = JSON.parse(sampleContent) as GameDefinition;
+
+    // Update gameId to match the requested game
+    sampleDefinition.gameId = gameId;
+
+    // Update creation date to current date
+    if (sampleDefinition.metadata) {
+      sampleDefinition.metadata.created = new Date().toISOString().split('T')[0];
+    }
+
+    // Update schema reference to be relative from project root
+    (sampleDefinition as any)['$schema'] = './data/game-creation/game-definition.schema.json';
+
+    fs.writeFileSync(samplePath, JSON.stringify(sampleDefinition, null, 2), 'utf-8');
+    return samplePath;
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      throw new Error(`Invalid JSON in sample definition file: ${error.message}`);
+    }
+    throw new Error(`Failed to process sample definition file: ${error instanceof Error ? error.message : error}`);
+  }
 }
 
 async function createGame(gameId: string, definitionPath?: string): Promise<void> {
@@ -292,8 +289,8 @@ Examples:
   pnpm create-game my-awesome-game --definition ./my-game-def.json
   pnpm create-game my-awesome-game -d ./my-game-def.json
 
-  # Use sample definition from data/ directory
-  pnpm create-game my-awesome-game -d data/game-definition.sample.json
+  # Use sample definition from data/game-creation/ directory
+  pnpm create-game my-awesome-game -d data/game-creation/game-definition.sample.json
 
 Game ID requirements:
   - Only lowercase letters, numbers, and hyphens
@@ -301,12 +298,12 @@ Game ID requirements:
   - Must match the gameId in the definition file
 
 Definition file format:
-  See data/game-definition.sample.json for a complete example
-  Schema: data/game-definition.schema.json
+  See data/game-creation/game-definition.sample.json for a complete example
+  Schema: data/game-creation/game-definition.schema.json
 
 The script will:
   1. Load and validate the game definition
-  2. Copy the template from data/templates/
+  2. Copy the template from data/game-creation/templates/
   3. Replace all placeholders with your game data
   4. Create the new game in apps/<game-id>/
 `);
