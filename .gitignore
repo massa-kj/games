@@ -7,3 +7,6 @@ Thumbs.db
 .env
 .vscode
 coverage
+
+# auto-generated docs
+docs/core.md
