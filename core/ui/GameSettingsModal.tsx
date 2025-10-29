@@ -1,14 +1,25 @@
 import { Modal } from './Modal';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * Configuration object for a single game setting control.
+ */
 export interface GameSettingControl {
+  /** Unique identifier for the setting */
   id: string;
+  /** Type of input control to render */
   type: 'checkbox' | 'select' | 'radio' | 'button-group';
+  /** Display label for the setting */
   label: string;
+  /** Optional description text */
   description?: string;
+  /** Current value of the setting */
   value: any;
+  /** Callback when the value changes */
   onChange: (value: any) => void;
+  /** Options for select, radio, and button-group types */
   options?: { value: any; label: string; description?: string }[];
+  /** Whether the control is disabled */
   disabled?: boolean;
 }
 
@@ -30,6 +41,37 @@ export interface GameSettingsModalProps {
   };
 }
 
+/**
+ * Modal dialog for configuring game settings with various input types.
+ *
+ * Supports multiple control types including checkboxes, selects, radio buttons,
+ * and button groups. Integrates with react-i18next for internationalization.
+ *
+ * @param isOpen Whether the modal is open
+ * @param onClose Callback when modal is closed
+ * @param title Modal title
+ * @param gameSettings Array of setting controls to render
+ * @param onResetSettings Optional callback to reset all settings
+ * @param texts Text overrides for internationalization
+ *
+ * @example
+ * ```tsx
+ * <GameSettingsModal
+ *   isOpen={showSettings}
+ *   onClose={() => setShowSettings(false)}
+ *   title="Game Settings"
+ *   gameSettings={[
+ *     {
+ *       id: 'sound',
+ *       type: 'checkbox',
+ *       label: 'Sound Effects',
+ *       value: soundEnabled,
+ *       onChange: setSoundEnabled
+ *     }
+ *   ]}
+ * />
+ * ```
+ */
 export function GameSettingsModal({
   isOpen,
   onClose,

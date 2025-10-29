@@ -8,6 +8,27 @@ export interface ToggleProps {
   className?: string;
 }
 
+/**
+ * Customizable toggle switch component with optional label.
+ *
+ * Provides a modern toggle switch interface with smooth animations
+ * and accessibility support.
+ *
+ * @param checked Current toggle state
+ * @param onChange Callback when toggle state changes
+ * @param label Optional label text to display
+ * @param disabled Whether the toggle is disabled
+ * @param className Additional CSS classes
+ *
+ * @example
+ * ```tsx
+ * <Toggle
+ *   checked={soundEnabled}
+ *   onChange={setSoundEnabled}
+ *   label="Sound Effects"
+ * />
+ * ```
+ */
 export function Toggle({
   checked,
   onChange,

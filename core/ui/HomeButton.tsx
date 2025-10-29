@@ -15,6 +15,24 @@ export interface HomeButtonProps extends Omit<ButtonProps, 'children'> {
   onClick?: () => void;
 }
 
+/**
+ * Home navigation button with customizable text and icon display.
+ *
+ * Can display icon only, text only, or both. Defaults to navigating
+ * to the site root when clicked.
+ *
+ * @param text Text to display on the button
+ * @param showText Whether to show text alongside the icon
+ * @param onClick Custom click handler (defaults to site root navigation)
+ * @param variant Button style variant
+ * @param size Button size
+ * @param className Additional CSS classes
+ *
+ * @example
+ * ```tsx
+ * <HomeButton showText text="Back to Games" />
+ * ```
+ */
 export function HomeButton({
   text = 'Home',
   showText = false,

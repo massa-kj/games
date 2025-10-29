@@ -21,6 +21,32 @@ export interface FlipCardProps {
   borderRadius?: string;
 }
 
+/**
+ * Animated flip card component with front and back content.
+ *
+ * Features 3D flip animation with customizable duration and optional overlay content.
+ * Commonly used in memory card games and interactive content displays.
+ *
+ * @param isFlipped Whether the card shows front content (true) or back content (false)
+ * @param backContent Content displayed when not flipped
+ * @param frontContent Content displayed when flipped
+ * @param overlayContent Optional overlay content (e.g., match indicators)
+ * @param onClick Click handler for card interaction
+ * @param disabled Whether the card is disabled from interaction
+ * @param className Additional CSS classes
+ * @param flipDuration Animation duration in milliseconds
+ * @param borderRadius Custom border radius CSS value
+ *
+ * @example
+ * ```tsx
+ * <FlipCard
+ *   isFlipped={showAnswer}
+ *   backContent={<div>?</div>}
+ *   frontContent={<div>Answer</div>}
+ *   onClick={() => setShowAnswer(!showAnswer)}
+ * />
+ * ```
+ */
 export function FlipCard({
   isFlipped,
   backContent,

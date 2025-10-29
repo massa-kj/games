@@ -33,6 +33,42 @@ const defaultColors = {
   empty: 'text-gray-300',
 };
 
+/**
+ * Customizable star rating display and input component.
+ *
+ * Supports both display-only and interactive modes, with configurable
+ * appearance including colors, sizes, and fractional ratings.
+ *
+ * @param rating Current rating value (0 to maxStars)
+ * @param maxStars Maximum number of stars to display
+ * @param size Size variant for star display
+ * @param filledColor CSS class for filled stars
+ * @param emptyColor CSS class for empty stars
+ * @param className Additional CSS classes for container
+ * @param allowHalf Whether to support half-star ratings
+ * @param interactive Whether stars are clickable for input
+ * @param onRatingChange Callback when rating changes (interactive mode)
+ * @param aria-label Accessibility label for screen readers
+ *
+ * @example
+ * ```tsx
+ * <StarsRating
+ *   rating={4.5}
+ *   size="lg"
+ *   allowHalf
+ * />
+ * ```
+ *
+ * @example Interactive rating:
+ * ```tsx
+ * <StarsRating
+ *   rating={userRating}
+ *   interactive
+ *   onRatingChange={setUserRating}
+ *   aria-label="Rate this game"
+ * />
+ * ```
+ */
 export function StarsRating({
   rating,
   maxStars = 5,

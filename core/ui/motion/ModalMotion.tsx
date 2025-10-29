@@ -19,6 +19,39 @@ export interface ModalMotionProps {
   backdropClassName?: string;
 }
 
+/**
+ * Animated modal container component with backdrop and keyboard handling.
+ *
+ * Provides modal-specific animations, escape key handling, backdrop click
+ * detection, and customizable animation types and speeds.
+ *
+ * @param isOpen Whether the modal is visible
+ * @param onClose Callback to close modal
+ * @param children Modal content to render
+ * @param zIndex CSS z-index for modal layering
+ * @param disableEscapeClose Disable closing with Escape key
+ * @param disableBackdropClose Disable closing when clicking backdrop
+ * @param onAnimationEnd Callback when animation sequence completes
+ * @param animationType Type of animation to use for modal
+ * @param speed Animation speed preset or custom duration
+ * @param size Modal size variant
+ * @param className Additional CSS classes for modal content
+ * @param backdropClassName Additional CSS classes for backdrop
+ *
+ * @example
+ * ```tsx
+ * <ModalMotion
+ *   isOpen={showModal}
+ *   onClose={() => setShowModal(false)}
+ *   animationType="scale"
+ *   speed="fast"
+ * >
+ *   <div>Modal content here</div>
+ * </ModalMotion>
+ * ```
+ *
+ * @remarks Uses Framer Motion AnimatePresence for smooth enter/exit animations.
+ */
 export function ModalMotion({
   isOpen,
   onClose,

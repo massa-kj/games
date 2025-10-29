@@ -1,6 +1,11 @@
 export type ModalAnimationType = "fade" | "scale" | "slideUp" | "modal";
 
 /**
+ * Utility functions for motion animations and CSS custom property integration.
+ * Provides consistent timing and easing across the motion system.
+ */
+
+/**
  * Get CSS motion value from CSS custom properties
  * @param name CSS custom property name (e.g., '--motion-duration-normal')
  * @param fallback Fallback value if CSS property is not found or invalid
@@ -43,6 +48,10 @@ export function getDurationFromSpeed(
   return unit === 'milliseconds' ? durationInSeconds * 1000 : durationInSeconds;
 }
 
+/**
+ * Predefined transition configurations for common animation patterns.
+ * Uses CSS custom properties for consistent timing across the application.
+ */
 export const transitions = {
   modal: {
     type: "spring" as const,
@@ -70,6 +79,12 @@ export const transitions = {
   }
 };
 
+/**
+ * Get transition configuration for a specific modal animation type.
+ *
+ * @param type The modal animation type
+ * @returns Framer Motion transition configuration
+ */
 export const getModalTransition = (type: ModalAnimationType) => {
   switch (type) {
     case "modal":

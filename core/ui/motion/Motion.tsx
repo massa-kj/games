@@ -15,6 +15,26 @@ export interface MotionProps {
   onAnimationEnd?: () => void;
 }
 
+/**
+ * General-purpose animation wrapper component using Framer Motion.
+ *
+ * Provides common animation variants with configurable speed and
+ * automatic show/hide transitions.
+ *
+ * @param type Animation variant to use
+ * @param show Whether to show the animated content
+ * @param children Content to animate
+ * @param speed Animation speed preset or custom duration in seconds
+ * @param className Additional CSS classes
+ * @param onAnimationEnd Callback when exit animation completes
+ *
+ * @example
+ * ```tsx
+ * <Motion type="slideUp" show={isVisible} speed="fast">
+ *   <div>Animated content</div>
+ * </Motion>
+ * ```
+ */
 export function Motion({
   type = "fade",
   show = true,

@@ -83,6 +83,45 @@ export interface GameHeaderProps {
   rightContent?: React.ReactNode;
 }
 
+/**
+ * Comprehensive game header component with home button, settings, and custom actions.
+ *
+ * Provides a consistent header layout for games with optional title, navigation,
+ * settings modal, and extensible action buttons.
+ *
+ * @param title Game title to display
+ * @param showHomeButton Whether to show the home navigation button
+ * @param homeButtonProps Props for the home button
+ * @param onHomeClick Custom home button click handler
+ * @param showSettingsButton Whether to show the settings button
+ * @param gameSettings Array of game setting controls for the settings modal
+ * @param settingsModalProps Additional props for the settings modal
+ * @param actions Additional action buttons to display
+ * @param variant Header layout variant
+ * @param className Additional CSS classes
+ * @param leftContent Custom left-side content (replaces title)
+ * @param rightContent Custom right-side content
+ *
+ * @example
+ * ```tsx
+ * <GameHeader
+ *   title="Memory Game"
+ *   gameSettings={[
+ *     {
+ *       id: 'difficulty',
+ *       type: 'select',
+ *       label: 'Difficulty',
+ *       value: 'easy',
+ *       onChange: setDifficulty,
+ *       options: [
+ *         { value: 'easy', label: 'Easy' },
+ *         { value: 'hard', label: 'Hard' }
+ *       ]
+ *     }
+ *   ]}
+ * />
+ * ```
+ */
 const SettingsIcon = () => (
   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />

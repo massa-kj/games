@@ -20,6 +20,39 @@ export interface ModalProps {
   disableEscapeClose?: boolean;
 }
 
+/**
+ * Flexible modal dialog component with animation support.
+ *
+ * Features customizable animations, multiple sizes, backdrop click handling,
+ * and keyboard navigation support.
+ *
+ * @param isOpen Whether the modal is visible
+ * @param onClose Callback when modal should close
+ * @param title Optional modal title
+ * @param children Modal content
+ * @param size Modal size variant
+ * @param showCloseButton Whether to show the close button in header
+ * @param animationType Animation style for modal appearance
+ * @param speed Animation speed preset or custom duration
+ * @param disableBackdropClose Prevent closing when clicking backdrop
+ * @param zIndex CSS z-index for modal layering
+ * @param onAnimationEnd Callback when animation completes
+ * @param disableEscapeClose Prevent closing with Escape key
+ *
+ * @example
+ * ```tsx
+ * <Modal
+ *   isOpen={showModal}
+ *   onClose={() => setShowModal(false)}
+ *   title="Confirmation"
+ *   size="md"
+ * >
+ *   <p>Are you sure?</p>
+ * </Modal>
+ * ```
+ *
+ * @remarks Uses ModalMotion internally for animation handling.
+ */
 export function Modal({
   isOpen,
   onClose,
