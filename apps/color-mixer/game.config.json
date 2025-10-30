@@ -1,0 +1,19 @@
+{
+  "id": "color-mixer",
+  "title": {
+    "en": "Color Mixer",
+    "ja": "カラーミキサー"
+  },
+  "icon": "/images/icons/color-mixer.png",
+  "category": "educational",
+  "description": {
+    "en": "Discover new colors!",
+    "ja": "あたらしいいろをみつけよう！"
+  },
+  "entry": "/apps/color-mixer/",
+  "languages": [
+    "en",
+    "ja"
+  ],
+  "minAge": 3
+}
