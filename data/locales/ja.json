@@ -71,7 +71,15 @@
       "memory": "きおく",
       "puzzle": "パズル",
       "learning": "がくしゅう",
-      "music": "おんがく"
+      "music": "おんがく",
+      "action": "アクション",
+      "creative": "そうさく",
+      "math": "すうがく",
+      "language": "ことば",
+      "strategy": "せんりゃく",
+      "sports": "スポーツ",
+      "adventure": "ぼうけん",
+      "rhythm": "リズム"
     }
   }
 }

@@ -71,7 +71,15 @@
       "memory": "Memory",
       "puzzle": "Puzzle",
       "learning": "Learning",
-      "music": "Music"
+      "music": "Music",
+      "action": "Action",
+      "creative": "Creative",
+      "math": "Math",
+      "language": "Language",
+      "strategy": "Strategy",
+      "sports": "Sports",
+      "adventure": "Adventure",
+      "rhythm": "Rhythm"
     }
   }
 }

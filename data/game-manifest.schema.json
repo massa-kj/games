@@ -31,7 +31,7 @@
     },
     "category": {
       "type": "string",
-      "enum": ["memory", "puzzle", "learning", "music"],
+      "enum": ["memory", "puzzle", "learning", "music", "action", "creative", "math", "language", "strategy", "sports", "adventure", "rhythm"],
       "description": "Game category"
     },
     "description": {
