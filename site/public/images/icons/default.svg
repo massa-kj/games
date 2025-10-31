@@ -1,0 +1,22 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Game controller outline -->
+  <path d="M16 20C10 20 6 24 6 30v8c0 6 4 10 10 10h6l4-8h12l4 8h6c6 0 10-4 10-10v-8c0-6-4-10-10-10H16z" fill="#4F46E5" stroke="#6366F1" stroke-width="2"/>
+
+  <!-- D-pad -->
+  <g fill="#A5B4FC">
+    <!-- Horizontal bar -->
+    <rect x="14" y="30" width="12" height="4" rx="2"/>
+    <!-- Vertical bar -->
+    <rect x="18" y="26" width="4" height="12" rx="2"/>
+  </g>
+
+  <!-- Action buttons -->
+  <circle cx="44" cy="28" r="3" fill="#A5B4FC"/>
+  <circle cx="50" cy="34" r="3" fill="#A5B4FC"/>
+  <circle cx="38" cy="34" r="3" fill="#A5B4FC"/>
+  <circle cx="44" cy="40" r="3" fill="#A5B4FC"/>
+
+  <!-- Controller grips -->
+  <ellipse cx="16" cy="44" rx="6" ry="4" fill="#6366F1"/>
+  <ellipse cx="48" cy="44" rx="6" ry="4" fill="#6366F1"/>
+</svg>
