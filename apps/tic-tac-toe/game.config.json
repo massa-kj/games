@@ -1,0 +1,19 @@
+{
+  "id": "tic-tac-toe",
+  "title": {
+    "en": "Tic Tac Toe",
+    "ja": "マルバツゲーム"
+  },
+  "icon": "/images/icons/tic-tac-toe.png",
+  "category": "puzzle",
+  "description": {
+    "en": "A classic Tic Tac Toe game for two players.",
+    "ja": "2人用のクラシックなマルバツゲームです。"
+  },
+  "entry": "/apps/tic-tac-toe/",
+  "languages": [
+    "en",
+    "ja"
+  ],
+  "minAge": 4
+}

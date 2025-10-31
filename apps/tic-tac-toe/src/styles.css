@@ -1,0 +1,108 @@
+/* Import core design tokens */
+@import '@core/themes/tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tic Tac Toe Game Styles */
+@layer components {
+  .tic-tac-toe-cell {
+    @apply relative aspect-square border-2 bg-white cursor-pointer transition-all duration-200;
+    @apply hover:bg-gray-50 hover:border-blue-400 hover:shadow-md;
+    @apply flex items-center justify-center text-6xl font-bold select-none;
+    @apply rounded-lg shadow-sm border-opacity-50;
+
+    /* Mobile optimizations */
+    @apply touch-manipulation;
+    min-height: 80px;
+  }
+
+  .tic-tac-toe-cell:hover {
+    @apply scale-105;
+  }
+
+  .tic-tac-toe-cell[disabled] {
+    @apply cursor-not-allowed opacity-70;
+  }
+
+  .tic-tac-toe-cell.winning {
+    @apply bg-green-100 border-green-400 shadow-lg;
+    animation: pulse-gentle 1.5s ease-in-out infinite;
+  }
+
+  .tic-tac-toe-board {
+    @apply grid grid-cols-3 gap-2 p-4 bg-gray-100 rounded-2xl shadow-lg border-4 border-white backdrop-blur-sm;
+    /* Ensure consistent sizing on all devices */
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .player-indicator {
+    @apply px-4 py-2 rounded-lg border-2 text-2xl font-bold transition-all duration-300;
+  }
+
+  .player-indicator.player-x {
+    @apply bg-blue-100 border-blue-300 text-blue-600;
+  }
+
+  .player-indicator.player-o {
+    @apply bg-red-100 border-red-300 text-red-600;
+  }
+
+  .score-card {
+    @apply text-center rounded-lg p-3 border-2 transition-all duration-300;
+  }
+
+  .score-card.score-x {
+    @apply bg-blue-100 border-blue-300;
+  }
+
+  .score-card.score-o {
+    @apply bg-red-100 border-red-300;
+  }
+
+  .score-card.score-tie {
+    @apply bg-yellow-100 border-yellow-300;
+  }
+}
+
+/* Mobile-specific styles */
+@media (max-width: 640px) {
+  .tic-tac-toe-cell {
+    @apply text-4xl;
+    min-height: 70px;
+  }
+
+  .tic-tac-toe-board {
+    @apply gap-1 p-2;
+    max-width: 300px;
+  }
+
+  .player-indicator {
+    @apply px-3 py-1 text-xl;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .tic-tac-toe-cell:hover {
+    @apply scale-100 bg-white border-gray-300;
+  }
+
+  .tic-tac-toe-cell:active {
+    @apply scale-95 bg-blue-50 border-blue-400;
+  }
+}
+
+/* Dark mode support (if needed in future) */
+@media (prefers-color-scheme: dark) {
+  .tic-tac-toe-board {
+    @apply bg-gray-800 border-gray-700;
+  }
+
+  .tic-tac-toe-cell {
+    @apply bg-gray-700 border-gray-600 text-white;
+  }
+}
