@@ -236,7 +236,37 @@ The game configuration file is automatically generated with your inputs:
 - **ID**: Must match the directory name
 - **Entry**: Path where the game is served
 - **Languages**: Supported locales
-- **Icon**: Game icon path (add to `site/public/images/icons/`)
+- **Icon**: Game icon path (recommended: SVG format in `site/public/images/icons/`)
+
+### Game Icons
+
+Each game should have a custom icon that represents its theme and gameplay:
+
+- **Format**: SVG recommended (scalable, lightweight)
+- **Size**: Designed for 64x64px viewport but should be scalable
+- **Location**: `apps/{game-id}/public/icon.svg` (inside each game directory)
+- **Configuration**: Set path in `game.config.json` as `/apps/{game-id}/icon.svg`
+- **Resolution**: Base URL (`/games/`) is automatically prepended by the platform
+- **Style**: Simple, recognizable, consistent with game theme
+- **Fallback**: If icon fails to load, defaults to `default.svg` then `🎮` emoji
+
+**Icon Guidelines:**
+- Use clear, simple shapes that work at small sizes
+- Maintain good contrast for accessibility
+- Consider the game's primary colors and theme
+- Test icon visibility on both light and dark backgrounds
+- Each game is self-contained with its own icon
+
+**Self-Contained Game Structure:**
+```
+apps/my-game/
+├── public/
+│   └── icon.svg          # Game icon (required)
+├── src/
+│   └── ...
+├── game.config.json      # References icon as "/apps/my-game/icon.svg"
+└── ...
+```
 
 ## Quality Checklist
 
@@ -247,6 +277,7 @@ Before submitting your game, ensure:
 - [ ] 📱 Responsive design (mobile-friendly)
 - [ ] ♿ Accessibility features (keyboard navigation, screen reader support)
 - [ ] 🎨 Consistent UI using core components
+- [ ] 🎯 Custom game icon (`public/icon.svg`, SVG format recommended)
 - [ ] ⚙️ Settings persistence
 - [ ] 🏠 Home button functionality
 - [ ] 📊 Game registry builds successfully
