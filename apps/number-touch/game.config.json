@@ -4,7 +4,7 @@
     "en": "Number Touch",
     "ja": "ナンバータッチ"
   },
-  "icon": "/images/icons/numbers.svg",
+  "icon": "/apps/number-touch/icon.svg",
   "category": "puzzle",
   "description": {
     "en": "Touch the numbers in order as fast as you can!",

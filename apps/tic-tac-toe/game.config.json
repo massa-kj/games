@@ -4,7 +4,7 @@
     "en": "Tic Tac Toe",
     "ja": "マルバツゲーム"
   },
-  "icon": "/images/icons/tic-tac-toe.svg",
+  "icon": "/apps/tic-tac-toe/icon.svg",
   "category": "puzzle",
   "description": {
     "en": "A classic Tic Tac Toe game for two players.",
