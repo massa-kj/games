@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { GameManifest } from '@core/types';
+import { resolveAssetPath, getAssetPaths } from '@core/utils';
 
 interface GameTileProps {
   game: GameManifest;
@@ -21,8 +22,32 @@ function GameTile({ game }: GameTileProps) {
     >
       {/* Game Icon */}
       <div className="flex justify-center mb-4">
-        <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-2xl">
-          🎮
+        <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center overflow-hidden">
+          {game.icon ? (
+            <img
+              src={resolveAssetPath(game.icon)}
+              alt={`${game.title[currentLanguage] || game.title.ja} icon`}
+              className="w-12 h-12 object-contain"
+              onError={(e) => {
+                // Fallback to default icon, then emoji if that fails too
+                const target = e.target as HTMLImageElement;
+                const { iconDefault } = getAssetPaths();
+                if (target.src === iconDefault) {
+                  // Already tried default, fallback to emoji
+                  target.style.display = 'none';
+                  const parent = target.parentElement;
+                  if (parent) {
+                    parent.innerHTML = '<span class="text-2xl">🎮</span>';
+                  }
+                } else {
+                  // Try default icon first
+                  target.src = iconDefault;
+                }
+              }}
+            />
+          ) : (
+            <span className="text-2xl">🎮</span>
+          )}
         </div>
       </div>
 

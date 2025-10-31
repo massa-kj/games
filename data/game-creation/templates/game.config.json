@@ -4,7 +4,7 @@
     "en": "{{GAME_TITLE_EN}}",
     "ja": "{{GAME_TITLE_JA}}"
   },
-  "icon": "/images/icons/{{GAME_ID}}.png",
+  "icon": "/images/icons/{{GAME_ID}}.svg",
   "category": "{{GAME_CATEGORY}}",
   "description": {
     "en": "{{GAME_DESCRIPTION_EN}}",

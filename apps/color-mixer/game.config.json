@@ -4,7 +4,7 @@
     "en": "Color Mixer",
     "ja": "カラーミキサー"
   },
-  "icon": "/images/icons/color-mixer.png",
+  "icon": "/images/icons/color-mixer.svg",
   "category": "creative",
   "description": {
     "en": "Discover new colors!",
