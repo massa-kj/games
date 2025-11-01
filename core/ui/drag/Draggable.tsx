@@ -13,16 +13,29 @@ import type { DraggableProps, Position } from './types.js';
  * @param onDrag Callback fired during drag movement
  * @param onDragEnd Callback fired when drag ends
  * @param disabled Whether dragging is disabled
+ * @param returnToOrigin Whether to return to original position if not dropped on a valid drop zone
+ * @param validDropZones List of valid drop zone IDs that this draggable can be dropped on
  * @param className Additional CSS classes
  * @param style Custom styling
  *
  * @example
  * ```tsx
+ * // Basic draggable (can be dropped on any drop zone)
  * <Draggable
  *   id="color-red"
  *   onDragEnd={(pos, id) => console.log(`Dropped ${id} at`, pos)}
  * >
  *   <div className="w-16 h-16 bg-red-500 rounded-lg">Red</div>
+ * </Draggable>
+ *
+ * // Draggable with restricted drop zones
+ * <Draggable
+ *   id="game-piece"
+ *   returnToOrigin={true}
+ *   validDropZones={['save-slot-1', 'save-slot-2', 'save-slot-3']}
+ *   initial={{ x: 100, y: 100 }}
+ * >
+ *   <div className="w-12 h-12 bg-blue-500 rounded">Game Piece</div>
  * </Draggable>
  * ```
  */
@@ -34,6 +47,8 @@ export function Draggable({
   onDrag,
   onDragEnd,
   disabled = false,
+  returnToOrigin = false,
+  validDropZones,
   className = '',
   style,
   ...props
@@ -42,12 +57,14 @@ export function Draggable({
   const [position, setPosition] = useState<Position>(initial);
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState<Position>({ x: 0, y: 0 });
+  const [originalPosition, setOriginalPosition] = useState<Position>(initial);
 
   const { setDragState, findDropZone } = useDragManager();
 
   // Reset position when initial changes
   useEffect(() => {
     setPosition(initial);
+    setOriginalPosition(initial);
   }, [initial]);
 
   const getPointerPosition = useCallback((e: PointerEvent): Position => {
@@ -81,6 +98,11 @@ export function Draggable({
     };
     setDragOffset(offset);
 
+    // Record original position at drag start
+    if (returnToOrigin) {
+      setOriginalPosition(position);
+    }
+
     const startPos = getPointerPosition(e.nativeEvent);
     const relativePos = getRelativePosition(startPos);
 
@@ -96,7 +118,7 @@ export function Draggable({
 
     // Capture pointer to ensure we receive all events
     element.setPointerCapture(e.pointerId);
-  }, [disabled, id, getPointerPosition, getRelativePosition, setDragState, onDragStart]);
+  }, [disabled, id, position, returnToOrigin, getPointerPosition, getRelativePosition, setDragState, onDragStart]);
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
     if (!isDragging) return;
@@ -123,8 +145,21 @@ export function Draggable({
 
     // Check for drop zone collision
     const dropZone = findDropZone(endPos);
+    let dropSuccess = false;
+
     if (dropZone) {
-      dropZone.onDrop?.(dropZone.id, id);
+      // Check if this drop zone is valid for this draggable
+      const isValidDropZone = !validDropZones || validDropZones.includes(dropZone.id);
+
+      if (isValidDropZone) {
+        dropZone.onDrop?.(dropZone.id, id);
+        dropSuccess = true;
+      }
+    }
+
+    // Return to original position if returnToOrigin is enabled and drop failed
+    if (returnToOrigin && !dropSuccess) {
+      setPosition(originalPosition);
     }
 
     setIsDragging(false);
@@ -133,11 +168,11 @@ export function Draggable({
       draggedId: undefined,
     });
 
-    onDragEnd?.(relativePos, id);
+    onDragEnd?.(dropSuccess ? relativePos : originalPosition, id);
 
     // Release pointer capture
     element.releasePointerCapture(e.pointerId);
-  }, [isDragging, id, getPointerPosition, getRelativePosition, findDropZone, setDragState, onDragEnd]);
+  }, [isDragging, id, returnToOrigin, originalPosition, validDropZones, getPointerPosition, getRelativePosition, findDropZone, setDragState, onDragEnd]);
 
   // Prevent default drag behavior and context menu
   const handleDragStart = useCallback((e: React.DragEvent) => {
@@ -161,7 +196,7 @@ export function Draggable({
   ].filter(Boolean).join(' ');
 
   const combinedStyle: React.CSSProperties = {
-    transform: isDragging ? `translate(${position.x}px, ${position.y}px)` : undefined,
+    transform: `translate(${position.x}px, ${position.y}px)`,
     transition: isDragging ? 'none' : 'transform 0.2s ease-out',
     position: isDragging ? 'relative' as const : undefined,
     ...style,

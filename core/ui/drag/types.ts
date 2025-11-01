@@ -49,6 +49,10 @@ export interface DraggableProps {
   onDragEnd?: (position: Position, id?: string) => void;
   /** Whether dragging is disabled */
   disabled?: boolean;
+  /** Whether to return to original position if not dropped on a valid drop zone */
+  returnToOrigin?: boolean;
+  /** List of valid drop zone IDs that this draggable can be dropped on. If not specified, all drop zones are valid. */
+  validDropZones?: string[];
   /** Additional CSS class names */
   className?: string;
   /** Custom styling */
