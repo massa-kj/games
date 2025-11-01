@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { GameHeader, Card, DragManagerProvider } from '@core/ui';
+import { GameContainer } from '@core/ui/GameContainer';
 import { useSettings } from '@core/hooks';
 import '@/styles.css';
 
@@ -8,7 +9,7 @@ import enTranslations from '@/data/locales/en.json';
 import jaTranslations from '@/data/locales/ja.json';
 
 // Import components
-import { IntegratedColorMixer } from '@/components/IntegratedColorMixer';
+import { IntegratedColorMixer } from '@/components';
 
 // Import types and utilities
 import type { ColorMixerState, GameTranslations, RGB } from '@/types';
@@ -72,29 +73,32 @@ export default function ColorMixerApp() {
   return (
     <DragManagerProvider>
       <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
-        <GameHeader />
+        <GameHeader
+          title={translations.title}
+          showHomeButton={true}
+          className='bg-gradient-to-br from-blue-200 to-purple-200'
+        />
 
         <main className="container mx-auto px-4 py-6 max-w-4xl">
-          {/* Game title */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">
-              {translations.title}
-            </h1>
-            <p className="text-lg text-gray-600">
-              ドラッグ＆ドロップで色を混ぜよう！
-            </p>
-          </div>
+          <GameContainer preventScroll>
+            {/* Game title */}
+            <div className="text-center mb-8">
+              <p className="text-lg text-gray-600">
+                {translations.description}
+              </p>
+            </div>
 
-          {/* Integrated Color Mixer */}
-          <Card className="max-w-2xl mx-auto" padding="md">
-            <IntegratedColorMixer
-              savedColors={gameState.savedColors}
-              onSaveColor={handleSaveColor}
-              translations={translations}
-              onPlayMixSound={sounds.playMixSound}
-              onPlaySuccessSound={sounds.playSuccessSound}
-            />
-          </Card>
+            {/* Integrated Color Mixer */}
+            <Card className="max-w-2xl mx-auto" padding="md">
+              <IntegratedColorMixer
+                savedColors={gameState.savedColors}
+                onSaveColor={handleSaveColor}
+                translations={translations}
+                onPlayMixSound={sounds.playMixSound}
+                onPlaySuccessSound={sounds.playSuccessSound}
+              />
+            </Card>
+          </GameContainer>
         </main>
       </div>
     </DragManagerProvider>
