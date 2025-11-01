@@ -1,5 +1,3 @@
-import type { SoundOptions } from '../types.js';
-
 export interface AudioNode {
   connect(destination: AudioNode | AudioParam): void;
   disconnect(): void;

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { useDragManager, DragManagerProvider, useRegisterDropZone } from './useDragManager.js';
-import type { DropZoneInfo } from './types.js';
+import { useDragManager, DragManagerProvider, useRegisterDropZone } from './useDragManager';
+import type { DropZoneInfo } from './types';
 
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({

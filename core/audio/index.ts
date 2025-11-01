@@ -1,5 +1,8 @@
-export { advancedSoundManager } from './hybridSoundManager.js';
-export { webAudioEngine } from './webAudioEngine.js';
-export { gameAudioTemplates, GameAudioUtils } from './gameAudioTemplates.js';
-export type { SoundManager, AdvancedSoundManager } from './hybridSoundManager.js';
-export type { SoundOptions } from '../types.js';
+export { soundManager } from './soundManager';
+export { advancedSoundManager } from './hybridSoundManager';
+export { webAudioEngine } from './webAudioEngine';
+export { gameAudioTemplates, GameAudioUtils } from './gameAudioTemplates';
+export type { SoundOptions, SoundManager, AdvancedSoundManager } from './types';
+
+export { speak, stopSpeech, isSpeechSupported } from './speech';
+export type { SpeechOptions } from './speech';

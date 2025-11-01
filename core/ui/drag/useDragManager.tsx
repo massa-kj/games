@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useCallback, useState, useRef } from 'react';
-import type { DragState, DropZoneInfo, DragManagerContextValue, Position } from './types.js';
+import type { DragState, DropZoneInfo, DragManagerContextValue, Position } from './types';
 
 const DragManagerContext = createContext<DragManagerContextValue | null>(null);
 

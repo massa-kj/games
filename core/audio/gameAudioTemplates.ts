@@ -1,4 +1,4 @@
-import type { AudioTemplate } from './webAudioEngine.js';
+import type { AudioTemplate } from './webAudioEngine';
 
 /**
  * Collection of audio effect templates commonly used in game development

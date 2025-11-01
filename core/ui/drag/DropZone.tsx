@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
-import { useRegisterDropZone, useDragManager } from './useDragManager.js';
-import type { DropZoneProps } from './types.js';
+import { useRegisterDropZone, useDragManager } from './useDragManager';
+import type { DropZoneProps } from './types';
 
 /**
  * DropZone component that defines areas where draggable items can be dropped

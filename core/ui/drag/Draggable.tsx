@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { useDragManager } from './useDragManager.js';
-import type { DraggableProps, Position } from './types.js';
+import { useDragManager } from './useDragManager';
+import type { DraggableProps, Position } from './types';
 
 /**
  * Draggable component that makes any element draggable

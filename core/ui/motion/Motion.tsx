@@ -1,3 +1,8 @@
+/**
+ * @file Motion.tsx
+ *
+ * Pure Animation Layer
+ */
 import { motion, AnimatePresence } from "motion/react";
 import { variants } from "./variants";
 import { getDurationFromSpeed } from "./transitions";

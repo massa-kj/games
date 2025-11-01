@@ -1,3 +1,5 @@
+// The framer-motion dependency is completely isolated in the `core/ui/motion` directory, so other components do not need to import framer-motion directly.
+
 // Implementation selection logic
 import { Motion as FramerMotion } from './Motion';
 // import { Motion as TailwindMotion } from './Motion.tailwind';

@@ -22,19 +22,6 @@ export interface Settings {
   sound: boolean;
 }
 
-export interface SoundOptions {
-  volume?: number;
-  loop?: boolean;
-}
-
-export interface SoundManager {
-  play(src: string, options?: SoundOptions): Promise<void>;
-  stopAll(): void;
-  setGlobalVolume(volume: number): void;
-  isEnabled(): boolean;
-  setEnabled(enabled: boolean): void;
-}
-
 export interface GameState {
   score?: number;
   level?: number;

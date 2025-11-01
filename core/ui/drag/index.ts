@@ -16,4 +16,4 @@ export type {
   SnapContainerProps,
   DraggableImageProps,
   DraggableButtonProps,
-} from './types.js';
+} from './types';

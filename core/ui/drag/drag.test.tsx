@@ -7,7 +7,7 @@ import {
   SnapContainer,
   DraggableImage,
   DraggableButton
-} from './index.js';
+} from './index';
 
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({

@@ -8,7 +8,7 @@ import type {
   SnapContainerProps,
   DraggableImageProps,
   DraggableButtonProps,
-} from './types.js';
+} from './types';
 
 describe('Type Definitions', () => {
   describe('Position', () => {

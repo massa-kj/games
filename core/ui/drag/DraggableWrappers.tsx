@@ -1,6 +1,6 @@
-import { Draggable } from './Draggable.js';
-import { Button } from '../Button.js';
-import type { DraggableImageProps, DraggableButtonProps } from './types.js';
+import { Draggable } from './Draggable';
+import { Button } from '../Button';
+import type { DraggableImageProps, DraggableButtonProps } from './types';
 
 /**
  * DraggableImage component - A draggable image wrapper

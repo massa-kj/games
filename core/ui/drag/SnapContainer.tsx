@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from 'react';
-import { useDragManager } from './useDragManager.js';
-import type { SnapContainerProps, Position, DropZoneInfo } from './types.js';
+import { useDragManager } from './useDragManager';
+import type { SnapContainerProps, Position, DropZoneInfo } from './types';
 
 /**
  * SnapContainer component that provides automatic snapping and drop coordination
