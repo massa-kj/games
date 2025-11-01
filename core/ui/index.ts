@@ -24,3 +24,27 @@ export type { GameHeaderProps, GameHeaderAction } from './GameHeader.js';
 
 export { StarsRating } from './game/StarsRating.js';
 export type { StarsRatingProps } from './game/StarsRating.js';
+
+// Drag and Drop System
+export {
+  DragManagerProvider,
+  useDragManager,
+  useRegisterDropZone,
+  Draggable,
+  DropZone,
+  SnapContainer,
+  DraggableImage,
+  DraggableButton,
+} from './drag/index.js';
+
+export type {
+  Position,
+  DragState,
+  DropZoneInfo,
+  DragManagerContextValue,
+  DraggableProps,
+  DropZoneProps,
+  SnapContainerProps,
+  DraggableImageProps,
+  DraggableButtonProps,
+} from './drag/index.js';
