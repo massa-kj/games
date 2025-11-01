@@ -31,8 +31,6 @@ export interface GameTranslations {
   saveColor: string;
   clearSaved: string;
   saved: string;
-  slotA: string;
-  slotB: string;
   newColor: string;
   tapTwoColors: string;
   colorSaved: string;
