@@ -4,3 +4,7 @@
  */
 
 export { IntegratedColorMixer } from './IntegratedColorMixer';
+export { DraggableColorCard } from './DraggableColorCard';
+export { ColorPalette } from './ColorPalette';
+export { SaveSlots } from './SaveSlots';
+export { ColorMixer } from './ColorMixer';
