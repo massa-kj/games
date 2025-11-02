@@ -2,9 +2,9 @@ import { useState } from 'react';
 import type { RGB, ColorDefinition, GameTranslations, SavedColor } from '@/types';
 import { getColorName, mixColors as mixTwoColors } from '@/utils/colorUtils';
 import { PRIMARY_COLORS } from '@/utils/colorUtils';
-import { ColorPalette } from './ColorPalette';
-import { SaveSlots } from './SaveSlots';
 import { ColorMixer } from './ColorMixer';
+import { ColorSelectionModal } from './ColorSelectionModal';
+import { SaveResultModal } from './SaveResultModal';
 
 interface IntegratedColorMixerProps {
   savedColors: SavedColor[];
@@ -24,6 +24,13 @@ export function IntegratedColorMixer({
   const [selectedColors, setSelectedColors] = useState<(ColorDefinition | null)[]>([null, null]);
   const [mixedColor, setMixedColor] = useState<RGB | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
+
+  // Modal states
+  const [colorSelectionModal, setColorSelectionModal] = useState<{
+    isOpen: boolean;
+    slotIndex: number | null;
+  }>({ isOpen: false, slotIndex: null });
+  const [saveResultModal, setSaveResultModal] = useState(false);
 
   const primaryColors: ColorDefinition[] = PRIMARY_COLORS;
 
@@ -46,61 +53,36 @@ export function IntegratedColorMixer({
     } : null,
   ];
 
-  const findColorByDragId = (dragId: string): ColorDefinition | null => {
-    // Check if it's a generated mixed color
-    if (dragId.startsWith('color-mixed-')) {
-      if (!mixedColor) return null;
-      return {
-        name: getColorName(mixedColor),
-        rgb: mixedColor,
-        isPrimary: false
-      };
+  const handleSlotClick = (slotIndex: number) => {
+    setColorSelectionModal({ isOpen: true, slotIndex });
+  };
+
+  const handleColorSelect = (color: ColorDefinition) => {
+    if (colorSelectionModal.slotIndex !== null) {
+      const newSelectedColors: (ColorDefinition | null)[] = [...selectedColors];
+      newSelectedColors[colorSelectionModal.slotIndex] = color;
+      setSelectedColors(newSelectedColors);
+      setMixedColor(null); // Reset mixed color when changing inputs
     }
+    setColorSelectionModal({ isOpen: false, slotIndex: null });
+  };
 
-    // Check if it's a saved color (format: saved-{index}-{colorName})
-    if (dragId.startsWith('saved-')) {
-      const parts = dragId.split('-');
-      if (parts.length >= 3) {
-        const index = parseInt(parts[1]);
-        if (index >= 0 && index < savedColorDefinitions.length && savedColorDefinitions[index]) {
-          return savedColorDefinitions[index];
-        }
-      }
+  const handleGeneratedColorClick = () => {
+    if (mixedColor) {
+      setSaveResultModal(true);
     }
-
-    // Extract color identifier from dragId for primary colors
-    const colorKey = dragId.replace('color-', '');
-
-    // Check from primary colors
-    const primaryColor = PRIMARY_COLORS.find(c => c.name === colorKey);
-    if (primaryColor) return primaryColor;
-
-    return null;
   };
 
   const handleColorDrop = async (zoneId: string, dragId?: string) => {
-    if (!dragId || isAnimating) return;
+    if (!dragId || !mixedColor) return;
 
-    const color = findColorByDragId(dragId);
-    if (!color) return;
-
-    // Handle drops to save slots
+    // Handle drops to save slots in the save modal
     if (zoneId.startsWith('save-slot-')) {
       const slotNumber = parseInt(zoneId.replace('save-slot-', ''));
       const slotIndex = slotNumber - 1; // Convert to 0-based index
-      onSaveColor(color.rgb, slotIndex);
+      onSaveColor(mixedColor, slotIndex);
       await onPlaySuccessSound();
-      return;
-    }
-
-    // Handle drops to mixer slots
-    if (zoneId.startsWith('mixer-slot-')) {
-      const slotNumber = parseInt(zoneId.replace('mixer-slot-', ''));
-      const slotIndex = slotNumber - 1; // Convert to 0-based index
-      const newSelectedColors: (ColorDefinition | null)[] = [...selectedColors];
-      newSelectedColors[slotIndex] = color;
-      setSelectedColors(newSelectedColors);
-      setMixedColor(null);
+      setSaveResultModal(false);
     }
   };
 
@@ -127,34 +109,49 @@ export function IntegratedColorMixer({
     }
   };
 
-
-
   return (
-    <div className="space-y-6">
-      {/* Primary Colors */}
-      <ColorPalette
-        colors={primaryColors}
-        translations={translations}
-        validDropZones={['mixer-slot-1', 'mixer-slot-2']}
-      />
+    <>
+      {/* Main Content - Only Color Mixer */}
+      <div className="flex justify-center items-center min-h-screen">
+        <ColorMixer
+          selectedColors={selectedColors}
+          mixedColor={mixedColor}
+          isAnimating={isAnimating}
+          translations={translations}
+          onSlotClick={handleSlotClick}
+          onMixButtonClick={handleMixButtonClick}
+          onGeneratedColorClick={handleGeneratedColorClick}
+        />
+      </div>
 
-      {/* Save Slots */}
-      <SaveSlots
+      {/* Color Selection Modal */}
+      <ColorSelectionModal
+        isOpen={colorSelectionModal.isOpen}
+        onClose={() => setColorSelectionModal({ isOpen: false, slotIndex: null })}
+        primaryColors={primaryColors}
         savedColors={savedColorDefinitions}
         translations={translations}
-        onDrop={handleColorDrop}
-        validDropZones={['mixer-slot-1', 'mixer-slot-2']}
+        onColorSelect={handleColorSelect}
+        title={
+          colorSelectionModal.slotIndex === 0
+            ? "Choose Element A"
+            : colorSelectionModal.slotIndex === 1
+            ? "Choose Element B"
+            : "Choose Your Element"
+        }
       />
 
-      {/* Color Mixer */}
-      <ColorMixer
-        selectedColors={selectedColors}
-        mixedColor={mixedColor}
-        isAnimating={isAnimating}
-        translations={translations}
-        onDrop={handleColorDrop}
-        onMixButtonClick={handleMixButtonClick}
-      />
-    </div>
+      {/* Save Result Modal */}
+      {mixedColor && (
+        <SaveResultModal
+          isOpen={saveResultModal}
+          onClose={() => setSaveResultModal(false)}
+          mixedColor={mixedColor}
+          savedColors={savedColors}
+          translations={translations}
+          onDrop={handleColorDrop}
+        />
+      )}
+    </>
   );
 }

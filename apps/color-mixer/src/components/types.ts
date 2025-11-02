@@ -40,6 +40,7 @@ export interface ColorMixerProps {
   mixedColor: RGB | null;
   isAnimating: boolean;
   translations: GameTranslations;
-  onDrop: (zoneId: string, dragId?: string) => void;
+  onSlotClick: (slotIndex: number) => void;
   onMixButtonClick: () => void;
+  onGeneratedColorClick: () => void;
 }
