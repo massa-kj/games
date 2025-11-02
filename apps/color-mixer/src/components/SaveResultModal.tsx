@@ -31,7 +31,7 @@ export function SaveResultModal({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Save Your Creation"
+      title={translations.saveYourCreation}
       size="lg"
       animationType="scale"
       speed="normal"
@@ -46,7 +46,7 @@ export function SaveResultModal({
               </svg>
             </div>
             <h3 className="text-xl font-bold uppercase tracking-wider bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
-              Preserve Your Alchemy
+              {translations.preserveYourAlchemy}
             </h3>
             <div className="p-3 bg-gradient-to-r from-yellow-400 to-amber-400 rounded-full animate-pulse-gentle" style={{ animationDelay: '0.5s' }}>
               <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -55,7 +55,7 @@ export function SaveResultModal({
             </div>
           </div>
           <p className="text-gray-600 text-sm">
-            Drag your magical creation to one of the preservation chambers below
+            {translations.dragCreationInstruction}
           </p>
         </div>
 
@@ -64,7 +64,7 @@ export function SaveResultModal({
           <div className="text-center">
             <div className="flex items-center justify-center gap-2 px-4 py-2 bg-amber-100 rounded-full mb-3">
               <div className="w-3 h-3 bg-amber-500 rounded-full animate-pulse"></div>
-              <span className="text-sm font-bold text-amber-700 uppercase tracking-wide">Your Creation</span>
+              <span className="text-sm font-bold text-amber-700 uppercase tracking-wide">{translations.yourCreation}</span>
               <div className="w-3 h-3 bg-amber-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
             </div>
           </div>
@@ -128,8 +128,8 @@ export function SaveResultModal({
         {/* Save Slots - arranged in elegant layout */}
         <div className="space-y-4">
           <div className="text-center">
-            <h4 className="text-lg font-bold text-gray-700 mb-2">Preservation Chambers</h4>
-            <p className="text-sm text-gray-500">Choose a chamber to store your creation</p>
+            <h4 className="text-lg font-bold text-gray-700 mb-2">{translations.preservationChambers}</h4>
+            <p className="text-sm text-gray-500">{translations.chooseChamberInstruction}</p>
           </div>
 
           <div className="grid grid-cols-3 gap-6 justify-items-center">
@@ -140,7 +140,7 @@ export function SaveResultModal({
               return (
                 <div key={index} className="text-center space-y-2">
                   <div className="text-sm font-semibold text-gray-600">
-                    Chamber {slotNumber}
+                    {translations.chamber} {slotNumber}
                   </div>
 
                   <DropZone
@@ -164,7 +164,7 @@ export function SaveResultModal({
                           {/* Replacement indicator overlay */}
                           <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                             <div className="text-white text-xs font-bold">
-                              Replace?
+                              {translations.replace}
                             </div>
                           </div>
 
@@ -198,7 +198,7 @@ export function SaveResultModal({
                           </div>
                         </div>
                         <div className="text-amber-600 text-xs text-center mt-1 font-semibold group-hover:text-amber-700 transition-colors duration-300">
-                          Empty
+                          {translations.empty}
                         </div>
                       </div>
                     )}
@@ -212,8 +212,7 @@ export function SaveResultModal({
         {/* Instructions */}
         <div className="text-center max-w-md">
           <p className="text-sm text-gray-500 leading-relaxed">
-            Drag your creation to any preservation chamber above.
-            If a chamber is already occupied, your new creation will replace the existing one.
+            {translations.dragInstructions}
           </p>
         </div>
       </div>

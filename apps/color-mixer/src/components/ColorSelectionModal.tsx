@@ -49,7 +49,7 @@ export function ColorSelectionModal({
               </svg>
             </div>
             <h3 className="text-lg font-bold uppercase tracking-wider bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Choose Your Element
+              {translations.chooseYourElement}
             </h3>
             <div className="p-2 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full animate-pulse-gentle" style={{ animationDelay: '0.5s' }}>
               <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -152,7 +152,7 @@ export function ColorSelectionModal({
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
             </div>
-            <span className="text-blue-700 font-semibold">Primary Elements</span>
+            <span className="text-blue-700 font-semibold">{translations.primaryElements}</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
@@ -160,14 +160,13 @@ export function ColorSelectionModal({
                 <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
               </svg>
             </div>
-            <span className="text-green-700 font-semibold">Saved Creations</span>
+            <span className="text-green-700 font-semibold">{translations.savedCreations}</span>
           </div>
         </div>
 
         {/* Instruction text */}
         <p className="text-center text-gray-600 text-sm max-w-md">
-          Select an element from the magical circle to add it to your alchemy station.
-          Primary elements are your basic building blocks, while saved creations are your previous discoveries.
+          {translations.selectElementInstruction}
         </p>
       </div>
     </Modal>

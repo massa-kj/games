@@ -134,10 +134,10 @@ export function IntegratedColorMixer({
         onColorSelect={handleColorSelect}
         title={
           colorSelectionModal.slotIndex === 0
-            ? "Choose Element A"
+            ? translations.chooseElementA
             : colorSelectionModal.slotIndex === 1
-            ? "Choose Element B"
-            : "Choose Your Element"
+            ? translations.chooseElementB
+            : translations.chooseYourElement
         }
       />
 
