@@ -1,21 +1,27 @@
-import type { RGB, SavedColor } from '@/types';
+import { createDefaultStorage } from '@core/storage';
+import type { RGB, SavedColor, ColorMixerGameData } from '@/types';
 
-const STORAGE_KEY = 'color-mixer-saved-colors';
-const MAX_SAVED_COLORS = 2;
+// Create a storage instance for color-mixer using generic namespace
+const storage = createDefaultStorage();
+const gameStorage = storage.namespace('games:color-mixer');
+
+// Default game data
+const defaultGameData: ColorMixerGameData = {
+  savedColors: [],
+  stats: {
+    totalMixes: 0,
+    uniqueColorsCreated: 0,
+    lastPlayedAt: Date.now(),
+  },
+};
 
 /**
- * Get saved colors from localStorage
+ * Get saved colors from storage
  */
-export function getSavedColors(): SavedColor[] {
+export async function getSavedColors(): Promise<SavedColor[]> {
   try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) return [];
-
-    const colors = JSON.parse(stored);
-    return colors.map((color: any) => ({
-      ...color,
-      createdAt: new Date(color.createdAt),
-    }));
+    const gameData = await gameStorage.get<ColorMixerGameData>('data', defaultGameData);
+    return gameData?.savedColors || [];
   } catch (error) {
     console.warn('Failed to load saved colors:', error);
     return [];
@@ -23,35 +29,54 @@ export function getSavedColors(): SavedColor[] {
 }
 
 /**
- * Save a color (max 2 colors, overwrite style)
+ * Save a color to a specific slot or add to the end
  */
-export function saveColor(rgb: RGB): SavedColor {
-  const savedColors = getSavedColors();
-
-  const newColor: SavedColor = {
-    id: `color-${Date.now()}`,
-    rgb,
-    createdAt: new Date(),
-  };
-
-  // Add newest color to the front and remove excess colors
-  const updatedColors = [newColor, ...savedColors].slice(0, MAX_SAVED_COLORS);
-
+export async function saveColor(rgb: RGB, slotIndex?: number): Promise<SavedColor | null> {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedColors));
+    const gameData = await gameStorage.get<ColorMixerGameData>('data', defaultGameData);
+    const savedColors = [...(gameData?.savedColors || [])];
+
+    const newColor: SavedColor = {
+      id: `color-${Date.now()}`,
+      rgb,
+      createdAt: Date.now(),
+    };
+
+    if (slotIndex !== undefined && slotIndex >= 0 && slotIndex < 3) {
+      // Save to specific slot
+      savedColors[slotIndex] = newColor;
+    } else {
+      // Add to end and keep only last 3
+      savedColors.push(newColor);
+      savedColors.splice(0, savedColors.length - 3);
+    }
+
+    const updated: ColorMixerGameData = {
+      ...gameData!,
+      savedColors,
+      stats: {
+        ...(gameData?.stats || defaultGameData.stats!),
+        uniqueColorsCreated: (gameData?.stats?.uniqueColorsCreated || 0) + 1,
+        lastPlayedAt: Date.now(),
+      }
+    };
+
+    const success = await gameStorage.set('data', updated);
+    return success ? newColor : null;
   } catch (error) {
     console.warn('Failed to save color:', error);
+    return null;
   }
-
-  return newColor;
 }
 
 /**
  * Clear all saved colors
  */
-export function clearSavedColors(): void {
+export async function clearSavedColors(): Promise<void> {
   try {
-    localStorage.removeItem(STORAGE_KEY);
+    const gameData = await gameStorage.get<ColorMixerGameData>('data', defaultGameData);
+    const updated: ColorMixerGameData = { ...gameData!, savedColors: [] };
+    await gameStorage.set('data', updated);
   } catch (error) {
     console.warn('Failed to clear saved colors:', error);
   }
@@ -60,13 +85,46 @@ export function clearSavedColors(): void {
 /**
  * Remove a specific saved color
  */
-export function removeSavedColor(id: string): void {
-  const savedColors = getSavedColors();
-  const filteredColors = savedColors.filter(color => color.id !== id);
-
+export async function removeSavedColor(id: string): Promise<void> {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(filteredColors));
+    const gameData = await gameStorage.get<ColorMixerGameData>('data', defaultGameData);
+    const savedColors = (gameData?.savedColors || []).filter(color => color.id !== id);
+    const updated: ColorMixerGameData = { ...gameData!, savedColors };
+    await gameStorage.set('data', updated);
   } catch (error) {
     console.warn('Failed to remove saved color:', error);
+  }
+}
+
+/**
+ * Update mixing statistics
+ */
+export async function updateMixingStats(): Promise<void> {
+  try {
+    const gameData = await gameStorage.get<ColorMixerGameData>('data', defaultGameData);
+    const updated: ColorMixerGameData = {
+      ...gameData!,
+      stats: {
+        ...(gameData?.stats || defaultGameData.stats!),
+        totalMixes: (gameData?.stats?.totalMixes || 0) + 1,
+        lastPlayedAt: Date.now(),
+      }
+    };
+    await gameStorage.set('data', updated);
+  } catch (error) {
+    console.warn('Failed to update mixing stats:', error);
+  }
+}
+
+/**
+ * Get game statistics
+ */
+export async function getGameStats(): Promise<ColorMixerGameData['stats']> {
+  try {
+    const gameData = await gameStorage.get<ColorMixerGameData>('data', defaultGameData);
+    return gameData?.stats || defaultGameData.stats!;
+  } catch (error) {
+    console.warn('Failed to get game stats:', error);
+    return defaultGameData.stats!;
   }
 }

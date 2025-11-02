@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { GameHeader, Card, DragManagerProvider } from '@core/ui';
-import { GameContainer } from '@core/ui/GameContainer';
+import { GameHeader, DragManagerProvider } from '@core/ui';
 import { useSettings } from '@core/hooks';
 import '@/styles.css';
 
@@ -13,7 +12,7 @@ import { IntegratedColorMixer } from '@/components';
 
 // Import types and utilities
 import type { ColorMixerState, GameTranslations, RGB } from '@/types';
-import { getSavedColors } from '@/utils/storage';
+import { getSavedColors, saveColor, updateMixingStats } from '@/utils/storage';
 import { useColorMixerSounds } from '@/hooks/useColorMixerSounds';
 
 export default function ColorMixerApp() {
@@ -33,35 +32,26 @@ export default function ColorMixerApp() {
 
   // Initialize saved colors
   useEffect(() => {
-    const saved = getSavedColors();
-    setGameState(prev => ({ ...prev, savedColors: saved }));
+    const loadSavedColors = async () => {
+      const saved = await getSavedColors();
+      setGameState(prev => ({ ...prev, savedColors: saved }));
+    };
+    loadSavedColors();
   }, []);
 
   // Save color (updated for 3 slots)
-  const handleSaveColor = useCallback((color: RGB, slotIndex?: number) => {
-    setGameState(prev => {
-      const newSavedColors = [...prev.savedColors];
-      const savedColor = {
-        id: Date.now().toString(),
-        rgb: color,
-        createdAt: new Date(),
-      };
+  const handleSaveColor = useCallback(async (color: RGB, slotIndex?: number) => {
+    try {
+      await saveColor(color, slotIndex);
 
-      if (slotIndex !== undefined && slotIndex >= 0 && slotIndex < 3) {
-        // Save to specific slot
-        newSavedColors[slotIndex] = savedColor;
-      } else {
-        // Add to end and keep only last 3 (old behavior for backward compatibility)
-        newSavedColors.push(savedColor);
-        newSavedColors.splice(0, newSavedColors.length - 3);
-      }
+      // Reload saved colors to update UI
+      const updatedColors = await getSavedColors();
+      setGameState(prev => ({ ...prev, savedColors: updatedColors }));
 
-      return {
-        ...prev,
-        savedColors: newSavedColors
-      };
-    });
-    sounds.playSuccessSound();
+      sounds.playSuccessSound();
+    } catch (error) {
+      console.warn('Failed to save color:', error);
+    }
   }, [sounds]);
 
   // Clear saved colors (for future use)
@@ -84,6 +74,7 @@ export default function ColorMixerApp() {
           <IntegratedColorMixer
             savedColors={gameState.savedColors}
             onSaveColor={handleSaveColor}
+            onMixColors={updateMixingStats}
             translations={translations}
             onPlayMixSound={sounds.playMixSound}
             onPlaySuccessSound={sounds.playSuccessSound}

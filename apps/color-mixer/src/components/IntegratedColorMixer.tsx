@@ -9,6 +9,7 @@ import { SaveResultModal } from './SaveResultModal';
 interface IntegratedColorMixerProps {
   savedColors: SavedColor[];
   onSaveColor: (color: RGB, slotIndex?: number) => void;
+  onMixColors?: () => Promise<void>;
   translations: GameTranslations;
   onPlayMixSound: () => Promise<void>;
   onPlaySuccessSound: () => Promise<void>;
@@ -17,6 +18,7 @@ interface IntegratedColorMixerProps {
 export function IntegratedColorMixer({
   savedColors,
   onSaveColor,
+  onMixColors,
   translations,
   onPlayMixSound,
   onPlaySuccessSound,
@@ -94,6 +96,11 @@ export function IntegratedColorMixer({
 
     // Play mixing sound
     await onPlayMixSound();
+
+    // Update mixing statistics
+    if (onMixColors) {
+      await onMixColors();
+    }
 
     // Simulate mixing animation delay
     setTimeout(() => {

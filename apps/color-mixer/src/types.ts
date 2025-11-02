@@ -88,16 +88,30 @@ export interface RGB {
   b: number;
 }
 
+export interface SavedColor {
+  id: string;
+  rgb: RGB;
+  createdAt: number; // timestamp
+}
+
+/**
+ * Color-mixer specific game data schema
+ */
+export interface ColorMixerGameData {
+  /** Array of saved colors (max 3 slots) */
+  savedColors: SavedColor[];
+  /** Game statistics */
+  stats?: {
+    totalMixes: number;
+    uniqueColorsCreated: number;
+    lastPlayedAt: number;
+  };
+}
+
 export interface ColorDefinition {
   name: string;
   rgb: RGB;
   isPrimary: boolean;
-}
-
-export interface SavedColor {
-  id: string;
-  rgb: RGB;
-  createdAt: Date;
 }
 
 export interface ColorMixerState {
