@@ -80,25 +80,23 @@ export default function ColorMixerApp() {
         />
 
         <main className="container mx-auto px-4 py-6 max-w-4xl">
-          <GameContainer preventScroll>
-            {/* Game title */}
-            <div className="text-center mb-8">
-              <p className="text-lg text-gray-600">
-                {translations.description}
-              </p>
-            </div>
+          {/* Game title */}
+          <div className="text-center mb-8">
+            <p className="text-lg text-gray-600">
+              {translations.description}
+            </p>
+          </div>
 
-            {/* Integrated Color Mixer */}
-            <Card className="max-w-2xl mx-auto" padding="md">
-              <IntegratedColorMixer
-                savedColors={gameState.savedColors}
-                onSaveColor={handleSaveColor}
-                translations={translations}
-                onPlayMixSound={sounds.playMixSound}
-                onPlaySuccessSound={sounds.playSuccessSound}
-              />
-            </Card>
-          </GameContainer>
+          {/* Integrated Color Mixer */}
+          <Card className="max-w-2xl mx-auto" padding="md">
+            <IntegratedColorMixer
+              savedColors={gameState.savedColors}
+              onSaveColor={handleSaveColor}
+              translations={translations}
+              onPlayMixSound={sounds.playMixSound}
+              onPlaySuccessSound={sounds.playSuccessSound}
+            />
+          </Card>
         </main>
       </div>
     </DragManagerProvider>
