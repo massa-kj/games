@@ -111,18 +111,16 @@ export function IntegratedColorMixer({
 
   return (
     <>
-      {/* Main Content - Only Color Mixer */}
-      <div className="flex justify-center items-center min-h-screen">
-        <ColorMixer
-          selectedColors={selectedColors}
-          mixedColor={mixedColor}
-          isAnimating={isAnimating}
-          translations={translations}
-          onSlotClick={handleSlotClick}
-          onMixButtonClick={handleMixButtonClick}
-          onGeneratedColorClick={handleGeneratedColorClick}
-        />
-      </div>
+      {/* Main Content */}
+      <ColorMixer
+        selectedColors={selectedColors}
+        mixedColor={mixedColor}
+        isAnimating={isAnimating}
+        translations={translations}
+        onSlotClick={handleSlotClick}
+        onMixButtonClick={handleMixButtonClick}
+        onGeneratedColorClick={handleGeneratedColorClick}
+      />
 
       {/* Color Selection Modal */}
       <ColorSelectionModal

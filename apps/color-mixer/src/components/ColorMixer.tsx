@@ -33,27 +33,20 @@ export function ColorMixer({
   onGeneratedColorClick,
 }: ColorMixerProps) {
   return (
-    <div className="max-w-2xl mx-auto space-y-6 p-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl shadow-xl border border-purple-200/50">
-      {/* Header with beaker icon */}
+    <div className="max-w-2xl mx-auto space-y-6 p-6 bg-gradient-to-br from-purple-200 to-pink-200 rounded-3xl shadow-xl border border-purple-200/50">
+      {/* Header */}
       <div className="flex items-center justify-center gap-3 text-purple-700">
-        <div className="p-3 bg-purple-100 rounded-full animate-pulse-gentle">
-          <BeakerIcon className="w-6 h-6 text-purple-600" />
-        </div>
         <h3 className="text-xl font-bold uppercase tracking-wider bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
           {translations.alchemyStation}
         </h3>
-        <div className="p-3 bg-purple-100 rounded-full animate-pulse-gentle" style={{ animationDelay: '1s' }}>
-          <BeakerIcon className="w-6 h-6 text-purple-600 scale-x-[-1]" />
-        </div>
       </div>
 
       {/* Mixer Slots */}
-      <div className="relative bg-white/50 rounded-2xl p-6 shadow-inner">
-        <div className="grid grid-cols-5 gap-4 items-center justify-items-center">
+      <div className="relative bg-white/50 rounded-2xl p-2 shadow-inner">
+        <div className="grid grid-cols-4 gap-4 items-center justify-items-center">
           {/* Slot 1 */}
           <div className="col-span-2 text-center space-y-3">
             <div className="flex items-center justify-center gap-2 px-3 py-1 bg-purple-100 rounded-full">
-              <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
               <span className="text-sm font-bold text-purple-700 uppercase tracking-wide">{translations.elementA}</span>
             </div>
 
@@ -82,13 +75,9 @@ export function ColorMixer({
                       </span>
                     </div>
                   </Card>
-
-                  {/* Magical glow indicator */}
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full flex items-center justify-center shadow-lg animate-bounce-in">
-                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                  </div>
-                  {/* Energy rings */}
-                  <div className="absolute inset-0 rounded-2xl border-2 border-purple-300/50 animate-ping"></div>
+                  {/* Magic sparkles */}
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-300 rounded-full animate-ping"></div>
+                  <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-yellow-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
                 </div>
               ) : (
                 <div className="w-full h-full border-3 border-dashed border-purple-300 rounded-2xl flex flex-col items-center justify-center transition-all duration-500 group-hover:border-purple-500 group-hover:bg-purple-50/50 group-hover:shadow-xl group-hover:shadow-purple-300/50 bg-gradient-to-br from-white/80 to-purple-50/50">
@@ -107,26 +96,18 @@ export function ColorMixer({
                   <div className="text-purple-600 text-xs text-center mt-2 font-semibold group-hover:text-purple-700 transition-colors duration-300">
                     {translations.clickToChoose}
                   </div>
+
+                  {/* Energy rings */}
+                  <div className="absolute inset-0 rounded-2xl border-2 border-purple-300/50 animate-ping"></div>
                 </div>
               )}
             </button>
-          </div>
-
-          {/* Plus Symbol with magical effect */}
-          <div className="flex items-center justify-center">
-            <div className="relative p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-xl animate-pulse-gentle">
-              <PlusIcon className="w-5 h-5 text-white" />
-              {/* Magic sparkles */}
-              <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-300 rounded-full animate-ping"></div>
-              <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-yellow-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
-            </div>
           </div>
 
           {/* Slot 2 */}
           <div className="col-span-2 text-center space-y-3">
             <div className="flex items-center justify-center gap-2 px-3 py-1 bg-pink-100 rounded-full">
               <span className="text-sm font-bold text-pink-700 uppercase tracking-wide">{translations.elementB}</span>
-              <div className="w-2 h-2 bg-pink-500 rounded-full animate-pulse"></div>
             </div>
 
             <button
@@ -154,13 +135,9 @@ export function ColorMixer({
                       </span>
                     </div>
                   </Card>
-
-                  {/* Magical glow indicator */}
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-pink-400 to-pink-600 rounded-full flex items-center justify-center shadow-lg animate-bounce-in">
-                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                  </div>
-                  {/* Energy rings */}
-                  <div className="absolute inset-0 rounded-2xl border-2 border-pink-300/50 animate-ping"></div>
+                  {/* Magic sparkles */}
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-300 rounded-full animate-ping"></div>
+                  <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-yellow-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
                 </div>
               ) : (
                 <div className="w-full h-full border-3 border-dashed border-pink-300 rounded-2xl flex flex-col items-center justify-center transition-all duration-500 group-hover:border-pink-500 group-hover:bg-pink-50/50 group-hover:shadow-xl group-hover:shadow-pink-300/50 bg-gradient-to-br from-white/80 to-pink-50/50">
@@ -179,21 +156,13 @@ export function ColorMixer({
                   <div className="text-pink-600 text-xs text-center mt-2 font-semibold group-hover:text-pink-700 transition-colors duration-300">
                     {translations.clickToChoose}
                   </div>
+
+                  {/* Energy rings */}
+                  <div className="absolute inset-0 rounded-2xl border-2 border-pink-300/50 animate-ping"></div>
                 </div>
               )}
             </button>
           </div>
-        </div>
-
-        {/* Magical energy flow lines */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-          <div className="flex items-center space-x-2">
-            <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-transparent rounded-full animate-pulse"></div>
-            <div className="w-16 h-1 bg-gradient-to-r from-transparent to-pink-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-          </div>
-          {/* Energy particles */}
-          <div className="absolute top-1/2 left-4 w-1 h-1 bg-purple-400 rounded-full animate-ping"></div>
-          <div className="absolute top-1/2 right-4 w-1 h-1 bg-pink-400 rounded-full animate-ping" style={{ animationDelay: '0.3s' }}></div>
         </div>
       </div>
 
@@ -223,26 +192,16 @@ export function ColorMixer({
         </Button>
       </div>
 
-      {/* Arrow pointing down */}
-      <div className="flex justify-center">
-        <div className="text-purple-400">
-          <svg className="w-8 h-8 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-        </div>
-      </div>
-
       {/* Generated Color */}
       <div className="text-center space-y-4 p-4 bg-gradient-to-br from-yellow-50 to-amber-50 rounded-2xl shadow-inner border border-yellow-200/50">
-        <div className="flex items-center justify-center gap-3">
-          <div className="p-2 bg-gradient-to-r from-yellow-400 to-amber-400 rounded-full animate-pulse-gentle">
-            <SparklesIcon className="w-5 h-5 text-white" />
-          </div>
-          <h4 className="text-lg font-bold uppercase tracking-wider bg-gradient-to-r from-yellow-600 to-amber-600 bg-clip-text text-transparent">
-            {translations.alchemicalCreation}
-          </h4>
-          <div className="p-2 bg-gradient-to-r from-amber-400 to-yellow-400 rounded-full animate-pulse-gentle" style={{ animationDelay: '0.5s' }}>
-            <SparklesIcon className="w-5 h-5 text-white" />
+        {/* Status indicator */}
+        <div className="flex justify-center">
+          <div className="flex items-center gap-2 px-4 py-2 bg-white/70 rounded-full shadow-md">
+            <div className="w-2 h-2 bg-gradient-to-r from-yellow-400 to-amber-400 rounded-full animate-pulse"></div>
+            <span className="text-xs font-semibold text-yellow-700 uppercase tracking-wide">
+              {mixedColor ? translations.clickColorToSave : translations.laboratoryReady}
+            </span>
+            <div className="w-2 h-2 bg-gradient-to-r from-amber-400 to-yellow-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
           </div>
         </div>
 
@@ -256,7 +215,7 @@ export function ColorMixer({
                 {/* Magical aura */}
                 <div className="absolute inset-0 bg-gradient-to-r from-yellow-300/30 to-amber-300/30 rounded-3xl blur-md animate-pulse-gentle"></div>
                 <Card
-                  className={`relative w-32 h-32 sm:w-36 sm:h-36 transition-all duration-700 cursor-pointer hover:rotate-3 ${
+                  className={`relative w-24 h-24 sm:w-36 sm:h-36 transition-all duration-700 cursor-pointer hover:rotate-3 ${
                     isAnimating ? 'animate-pulse-gentle' : 'animate-bounce-in shadow-2xl hover:shadow-3xl'
                   }`}
                   padding="sm"
@@ -303,7 +262,7 @@ export function ColorMixer({
               </div>
             </button>
           ) : (
-            <div className="w-32 h-32 sm:w-36 sm:h-36 border-3 border-dashed border-yellow-400 rounded-3xl flex flex-col items-center justify-center text-yellow-600 bg-gradient-to-br from-white/60 to-yellow-50/60 shadow-inner relative overflow-hidden">
+            <div className="w-24 h-24 sm:w-36 sm:h-36 border-3 border-dashed border-yellow-400 rounded-3xl flex flex-col items-center justify-center text-yellow-600 bg-gradient-to-br from-white/60 to-yellow-50/60 shadow-inner relative overflow-hidden">
               {isAnimating ? (
                 <div className="flex flex-col items-center gap-3">
                   <div className="relative">
@@ -331,17 +290,6 @@ export function ColorMixer({
               )}
             </div>
           )}
-        </div>
-
-        {/* Status indicator */}
-        <div className="flex justify-center">
-          <div className="flex items-center gap-2 px-4 py-2 bg-white/70 rounded-full shadow-md">
-            <div className="w-2 h-2 bg-gradient-to-r from-yellow-400 to-amber-400 rounded-full animate-pulse"></div>
-            <span className="text-xs font-semibold text-yellow-700 uppercase tracking-wide">
-              {mixedColor ? translations.clickColorToSave : translations.laboratoryReady}
-            </span>
-            <div className="w-2 h-2 bg-gradient-to-r from-amber-400 to-yellow-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-          </div>
         </div>
       </div>
     </div>

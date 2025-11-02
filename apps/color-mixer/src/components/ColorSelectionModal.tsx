@@ -138,10 +138,6 @@ export function ColorSelectionModal({
               </button>
             );
           })}
-
-          {/* Orbital rings for visual effect */}
-          <div className="absolute inset-8 border border-purple-200/30 rounded-full animate-spin-slow opacity-50"></div>
-          <div className="absolute inset-12 border border-pink-200/30 rounded-full animate-spin-slower opacity-30"></div>
         </div>
 
         {/* Legend */}

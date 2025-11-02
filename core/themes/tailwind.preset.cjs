@@ -57,10 +57,35 @@ module.exports = {
         normal: 'var(--transition-normal)',
         slow: 'var(--transition-slow)',
       },
+      borderWidth: {
+        '3': '3px',
+      },
+      scale: {
+        '115': '1.15',
+      },
+      boxShadow: {
+        '3xl': '0 35px 60px -12px rgba(0, 0, 0, 0.25)',
+      },
       animation: {
         'bounce-in': 'bounce-in 0.5s ease-out',
         'wiggle': 'wiggle 0.8s ease-in-out infinite',
         'pulse-gentle': 'pulse-gentle 2s ease-in-out infinite',
+      },
+      keyframes: {
+        'bounce-in': {
+          '0%': { transform: 'scale(0.3)', opacity: '0' },
+          '50%': { transform: 'scale(1.05)', opacity: '0.8' },
+          '70%': { transform: 'scale(0.9)', opacity: '0.9' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+        'wiggle': {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        },
+        'pulse-gentle': {
+          '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+          '50%': { opacity: '0.8', transform: 'scale(1.02)' },
+        },
       },
     },
   },
