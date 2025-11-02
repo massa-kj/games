@@ -60,16 +60,7 @@ export function ColorSelectionModal({
         </div>
 
         {/* Circular color arrangement */}
-        <div className="relative w-80 h-80 rounded-full bg-gradient-to-br from-purple-50/50 to-pink-50/50 border-4 border-purple-200/50 shadow-inner">
-          {/* Central magical core */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center shadow-lg animate-pulse-gentle">
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-          </div>
-
+        <div className="relative w-80 h-80 rounded-full bg-gradient-to-r from-purple-200 to-pink-200 animate-pulse-gentle border-4 border-purple-200/50 shadow-inner">
           {/* Circular arrangement of colors */}
           {allColors.map((color, index) => {
             if (!color) return null;
@@ -159,11 +150,6 @@ export function ColorSelectionModal({
             <span className="text-green-700 font-semibold">{translations.savedCreations}</span>
           </div>
         </div>
-
-        {/* Instruction text */}
-        <p className="text-center text-gray-600 text-sm max-w-md">
-          {translations.selectElementInstruction}
-        </p>
       </div>
     </Modal>
   );
