@@ -1,34 +1,13 @@
 import React, { useState } from 'react';
+import { I18nProvider } from '@core/i18n';
 import { useGameLogic } from '@/hooks';
 import { GameBoard, ResultModal } from '@/components';
+import { useL10n } from '@/locales';
 import { Difficulty } from '@/types';
-import { useSettings } from '@core/hooks';
 import '@/styles.css';
 
-// Import locale data
-import enLocale from '@/data/locales/en.json';
-import jaLocale from '@/data/locales/ja.json';
-
-const locales = {
-  en: enLocale,
-  ja: jaLocale
-};
-
-export default function App() {
-  const { settings: appSettings } = useSettings();
-
-  // Simple translation function
-  const t = (key: string): string => {
-    const currentLocale = locales[appSettings.lang || 'en'];
-    const keys = key.split('.');
-    let value: any = currentLocale;
-
-    for (const k of keys) {
-      value = value?.[k];
-    }
-
-    return value || key;
-  };
+function NumberTouchGame() {
+  const { t } = useL10n();
   const {
     numbers,
     currentTarget,
@@ -83,12 +62,12 @@ export default function App() {
         {
           value: 'easy',
           label: t('game.difficulty.easy'),
-          description: t('game.difficulty.easyDescription')
+          description: t('game.difficulty.easy')
         },
         {
           value: 'hard',
           label: t('game.difficulty.hard'),
-          description: t('game.difficulty.hardDescription')
+          description: t('game.difficulty.hard')
         }
       ]
     },
@@ -129,5 +108,13 @@ export default function App() {
         mistakes={mistakes}
       />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <I18nProvider>
+      <NumberTouchGame />
+    </I18nProvider>
   );
 }

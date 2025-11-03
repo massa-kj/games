@@ -1,16 +1,7 @@
 import React from 'react';
 import { calculateStars, Difficulty } from '@/types';
-import { useSettings } from '@core/hooks';
+import { useL10n } from '@/locales';
 import { Modal, StarsRating } from '@core/ui';
-
-// Import locale data
-import enLocale from '@/data/locales/en.json';
-import jaLocale from '@/data/locales/ja.json';
-
-const locales = {
-  en: enLocale,
-  ja: jaLocale
-};
 
 interface ResultModalProps {
   isOpen: boolean;
@@ -29,20 +20,7 @@ export const ResultModal: React.FC<ResultModalProps> = ({
   difficulty,
   mistakes
 }) => {
-  const { settings } = useSettings();
-
-  // Simple translation function
-  const t = (key: string): string => {
-    const currentLocale = locales[settings.lang || 'en'];
-    const keys = key.split('.');
-    let value: any = currentLocale;
-
-    for (const k of keys) {
-      value = value?.[k];
-    }
-
-    return value || key;
-  };
+  const { t } = useL10n();
 
   const stars = calculateStars(time, difficulty);
   const maxNumber = difficulty === 'easy' ? 10 : 20;
