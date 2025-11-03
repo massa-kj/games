@@ -2,7 +2,7 @@ import { DropZone } from '@core/ui';
 import { DraggableColorCard } from './DraggableColorCard';
 import type { ColorPaletteProps } from './types';
 
-export function ColorPalette({ colors, translations, validDropZones }: ColorPaletteProps) {
+export function ColorPalette({ colors, t, validDropZones }: ColorPaletteProps) {
   return (
     <div>
       <div className="grid grid-cols-4 gap-3">
@@ -13,7 +13,7 @@ export function ColorPalette({ colors, translations, validDropZones }: ColorPale
           >
             <DraggableColorCard
               color={color}
-              translations={translations}
+              t={t}
               initialPosition={{ x: 0, y: 0 }}
               size="sm"
               returnToOrigin

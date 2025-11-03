@@ -1,17 +1,18 @@
 import { useState } from 'react';
-import type { RGB, ColorDefinition, GameTranslations, SavedColor } from '@/types';
+import type { RGB, ColorDefinition, SavedColor } from '@/types';
 import { ColorMixingMethod } from '@/types';
 import { getColorName, mixColors as mixTwoColors } from '@/utils/colorUtils';
 import { PRIMARY_COLORS } from '@/utils/colorUtils';
 import { ColorMixer } from './ColorMixer';
 import { ColorSelectionModal } from './ColorSelectionModal';
 import { SaveResultModal } from './SaveResultModal';
+import type { useL10n } from '@/locales';
 
 interface IntegratedColorMixerProps {
   savedColors: SavedColor[];
   onSaveColor: (color: RGB, slotIndex?: number) => void;
   onMixColors?: () => Promise<void>;
-  translations: GameTranslations;
+  t: ReturnType<typeof useL10n>['t'];
   onPlayMixSound: () => Promise<void>;
   onPlaySuccessSound: () => Promise<void>;
 }
@@ -20,7 +21,7 @@ export function IntegratedColorMixer({
   savedColors,
   onSaveColor,
   onMixColors,
-  translations,
+  t,
   onPlayMixSound,
   onPlaySuccessSound,
 }: IntegratedColorMixerProps) {
@@ -132,7 +133,7 @@ export function IntegratedColorMixer({
         selectedColors={selectedColors}
         mixedColor={mixedColor}
         isAnimating={isAnimating}
-        translations={translations}
+        t={t}
         mixingMethod={mixingMethod}
         onSlotClick={handleSlotClick}
         onMixButtonClick={handleMixButtonClick}
@@ -146,14 +147,14 @@ export function IntegratedColorMixer({
         onClose={() => setColorSelectionModal({ isOpen: false, slotIndex: null })}
         primaryColors={primaryColors}
         savedColors={savedColorDefinitions}
-        translations={translations}
+        t={t}
         onColorSelect={handleColorSelect}
         title={
           colorSelectionModal.slotIndex === 0
-            ? translations.chooseElementA
+            ? t('chooseElementA')
             : colorSelectionModal.slotIndex === 1
-            ? translations.chooseElementB
-            : translations.chooseYourElement
+            ? t('chooseElementB')
+            : t('chooseYourElement')
         }
       />
 
@@ -164,7 +165,7 @@ export function IntegratedColorMixer({
           onClose={() => setSaveResultModal(false)}
           mixedColor={mixedColor}
           savedColors={savedColors}
-          translations={translations}
+          t={t}
           onDrop={handleColorDrop}
         />
       )}

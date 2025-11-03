@@ -4,7 +4,7 @@ import type { DraggableColorCardProps } from './types';
 
 export function DraggableColorCard({
   color,
-  translations,
+  t,
   initialPosition,
   size = 'md',
   idPrefix,
@@ -36,9 +36,9 @@ export function DraggableColorCard({
             color: getTextColor(color.rgb),
           }}
         >
-          {/* @ts-ignore - translations.colorNames has the color name */}
-          {translations.colorNames[getColorName(color.rgb) as keyof typeof translations.colorNames] ||
-           translations.colorNames.unknown}
+          {/* @ts-ignore - t() function supports dynamic color names */}
+          {t(`colorNames.${getColorName(color.rgb)}` as any) ||
+           t('colorNames.unknown')}
         </div>
       </Card>
     </Draggable>

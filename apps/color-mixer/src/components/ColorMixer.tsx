@@ -10,8 +10,6 @@ const BeakerIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
   </svg>
 );
 
-
-
 // Sparkles for magic/result effect
 const SparklesIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 20 20">
@@ -44,7 +42,7 @@ export function ColorMixer({
   selectedColors,
   mixedColor,
   isAnimating,
-  translations,
+  t,
   mixingMethod,
   onSlotClick,
   onMixButtonClick,
@@ -57,24 +55,24 @@ export function ColorMixer({
       case ColorMixingMethod.SUBTRACTIVE:
         return {
           icon: PaintPaletteIcon,
-          label: '絵具風',
-          description: '減算混色（絵具のような合成）',
+          label: t('mixMethodPaintLikeLabel'),
+          description: t('mixMethodPaintLikeDescription'),
           bgClass: 'from-purple-600 to-indigo-600',
           hoverClass: 'hover:from-purple-700 hover:to-indigo-700'
         };
       case ColorMixingMethod.ADDITIVE:
         return {
           icon: SunIcon,
-          label: '光風',
-          description: '加算混色（光のような合成）',
+          label: t('mixMethodLightLikeLabel'),
+          description: t('mixMethodLightLikeDescription'),
           bgClass: 'from-yellow-500 to-orange-500',
           hoverClass: 'hover:from-yellow-600 hover:to-orange-600'
         };
       case ColorMixingMethod.AVERAGE:
         return {
           icon: SparklesIcon,
-          label: '平均色',
-          description: '平均色（RGB値の平均）',
+          label: t('mixMethodAverageLabel'),
+          description: t('mixMethodAverageDescription'),
           bgClass: 'from-pink-500 to-red-500',
           hoverClass: 'hover:from-pink-600 hover:to-red-600'
         };
@@ -82,8 +80,8 @@ export function ColorMixer({
       default:
         return {
           icon: PlusCircleIcon,
-          label: 'HSL補間',
-          description: 'HSL補間（色相環の中間色）',
+          label: t('mixMethodHSLInterpolationLabel'),
+          description: t('mixMethodHSLInterpolationDescription'),
           bgClass: 'from-green-500 to-teal-500',
           hoverClass: 'hover:from-green-600 hover:to-teal-600'
         };
@@ -94,7 +92,7 @@ export function ColorMixer({
       {/* Header */}
       <div className="flex items-center justify-center gap-3 text-purple-700">
         <h3 className="text-xl font-bold uppercase tracking-wider bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-          {translations.alchemyStation}
+          {t("alchemyStation")}
         </h3>
       </div>
 
@@ -104,7 +102,7 @@ export function ColorMixer({
           {/* Slot 1 */}
           <div className="col-span-2 text-center space-y-3">
             <div className="flex items-center justify-center gap-2 px-3 py-1 bg-purple-100 rounded-full">
-              <span className="text-sm font-bold text-purple-700 uppercase tracking-wide">{translations.elementA}</span>
+              <span className="text-sm font-bold text-purple-700 uppercase tracking-wide">{t("elementA")}</span>
             </div>
 
             <button
@@ -126,9 +124,7 @@ export function ColorMixer({
                       }}
                     >
                       <span className="text-center leading-tight">
-                        {/* @ts-ignore - translations.colorNames has the color name */}
-                        {(translations.colorNames[getColorName(selectedColors[0].rgb) as keyof typeof translations.colorNames] ||
-                         translations.colorNames.unknown).slice(0, 6)}
+                        {(t(`colorNames.${getColorName(selectedColors[0].rgb)}` as any) || t('colorNames.unknown')).slice(0, 6)}
                       </span>
                     </div>
                   </Card>
@@ -151,7 +147,7 @@ export function ColorMixer({
                     </div>
                   </div>
                   <div className="text-purple-600 text-xs text-center mt-2 font-semibold group-hover:text-purple-700 transition-colors duration-300">
-                    {translations.clickToChoose}
+                    {t("clickToChoose")}
                   </div>
 
                   {/* Energy rings */}
@@ -164,7 +160,7 @@ export function ColorMixer({
           {/* Slot 2 */}
           <div className="col-span-2 text-center space-y-3">
             <div className="flex items-center justify-center gap-2 px-3 py-1 bg-pink-100 rounded-full">
-              <span className="text-sm font-bold text-pink-700 uppercase tracking-wide">{translations.elementB}</span>
+              <span className="text-sm font-bold text-pink-700 uppercase tracking-wide">{t("elementB")}</span>
             </div>
 
             <button
@@ -186,9 +182,7 @@ export function ColorMixer({
                       }}
                     >
                       <span className="text-center leading-tight">
-                        {/* @ts-ignore - translations.colorNames has the color name */}
-                        {(translations.colorNames[getColorName(selectedColors[1].rgb) as keyof typeof translations.colorNames] ||
-                         translations.colorNames.unknown).slice(0, 6)}
+                        {(t(`colorNames.${getColorName(selectedColors[1].rgb)}` as any) || t('colorNames.unknown')).slice(0, 6)}
                       </span>
                     </div>
                   </Card>
@@ -211,7 +205,7 @@ export function ColorMixer({
                     </div>
                   </div>
                   <div className="text-pink-600 text-xs text-center mt-2 font-semibold group-hover:text-pink-700 transition-colors duration-300">
-                    {translations.clickToChoose}
+                    {t("clickToChoose")}
                   </div>
 
                   {/* Energy rings */}
@@ -226,7 +220,7 @@ export function ColorMixer({
       {/* Mixing Method Selection */}
       <div className="bg-white/60 rounded-2xl p-4 shadow-inner border border-white/50">
         <div className="text-center mb-3">
-          <h4 className="text-sm font-bold text-purple-700 uppercase tracking-wide">合成方式</h4>
+          <h4 className="text-sm font-bold text-purple-700 uppercase tracking-wide">{t('mixMethods')}</h4>
         </div>
         <div className="flex justify-center gap-2">
           {([ColorMixingMethod.AVERAGE, ColorMixingMethod.HSL_INTERPOLATION] as const).map((method) => {
@@ -272,12 +266,12 @@ export function ColorMixer({
           {isAnimating ? (
             <div className="flex items-center gap-3">
               <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
-              {translations.mixingMagic}
+              {t("mixingMagic")}
             </div>
           ) : (
             <div className="flex items-center gap-3">
               <BeakerIcon className="w-5 h-5" />
-              {translations.mixColors}
+              {t("mixColors")}
               <SparklesIcon className="w-5 h-5" />
             </div>
           )}
@@ -291,7 +285,7 @@ export function ColorMixer({
           <div className="flex items-center gap-2 px-4 py-2 bg-white/70 rounded-full shadow-md">
             <div className="w-2 h-2 bg-gradient-to-r from-yellow-400 to-amber-400 rounded-full animate-pulse"></div>
             <span className="text-xs font-semibold text-yellow-700 uppercase tracking-wide">
-              {mixedColor ? translations.clickColorToSave : translations.laboratoryReady}
+              {mixedColor ? t("clickColorToSave") : t("laboratoryReady")}
             </span>
             <div className="w-2 h-2 bg-gradient-to-r from-amber-400 to-yellow-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
           </div>
@@ -338,15 +332,13 @@ export function ColorMixer({
                     </div>
 
                     <div className="text-center relative z-10">
-                      {/* @ts-ignore - translations.colorNames has the color name */}
-                      {translations.colorNames[getColorName(mixedColor) as keyof typeof translations.colorNames] ||
-                       translations.colorNames.unknown}
+                      {t(`colorNames.${getColorName(mixedColor)}` as any) || t('colorNames.unknown')}
                     </div>
 
                     {/* Click to save indicator */}
                     <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <div className="text-xs font-bold bg-black/20 px-2 py-1 rounded-full">
-                        {translations.clickToSave}
+                        {t("clickToSave")}
                       </div>
                     </div>
                   </div>
@@ -361,7 +353,7 @@ export function ColorMixer({
                     <div className="animate-spin rounded-full h-8 w-8 border-3 border-yellow-400 border-t-transparent"></div>
                     <div className="absolute inset-0 animate-ping rounded-full h-8 w-8 border border-yellow-300 opacity-75"></div>
                   </div>
-                  <div className="text-sm font-bold animate-pulse">{translations.transmuting}</div>
+                  <div className="text-sm font-bold animate-pulse">{t("transmuting")}</div>
                   {/* Magical particles during animation */}
                   <div className="absolute inset-0">
                     <div className="absolute top-4 left-4 w-1 h-1 bg-yellow-400 rounded-full animate-bounce"></div>
@@ -376,7 +368,7 @@ export function ColorMixer({
                     <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full animate-ping opacity-75"></div>
                   </div>
                   <div className="text-sm font-bold text-center">
-                    {translations.waitingForMagicalElements}
+                    {t("waitingForMagicalElements")}
                   </div>
                 </div>
               )}

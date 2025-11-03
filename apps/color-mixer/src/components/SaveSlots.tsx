@@ -2,7 +2,7 @@ import { DropZone } from '@core/ui';
 import { DraggableColorCard } from './DraggableColorCard';
 import type { SaveSlotsProps } from './types';
 
-export function SaveSlots({ savedColors, translations, onDrop, validDropZones }: SaveSlotsProps) {
+export function SaveSlots({ savedColors, t, onDrop, validDropZones }: SaveSlotsProps) {
   return (
     <div>
       <div className="grid grid-cols-3 gap-4 justify-items-center">
@@ -16,7 +16,7 @@ export function SaveSlots({ savedColors, translations, onDrop, validDropZones }:
               {color ? (
                 <DraggableColorCard
                   color={color}
-                  translations={translations}
+                  t={t}
                   initialPosition={{ x: 0, y: 0 }}
                   size="sm"
                   idPrefix={`saved-${index}`}
@@ -25,7 +25,7 @@ export function SaveSlots({ savedColors, translations, onDrop, validDropZones }:
                 />
               ) : (
                 <div className="text-gray-400 text-xs text-center">
-                  {translations.saved}
+                  {t('saved')}
                 </div>
               )}
             </DropZone>

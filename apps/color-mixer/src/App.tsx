@@ -1,24 +1,27 @@
 import { useState, useEffect, useCallback } from 'react';
 import { GameHeader, DragManagerProvider } from '@core/ui';
-import { useSettings } from '@core/hooks';
+import { I18nProvider } from '@core/i18n';
 import '@/styles.css';
-
-// Import translations
-import enTranslations from '@/data/locales/en.json';
-import jaTranslations from '@/data/locales/ja.json';
 
 // Import components
 import { IntegratedColorMixer } from '@/components';
 
 // Import types and utilities
-import type { ColorMixerState, GameTranslations, RGB } from '@/types';
+import type { ColorMixerState, RGB } from '@/types';
 import { getSavedColors, saveColor, updateMixingStats } from '@/utils/storage';
 import { useColorMixerSounds } from '@/hooks/useColorMixerSounds';
+import { useL10n } from '@/locales';
 
 export default function ColorMixerApp() {
-  const { settings } = useSettings();
-  const currentLang = settings.lang;
-  const translations = (currentLang === 'en' ? enTranslations : jaTranslations) as GameTranslations;
+  return (
+    <I18nProvider>
+      <GameContent />
+    </I18nProvider>
+  );
+}
+
+function GameContent() {
+  const { t } = useL10n();
 
   const sounds = useColorMixerSounds();
 
@@ -64,7 +67,7 @@ export default function ColorMixerApp() {
     <DragManagerProvider>
       <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
         <GameHeader
-          title={translations.title}
+          title={t('title')}
           showHomeButton={true}
           className='bg-gradient-to-br from-blue-200 to-purple-200'
         />
@@ -75,7 +78,7 @@ export default function ColorMixerApp() {
             savedColors={gameState.savedColors}
             onSaveColor={handleSaveColor}
             onMixColors={updateMixingStats}
-            translations={translations}
+            t={t}
             onPlayMixSound={sounds.playMixSound}
             onPlaySuccessSound={sounds.playSuccessSound}
           />
