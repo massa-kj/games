@@ -1,11 +1,43 @@
 {
   "title": "{{GAME_TITLE_EN}}",
   "description": "{{GAME_DESCRIPTION_EN}}",
-  "startGame": "Start Game",
-  "playAgain": "Play Again",
-  "score": "Score",
-  "gameOver": "Game Over",
-  "congratulations": "Congratulations!",
-  "loading": "Loading...",
-  "error": "Something went wrong. Please try again."
+  "ui": {
+    "buttons": {
+      "start": "Start Game",
+      "playAgain": "Play Again",
+      "restart": "Restart",
+      "continue": "Continue",
+      "pause": "Pause",
+      "resume": "Resume",
+      "quit": "Quit"
+    },
+    "labels": {
+      "score": "Score",
+      "level": "Level",
+      "time": "Time",
+      "attempts": "Attempts"
+    }
+  },
+  "game": {
+    "states": {
+      "loading": "Loading...",
+      "ready": "Ready",
+      "playing": "Playing",
+      "paused": "Paused",
+      "gameOver": "Game Over",
+      "completed": "Completed!"
+    },
+    "messages": {
+      "congratulations": "Congratulations!",
+      "wellDone": "Well Done!",
+      "tryAgain": "Try Again!",
+      "newRecord": "New Record!"
+    }
+  },
+  "common": {
+    "error": "Something went wrong. Please try again.",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  }
 }
