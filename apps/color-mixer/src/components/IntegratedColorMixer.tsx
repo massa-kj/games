@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { RGB, ColorDefinition, GameTranslations, SavedColor } from '@/types';
+import { ColorMixingMethod } from '@/types';
 import { getColorName, mixColors as mixTwoColors } from '@/utils/colorUtils';
 import { PRIMARY_COLORS } from '@/utils/colorUtils';
 import { ColorMixer } from './ColorMixer';
@@ -26,6 +27,7 @@ export function IntegratedColorMixer({
   const [selectedColors, setSelectedColors] = useState<(ColorDefinition | null)[]>([null, null]);
   const [mixedColor, setMixedColor] = useState<RGB | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [mixingMethod, setMixingMethod] = useState<ColorMixingMethod>(ColorMixingMethod.HSL_INTERPOLATION);
 
   // Modal states
   const [colorSelectionModal, setColorSelectionModal] = useState<{
@@ -104,10 +106,17 @@ export function IntegratedColorMixer({
 
     // Simulate mixing animation delay
     setTimeout(() => {
-      const mixed = mixTwoColors(colors[0].rgb, colors[1].rgb);
+      const mixed = mixTwoColors(colors[0].rgb, colors[1].rgb, mixingMethod);
+      console.log('Mixed Color:', mixed);
       setMixedColor(mixed);
       setIsAnimating(false);
     }, 800);
+  };
+
+  const handleMixingMethodChange = (method: ColorMixingMethod) => {
+    setMixingMethod(method);
+    // Reset mixed color when changing method to show the difference
+    setMixedColor(null);
   };
 
   const handleMixButtonClick = async () => {
@@ -124,9 +133,11 @@ export function IntegratedColorMixer({
         mixedColor={mixedColor}
         isAnimating={isAnimating}
         translations={translations}
+        mixingMethod={mixingMethod}
         onSlotClick={handleSlotClick}
         onMixButtonClick={handleMixButtonClick}
         onGeneratedColorClick={handleGeneratedColorClick}
+        onMixingMethodChange={handleMixingMethodChange}
       />
 
       {/* Color Selection Modal */}

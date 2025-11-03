@@ -88,6 +88,26 @@ export interface RGB {
   b: number;
 }
 
+export interface HSL {
+  h: number;
+  s: number;
+  l: number;
+}
+
+/**
+ * Color mixing methods
+ */
+export enum ColorMixingMethod {
+  /** Subtractive mixing (like paint) - current default */
+  SUBTRACTIVE = 'subtractive',
+  /** Additive mixing (like light) */
+  ADDITIVE = 'additive',
+  /** HSL interpolation (midpoint on color wheel) */
+  HSL_INTERPOLATION = 'hsl_interpolation',
+  /** Average of RGB values */
+  AVERAGE = 'average',
+}
+
 export interface SavedColor {
   id: string;
   rgb: RGB;

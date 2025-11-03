@@ -1,5 +1,6 @@
 import { Card, Button } from '@core/ui';
 import { rgbToString, getTextColor, getColorName } from '@/utils/colorUtils';
+import { ColorMixingMethod } from '@/types';
 import type { ColorMixerProps } from './types';
 
 // Beaker/Flask Icon for mixing
@@ -9,12 +10,7 @@ const BeakerIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
   </svg>
 );
 
-// Plus Icon for combining
-const PlusIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-  </svg>
-);
+
 
 // Sparkles for magic/result effect
 const SparklesIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
@@ -23,15 +19,76 @@ const SparklesIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   </svg>
 );
 
+// Paint palette icon for subtractive mixing (like paint)
+const PaintPaletteIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM7 3v5h8V5a2 2 0 012-2h2a2 2 0 012 2v2a4 4 0 01-4 4h-6a4 4 0 01-4-4V3z" />
+  </svg>
+);
+
+// Sun/Light icon for additive mixing (like light)
+const SunIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+);
+
+// Plus circle icon for simple addition
+const PlusCircleIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+);
+
 export function ColorMixer({
   selectedColors,
   mixedColor,
   isAnimating,
   translations,
+  mixingMethod,
   onSlotClick,
   onMixButtonClick,
   onGeneratedColorClick,
+  onMixingMethodChange,
 }: ColorMixerProps) {
+  // Helper function to get method icon and label
+  const getMixingMethodInfo = (method: ColorMixingMethod) => {
+    switch (method) {
+      case ColorMixingMethod.SUBTRACTIVE:
+        return {
+          icon: PaintPaletteIcon,
+          label: '絵具風',
+          description: '減算混色（絵具のような合成）',
+          bgClass: 'from-purple-600 to-indigo-600',
+          hoverClass: 'hover:from-purple-700 hover:to-indigo-700'
+        };
+      case ColorMixingMethod.ADDITIVE:
+        return {
+          icon: SunIcon,
+          label: '光風',
+          description: '加算混色（光のような合成）',
+          bgClass: 'from-yellow-500 to-orange-500',
+          hoverClass: 'hover:from-yellow-600 hover:to-orange-600'
+        };
+      case ColorMixingMethod.AVERAGE:
+        return {
+          icon: SparklesIcon,
+          label: '平均色',
+          description: '平均色（RGB値の平均）',
+          bgClass: 'from-pink-500 to-red-500',
+          hoverClass: 'hover:from-pink-600 hover:to-red-600'
+        };
+      case ColorMixingMethod.HSL_INTERPOLATION:
+      default:
+        return {
+          icon: PlusCircleIcon,
+          label: 'HSL補間',
+          description: 'HSL補間（色相環の中間色）',
+          bgClass: 'from-green-500 to-teal-500',
+          hoverClass: 'hover:from-green-600 hover:to-teal-600'
+        };
+    }
+  };
   return (
     <div className="max-w-2xl mx-auto space-y-6 p-6 bg-gradient-to-br from-purple-200 to-pink-200 rounded-3xl shadow-xl border border-purple-200/50">
       {/* Header */}
@@ -163,6 +220,41 @@ export function ColorMixer({
               )}
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* Mixing Method Selection */}
+      <div className="bg-white/60 rounded-2xl p-4 shadow-inner border border-white/50">
+        <div className="text-center mb-3">
+          <h4 className="text-sm font-bold text-purple-700 uppercase tracking-wide">合成方式</h4>
+        </div>
+        <div className="flex justify-center gap-2">
+          {([ColorMixingMethod.AVERAGE, ColorMixingMethod.HSL_INTERPOLATION] as const).map((method) => {
+            const methodInfo = getMixingMethodInfo(method);
+            const IconComponent = methodInfo.icon;
+            const isActive = mixingMethod === method;
+
+            return (
+              <button
+                key={method}
+                onClick={() => onMixingMethodChange(method)}
+                className={`group relative px-3 py-2 rounded-xl font-semibold text-xs transition-all duration-300 transform hover:scale-105 shadow-md ${
+                  isActive
+                    ? `bg-gradient-to-r ${methodInfo.bgClass} text-white shadow-lg`
+                    : 'bg-white/80 text-gray-600 hover:bg-white hover:text-gray-800 hover:shadow-lg'
+                }`}
+                title={methodInfo.description}
+              >
+                <div className="flex flex-col items-center gap-1">
+                  <IconComponent className={`w-4 h-4 ${isActive ? 'text-white' : 'text-gray-500 group-hover:text-gray-700'} transition-colors duration-300`} />
+                  <span className="leading-none">{methodInfo.label}</span>
+                </div>
+                {isActive && (
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                )}
+              </button>
+            );
+          })}
         </div>
       </div>
 

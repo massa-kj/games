@@ -1,4 +1,4 @@
-import type { RGB, ColorDefinition, GameTranslations } from '@/types';
+import type { RGB, ColorDefinition, GameTranslations, ColorMixingMethod } from '@/types';
 
 /**
  * Props for draggable color card component
@@ -40,7 +40,9 @@ export interface ColorMixerProps {
   mixedColor: RGB | null;
   isAnimating: boolean;
   translations: GameTranslations;
+  mixingMethod: ColorMixingMethod;
   onSlotClick: (slotIndex: number) => void;
   onMixButtonClick: () => void;
   onGeneratedColorClick: () => void;
+  onMixingMethodChange: (method: ColorMixingMethod) => void;
 }
