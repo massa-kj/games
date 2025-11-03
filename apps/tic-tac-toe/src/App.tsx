@@ -1,22 +1,17 @@
 import { GameHeader } from '@core/ui';
-import { useSettings } from '@core/hooks';
+import { I18nProvider } from '@core/i18n';
 import { Motion } from '@core/ui/motion';
 import useGameState from '@/hooks/useGameState';
 import { useTicTacToeSound } from '@/hooks/useTicTacToeSound';
+import { useL10n } from '@/locales';
 import GameBoard from '@/components/GameBoard';
 import { GameInfo } from '@/components/GameInfo';
+import type { Player } from '@/types';
+import { useEffect } from 'react';
 import '@/styles.css';
 
-// Import translations
-import enTranslations from '@/data/locales/en.json';
-import jaTranslations from '@/data/locales/ja.json';
-import type { GameTranslations, Player } from '@/types';
-import { useEffect } from 'react';
-
-export default function TicTacToeApp() {
-  const { settings } = useSettings();
-  const currentLang = settings.lang;
-  const translations = currentLang === 'en' ? enTranslations : jaTranslations as GameTranslations;
+function TicTacToeGame() {
+  const { t } = useL10n();
 
   const { gameState, makeMove, resetGame, resetScores } = useGameState();
   const {
@@ -58,13 +53,13 @@ export default function TicTacToeApp() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       <GameHeader
-        title={translations.title}
+        title={t('title')}
         gameSettings={[
           {
             id: 'sound',
             type: 'checkbox',
-            label: currentLang === 'en' ? 'Sound Effects' : 'サウンド効果',
-            value: settings.sound,
+            label: 'Sound Effects', // This will be handled by GameHeader internally
+            value: true, // This will be handled by GameHeader internally via useSettings
             onChange: () => {
               // This will be handled by the GameHeader internally via useSettings
             }
@@ -80,10 +75,10 @@ export default function TicTacToeApp() {
           className="text-center mb-8"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
-            {translations.title}
+            {t('title')}
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            {translations.description}
+            {t('description')}
           </p>
         </Motion>
 
@@ -115,7 +110,6 @@ export default function TicTacToeApp() {
           >
             <GameInfo
               gameState={gameState}
-              translations={translations}
               onNewGame={handleNewGame}
               onResetScores={handleResetScores}
             />
@@ -130,10 +124,18 @@ export default function TicTacToeApp() {
           className="text-center mt-12"
         >
           <p className="text-sm text-gray-500">
-            {gameState.status === 'playing' && translations.clickToPlay}
+            {gameState.status === 'playing' && t('clickToPlay')}
           </p>
         </Motion>
       </main>
     </div>
+  );
+}
+
+export default function TicTacToeApp() {
+  return (
+    <I18nProvider>
+      <TicTacToeGame />
+    </I18nProvider>
   );
 }

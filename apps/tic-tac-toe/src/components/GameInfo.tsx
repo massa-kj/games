@@ -1,10 +1,10 @@
 import { Card, Button } from '@core/ui';
 import { Motion } from '@core/ui/motion';
-import type { GameState, GameTranslations } from '@/types';
+import { useL10n } from '@/locales';
+import type { GameState } from '@/types';
 
 interface GameInfoProps {
   gameState: GameState;
-  translations: GameTranslations;
   onNewGame: () => void;
   onResetScores: () => void;
   className?: string;
@@ -15,25 +15,25 @@ interface GameInfoProps {
  */
 export function GameInfo({
   gameState,
-  translations,
   onNewGame,
   onResetScores,
   className = ''
 }: GameInfoProps) {
   const { currentPlayer, status, winner, scores } = gameState;
+  const { t } = useL10n();
 
 
 
   const getStatusMessage = (): string => {
     if (status === 'won' && winner) {
-      return translations.playerWins.replace('{{player}}',
-        winner === 'X' ? translations.playerX : translations.playerO
+      return t('playerWins').replace('{{player}}',
+        winner === 'X' ? t('playerX') : t('playerO')
       );
     }
     if (status === 'tie') {
-      return translations.itsATie;
+      return t('itsATie');
     }
-    return translations.gameInProgress;
+    return t('gameInProgress');
   };
 
   const getStatusColor = (): string => {
@@ -53,7 +53,7 @@ export function GameInfo({
 
           {status === 'playing' && (
             <div className="flex items-center justify-center space-x-2">
-              <span className="text-lg text-gray-600">{translations.currentPlayer}:</span>
+              <span className="text-lg text-gray-600">{t('currentPlayer')}:</span>
               <div className={`player-indicator player-${currentPlayer.toLowerCase()}`}>
                 {currentPlayer}
               </div>
@@ -62,7 +62,7 @@ export function GameInfo({
 
           {status === 'playing' && (
             <p className="text-sm text-gray-500 mt-2">
-              {translations.clickToPlay}
+              {t('clickToPlay')}
             </p>
           )}
         </Motion>
@@ -71,7 +71,7 @@ export function GameInfo({
       {/* Score Board */}
       <Card className="bg-gradient-to-r from-blue-50 to-red-50">
         <h3 className="text-xl font-semibold text-center mb-4 text-gray-800">
-          {translations.score}
+          {t('score')}
         </h3>
 
         <div className="grid grid-cols-3 gap-4">
@@ -80,7 +80,7 @@ export function GameInfo({
             <div className="score-card score-x">
               <div className="text-2xl font-bold text-blue-600 mb-1">X</div>
               <div className="text-3xl font-bold text-blue-800">{scores.X}</div>
-              <div className="text-sm text-blue-600">{translations.wins}</div>
+              <div className="text-sm text-blue-600">{t('wins')}</div>
             </div>
           </Motion>
 
@@ -89,7 +89,7 @@ export function GameInfo({
             <div className="score-card score-tie">
               <div className="text-2xl font-bold text-yellow-600 mb-1">―</div>
               <div className="text-3xl font-bold text-yellow-800">{scores.ties}</div>
-              <div className="text-sm text-yellow-600">{translations.ties}</div>
+              <div className="text-sm text-yellow-600">{t('ties')}</div>
             </div>
           </Motion>
 
@@ -98,7 +98,7 @@ export function GameInfo({
             <div className="score-card score-o">
               <div className="text-2xl font-bold text-red-600 mb-1">O</div>
               <div className="text-3xl font-bold text-red-800">{scores.O}</div>
-              <div className="text-sm text-red-600">{translations.wins}</div>
+              <div className="text-sm text-red-600">{t('wins')}</div>
             </div>
           </Motion>
         </div>
@@ -113,7 +113,7 @@ export function GameInfo({
             size="lg"
             className="flex-1"
           >
-            {status === 'playing' ? translations.newGame : translations.playAgain}
+            {status === 'playing' ? t('newGame') : t('playAgain')}
           </Button>
 
           <Button
@@ -122,7 +122,7 @@ export function GameInfo({
             size="lg"
             className="flex-1"
           >
-            {translations.resetScore}
+            {t('resetScore')}
           </Button>
         </div>
       </Card>
