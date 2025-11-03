@@ -1,12 +1,8 @@
 import { GameContainer } from '@core/ui/GameContainer';
-import { useSettings } from '@core/hooks/useSettings';
 import { Card } from '@/components/Card';
+import { useL10n } from '@/locales';
 import type { MemoryGameState, Difficulty } from '@/types';
 import { DIFFICULTY_CONFIGS } from '@/types';
-
-// Import translations
-import enTranslations from '@/data/locales/en.json';
-import jaTranslations from '@/data/locales/ja.json';
 
 interface GameBoardProps {
   gameState: MemoryGameState;
@@ -16,9 +12,7 @@ interface GameBoardProps {
 export function GameBoard({ gameState, onCardFlip }: GameBoardProps) {
   const { cards, isLocked, difficulty } = gameState;
   const config = DIFFICULTY_CONFIGS[difficulty];
-  const { settings } = useSettings();
-  const currentLang = settings.lang;
-  const translations = currentLang === 'en' ? enTranslations : jaTranslations;
+  const { t } = useL10n();
 
   const getGridClassName = (difficulty: Difficulty): string => {
     const gridClasses = {
@@ -36,7 +30,7 @@ export function GameBoard({ gameState, onCardFlip }: GameBoardProps) {
         <div className="text-center">
           <div className="text-6xl mb-4">🎮</div>
           <div className="text-xl text-gray-600">
-            {translations.readyToPlay}
+            {t('readyToPlay')}
           </div>
         </div>
       </div>
@@ -48,13 +42,13 @@ export function GameBoard({ gameState, onCardFlip }: GameBoardProps) {
       {/* Game Stats */}
       <div className="mb-6 flex gap-8 text-center">
         <div className="bg-white rounded-lg px-4 py-2 shadow-md">
-          <div className="text-sm text-gray-600">{translations.matches}</div>
+          <div className="text-sm text-gray-600">{t('matches')}</div>
           <div className="text-2xl font-bold text-green-600">
             {gameState.matches}/{config.pairs}
           </div>
         </div>
         <div className="bg-white rounded-lg px-4 py-2 shadow-md">
-          <div className="text-sm text-gray-600">{translations.attempts}</div>
+          <div className="text-sm text-gray-600">{t('attempts')}</div>
           <div className="text-2xl font-bold text-blue-600">
             {gameState.attempts}
           </div>
@@ -79,7 +73,7 @@ export function GameBoard({ gameState, onCardFlip }: GameBoardProps) {
       {isLocked && (
         <div className="mt-4 text-center">
           <div className="text-lg text-gray-600 animate-pulse">
-            {translations.checking}
+            {t('checking')}
           </div>
         </div>
       )}

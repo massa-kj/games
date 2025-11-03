@@ -1,20 +1,15 @@
 import { Button, GameHeader } from '@core/ui';
-import { useSettings } from '@core/hooks';
+import { I18nProvider } from '@core/i18n';
 import { GameBoard } from '@/components/GameBoard';
 import { ResultModal } from '@/components/ResultModal';
 import { useGameLogic } from '@/hooks/useGameLogic';
+import { useL10n } from '@/locales';
 import type { Difficulty } from '@/types';
 import '@/styles.css';
 
-// Import translations
-import enTranslations from '@/data/locales/en.json';
-import jaTranslations from '@/data/locales/ja.json';
-
-export default function MemoryCardsApp() {
-  const { settings } = useSettings();
+function MemoryCardsGame() {
   const { state, startGame, flipCard, restartGame, setDifficulty, clearJustCleared } = useGameLogic();
-  const currentLang = settings.lang;
-  const translations = currentLang === 'en' ? enTranslations : jaTranslations;
+  const { t } = useL10n();
 
   const handleStartGame = (difficulty: Difficulty) => {
     setDifficulty(difficulty);
@@ -31,7 +26,7 @@ export default function MemoryCardsApp() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 no-select">
       <GameHeader
-        title={translations.title}
+        title={t('title')}
         showHomeButton={true}
         showSettingsButton={true}
         className='bg-gradient-to-br from-blue-200 to-purple-200'
@@ -44,24 +39,24 @@ export default function MemoryCardsApp() {
             <div className="bg-white rounded-2xl shadow-lg p-4 mb-8 max-w-md mx-auto">
               <div className="text-6xl mb-4">🎮</div>
               <p className="text-lg text-gray-700 mb-6">
-                {translations.clickToStart}
+                {t('clickToStart')}
                 <br />
-                {translations.description}
+                {t('description')}
               </p>
 
               {/* Difficulty Selection */}
               <div className="mb-6">
                 <h3 className="text-lg font-bold mb-4 text-gray-800">
-                  {translations.selectDifficulty}
+                  {t('selectDifficulty')}
                 </h3>
                 <div className="grid grid-cols-1 gap-3">
-                  {Object.entries(translations.difficulty).map(([key, label]) => (
+                  {(['easy', 'medium', 'hard', 'expert'] as const).map((key) => (
                     <Button
                       key={key}
                       onClick={() => handleStartGame(key as Difficulty)}
                       className="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 text-lg"
                     >
-                      {label}
+                      {t(`difficulty.${key}`)}
                     </Button>
                   ))}
                 </div>
@@ -102,5 +97,13 @@ export default function MemoryCardsApp() {
         />
       </div>
     </div>
+  );
+}
+
+export default function MemoryCardsApp() {
+  return (
+    <I18nProvider>
+      <MemoryCardsGame />
+    </I18nProvider>
   );
 }
