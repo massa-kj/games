@@ -1,20 +1,23 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+/**
+ * Root Tailwind CSS Configuration
+ * CSS-first approach using the unified theme system
+ */
 
-/** @type {import('tailwindcss').Config} */
-export default {
+import { createSiteConfig } from './core/themes/tailwind.config.js';
+
+export default createSiteConfig({
+  // Additional content paths if needed
   content: [
-    "./site/index.html",
-    "./site/src/**/*.{js,ts,jsx,tsx}",
-    "./apps/*/index.html",
-    "./apps/*/src/**/*.{js,ts,jsx,tsx}",
-    "./core/**/*.{js,ts,jsx,tsx}",
+    // Default paths are already included in createSiteConfig
   ],
-  presets: [
-    require('./core/themes/tailwind.preset.cjs')
-  ],
-  theme: {
-    extend: {},
+
+  // Site-specific theme extensions
+  extend: {
+    // Add any site-specific customizations here
   },
-  plugins: [],
-}
+
+  // Additional plugins
+  plugins: [
+    // Add any site-specific plugins here
+  ],
+});

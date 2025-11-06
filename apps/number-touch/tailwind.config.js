@@ -1,18 +1,9 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+import { createGameConfig } from '../../core/themes/tailwind.config.js';
 
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "../../core/**/*.{js,ts,jsx,tsx}",
-  ],
-  presets: [
-    require('../../core/themes/tailwind.preset.cjs')
-  ],
-  theme: {
-    extend: {},
-  },
+export default createGameConfig({
+  // Game-specific theme extensions
+  extend: {},
+
+  // No additional plugins needed
   plugins: [],
-}
+});
