@@ -34,9 +34,14 @@ export function ResultModal({ isOpen, gameState, timer, onPlayAgain, onClose }: 
     const { attempts, matches } = gameState;
     const efficiency = matches > 0 ? (matches / attempts) * 100 : 0;
 
-    let stars = 3;
-    if (efficiency < 50) stars = 1;
-    else if (efficiency < 75) stars = 2;
+    // If the number of attempts is less than the number of pairs * 1.6 rounded up, it will be 3 stars.
+    const calc = (rate: number) => attempts <= Math.ceil(matches * rate);
+    console.log(Math.ceil(matches * 1.6))
+
+    let stars = 0;
+    if (calc(1.6)) stars = 3;
+    else if (calc(2.5)) stars = 2;
+    else if (calc(3.5)) stars = 1;
 
     return { efficiency: Math.round(efficiency), stars };
   }, [gameState]);
