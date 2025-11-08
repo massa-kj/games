@@ -1,7 +1,25 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { soundManager } from './soundManager';
+import type { SoundMap } from './types';
 
-// Mock HTMLAudioElement
+// Mock the audio engine to avoid WebAudio dependencies in tests
+const mockEngine = {
+  name: 'MockEngine',
+  createSound: vi.fn(() => Promise.resolve('mock-sound-id')),
+  playSound: vi.fn(() => Promise.resolve()),
+  stopSound: vi.fn(),
+  stopAll: vi.fn(),
+  setVolume: vi.fn(),
+  setEnabled: vi.fn(),
+  isEnabled: vi.fn(() => true),
+  dispose: vi.fn()
+};
+
+vi.mock('./engine/index.js', () => ({
+  getAudioEngine: vi.fn(() => Promise.resolve(mockEngine)),
+  setEngineConfig: vi.fn()
+}));
+
+// Mock HTMLAudioElement for legacy tests
 class MockAudioElement {
   public src = '';
   public currentTime = 0;
@@ -48,10 +66,14 @@ const createMockStorage = () => {
 };
 
 describe('soundManager', () => {
+  let soundManager: any;
   let mockStorage: ReturnType<typeof createMockStorage>;
-  let mockAudioElements: MockAudioElement[] = [];
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    // Clear module cache and reimport
+    vi.resetModules();
+    vi.clearAllMocks();
+
     // Reset mock storage
     mockStorage = createMockStorage();
     Object.defineProperty(global, 'localStorage', {
@@ -59,377 +81,273 @@ describe('soundManager', () => {
       configurable: true
     });
 
-    // Clear the mock audio elements array
-    mockAudioElements.length = 0;
-
-    // Mock Audio constructor - ensure it's a proper mock
+    // Mock Audio constructor
     global.Audio = vi.fn().mockImplementation((src?: string) => {
-      const audio = new MockAudioElement(src);
-      mockAudioElements.push(audio);
-      return audio;
+      return new MockAudioElement(src);
     }) as any;
+
+    // Mock process.env for engine configuration
+    process.env.USE_TONE = 'false';
+    delete process.env.AUDIO_ENGINE;
 
     // Mock console methods
     vi.spyOn(console, 'warn').mockImplementation(() => { });
 
-    // Clear any existing state in soundManager
-    soundManager.stopAll();
-    soundManager.setEnabled(true);
-    soundManager.setGlobalVolume(1);
-
-    // Clear internal audio elements map
-    (soundManager as any).audioElements?.clear();
+    // Import soundManager after setting up mocks
+    const { soundManager: sm } = await import('./soundManager');
+    soundManager = sm;
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
+    delete process.env.USE_TONE;
+    delete process.env.AUDIO_ENGINE;
   });
 
-  describe('initialization', () => {
-    it('should initialize with sound enabled by default', () => {
-      expect(soundManager.isEnabled()).toBe(true);
+  describe('SoundMap functionality', () => {
+    const testSoundMap: SoundMap = {
+      beep: {
+        tone: {
+          type: 'sine',
+          note: 'A4',
+          duration: '8n'
+        },
+        volume: 0.5
+      },
+      click: {
+        src: '/sounds/click.mp3',
+        volume: 0.8
+      },
+      mixedSound: {
+        tone: {
+          type: 'square',
+          frequency: 880,
+          duration: 0.1
+        },
+        src: '/sounds/fallback.mp3',
+        volume: 0.6
+      }
+    };
+
+    it('should play sound from SoundMap', async () => {
+      await soundManager.playSound('beep', testSoundMap);
+
+      expect(mockEngine.createSound).toHaveBeenCalledWith(
+        expect.objectContaining({
+          tone: expect.objectContaining({
+            type: 'sine',
+            note: 'A4',
+            duration: '8n'
+          }),
+          volume: 0.5
+        }),
+        expect.any(Object)
+      );
+      expect(mockEngine.playSound).toHaveBeenCalled();
     });
 
-    it('should load sound setting from localStorage on initialization', () => {
-      // This test checks the behavior that would happen during module load
-      // Since we can't easily test the constructor again, we'll test the setting functionality
-      mockStorage.setItem('sound', 'false');
-      soundManager.setEnabled(false);
-      expect(soundManager.isEnabled()).toBe(false);
-    });
-  });
+    it('should handle file-based sounds from SoundMap', async () => {
+      await soundManager.playSound('click', testSoundMap);
 
-  describe('play', () => {
-    it('should create and play audio element with default options', async () => {
-      const src = '/test-sound.mp3';
-
-      await soundManager.play(src);
-
-      expect(global.Audio).toHaveBeenCalledWith(src);
-      expect(mockAudioElements).toHaveLength(1);
-
-      const audio = mockAudioElements[0];
-      expect(audio.src).toBe(src);
-      expect(audio.currentTime).toBe(0);
-      expect(audio.volume).toBe(1);
-      expect(audio.loop).toBe(false);
-      expect(audio.preload).toBe('auto');
-    });
-
-    it('should reuse existing audio element for same source', async () => {
-      const src = '/test-sound.mp3';
-
-      await soundManager.play(src);
-      await soundManager.play(src);
-
-      expect(global.Audio).toHaveBeenCalledTimes(1);
-      expect(mockAudioElements).toHaveLength(1);
-    });
-
-    it('should reset currentTime to 0 when playing', async () => {
-      const src = '/test-sound.mp3';
-
-      await soundManager.play(src);
-      const audio = mockAudioElements[0];
-      audio.currentTime = 5; // Simulate audio progress
-
-      await soundManager.play(src);
-      expect(audio.currentTime).toBe(0);
-    });
-
-    it('should apply volume options correctly', async () => {
-      const src = '/test-sound.mp3';
-
-      await soundManager.play(src, { volume: 0.5 });
-
-      const audio = mockAudioElements[0];
-      expect(audio.volume).toBe(0.5);
-    });
-
-    it('should apply global volume multiplier', async () => {
-      const src = '/test-sound.mp3';
-      soundManager.setGlobalVolume(0.8);
-
-      await soundManager.play(src, { volume: 0.5 });
-
-      const audio = mockAudioElements[0];
-      expect(audio.volume).toBe(0.4); // 0.5 * 0.8
-    });
-
-    it('should clamp volume between 0 and 1', async () => {
-      const src = '/test-sound.mp3';
-
-      // Test volume > 1
-      await soundManager.play(src, { volume: 2.0 });
-      expect(mockAudioElements[0].volume).toBe(1);
-
-      // Test volume < 0
-      await soundManager.play(src, { volume: -0.5 });
-      expect(mockAudioElements[0].volume).toBe(0);
-    });
-
-    it('should apply loop option correctly', async () => {
-      const src = '/test-sound.mp3';
-
-      await soundManager.play(src, { loop: true });
-
-      const audio = mockAudioElements[0];
-      expect(audio.loop).toBe(true);
-    });
-
-    it('should not play when sound is disabled', async () => {
-      const src = '/test-sound.mp3';
-      soundManager.setEnabled(false);
-
-      await soundManager.play(src);
-
-      expect(global.Audio).not.toHaveBeenCalled();
-      expect(mockAudioElements).toHaveLength(0);
-    });
-
-    it('should handle play errors gracefully', async () => {
-      const src = '/test-sound.mp3';
-      const mockAudio = new MockAudioElement();
-      mockAudio.play = vi.fn().mockRejectedValue(new Error('Play failed'));
-
-      global.Audio = vi.fn().mockReturnValue(mockAudio);
-
-      await soundManager.play(src);
-
-      expect(console.warn).toHaveBeenCalledWith(
-        'Failed to play sound:',
-        src,
-        expect.any(Error)
+      expect(mockEngine.createSound).toHaveBeenCalledWith(
+        expect.objectContaining({
+          src: '/sounds/click.mp3',
+          volume: 0.8
+        }),
+        expect.any(Object)
       );
     });
 
-    it('should handle multiple different audio sources', async () => {
-      const src1 = '/sound1.mp3';
-      const src2 = '/sound2.mp3';
+    it('should handle missing sound in SoundMap', async () => {
+      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-      await soundManager.play(src1);
-      await soundManager.play(src2);
+      await soundManager.playSound('nonexistent', testSoundMap);
 
-      expect(global.Audio).toHaveBeenCalledTimes(2);
-      expect(mockAudioElements).toHaveLength(2);
-      expect(mockAudioElements[0].src).toBe(src1);
-      expect(mockAudioElements[1].src).toBe(src2);
-    });
-  });
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining("Sound 'nonexistent' not found in sound map")
+      );
+      expect(mockEngine.createSound).not.toHaveBeenCalled();
 
-  describe('stopAll', () => {
-    it('should pause all audio elements and reset currentTime', async () => {
-      const src1 = '/sound1.mp3';
-      const src2 = '/sound2.mp3';
-
-      await soundManager.play(src1);
-      await soundManager.play(src2);
-
-      // Simulate audio playing
-      mockAudioElements.forEach(audio => {
-        audio.currentTime = 5;
-        audio['_paused'] = false;
-      });
-
-      soundManager.stopAll();
-
-      mockAudioElements.forEach(audio => {
-        expect(audio.paused).toBe(true);
-        expect(audio.currentTime).toBe(0);
-      });
+      consoleSpy.mockRestore();
     });
 
-    it('should work when no audio elements exist', () => {
-      expect(() => soundManager.stopAll()).not.toThrow();
-    });
-  });
+    it('should register and retrieve SoundMaps', () => {
+      soundManager.registerSoundMap('test', testSoundMap);
 
-  describe('setGlobalVolume', () => {
-    it('should set global volume within valid range', () => {
-      soundManager.setGlobalVolume(0.7);
-      // We can't directly test the private property, but we can test its effect
-
-      // Test by playing a sound and checking the resulting volume
-      const testVolume = async (inputVolume: number, expectedVolume: number) => {
-        await soundManager.play('/test.mp3', { volume: inputVolume });
-        const audio = mockAudioElements[mockAudioElements.length - 1];
-        expect(audio.volume).toBe(expectedVolume);
-      };
-
-      return testVolume(1, 0.7); // 1 * 0.7 = 0.7
+      const retrievedMap = soundManager.getSoundMap('test');
+      expect(retrievedMap).toBe(testSoundMap);
     });
 
-    it('should clamp global volume to minimum 0', async () => {
-      soundManager.setGlobalVolume(-0.5);
+    it('should play from registered SoundMap', async () => {
+      soundManager.registerSoundMap('test', testSoundMap);
 
-      await soundManager.play('/test.mp3', { volume: 1 });
-      const audio = mockAudioElements[0];
-      expect(audio.volume).toBe(0);
+      await soundManager.playSoundFromMap('test', 'beep');
+
+      expect(mockEngine.createSound).toHaveBeenCalled();
+      expect(mockEngine.playSound).toHaveBeenCalled();
     });
 
-    it('should clamp global volume to maximum 1', async () => {
-      soundManager.setGlobalVolume(1.5);
+    it('should handle missing registered SoundMap', async () => {
+      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-      await soundManager.play('/test.mp3', { volume: 1 });
-      const audio = mockAudioElements[0];
-      expect(audio.volume).toBe(1);
+      await soundManager.playSoundFromMap('missing', 'beep');
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining("Sound map 'missing' not found")
+      );
+
+      consoleSpy.mockRestore();
     });
-  });
 
-  describe('isEnabled', () => {
-    it('should return current enabled state', () => {
-      soundManager.setEnabled(true);
-      expect(soundManager.isEnabled()).toBe(true);
-
-      soundManager.setEnabled(false);
-      expect(soundManager.isEnabled()).toBe(false);
-    });
-  });
-
-  describe('setEnabled', () => {
-    it('should update enabled state and save to localStorage', () => {
+    it('should not play when disabled', async () => {
       soundManager.setEnabled(false);
 
-      expect(soundManager.isEnabled()).toBe(false);
+      await soundManager.playSound('beep', testSoundMap);
+
+      expect(mockEngine.createSound).not.toHaveBeenCalled();
+      expect(mockEngine.playSound).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Legacy compatibility', () => {
+    it('should support legacy play method', async () => {
+      await soundManager.play('/sounds/test.mp3');
+
+      expect(mockEngine.createSound).toHaveBeenCalledWith(
+        expect.objectContaining({
+          src: '/sounds/test.mp3'
+        }),
+        expect.any(Object)
+      );
+      expect(mockEngine.playSound).toHaveBeenCalled();
+    });
+
+    it('should respect volume and loop options in legacy mode', async () => {
+      await soundManager.play('/sounds/test.mp3', { volume: 0.5, loop: true });
+
+      expect(mockEngine.createSound).toHaveBeenCalledWith(
+        expect.objectContaining({
+          src: '/sounds/test.mp3',
+          volume: 0.5,
+          loop: true
+        }),
+        expect.objectContaining({
+          volume: 0.5,
+          loop: true
+        })
+      );
+    });
+
+    it('should handle legacy play errors gracefully', async () => {
+      mockEngine.createSound.mockRejectedValueOnce(new Error('Engine error'));
+      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      await soundManager.play('/sounds/test.mp3');
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Failed to play sound:',
+        '/sounds/test.mp3',
+        expect.any(Error)
+      );
+
+      consoleSpy.mockRestore();
+    });
+  });
+
+  describe('Global settings', () => {
+    it('should save and load enabled state from localStorage', () => {
+      soundManager.setEnabled(false);
       expect(mockStorage.setItem).toHaveBeenCalledWith('sound', 'false');
 
       soundManager.setEnabled(true);
-
-      expect(soundManager.isEnabled()).toBe(true);
       expect(mockStorage.setItem).toHaveBeenCalledWith('sound', 'true');
     });
 
-    it('should stop all sounds when disabled', async () => {
-      const src = '/test-sound.mp3';
-      await soundManager.play(src);
+    it('should configure engine based on environment', async () => {
+      const { setEngineConfig } = await import('./engine/index.js');
 
-      const audio = mockAudioElements[0];
-      audio.currentTime = 5;
-      audio['_paused'] = false;
-
-      soundManager.setEnabled(false);
-
-      expect(audio.paused).toBe(true);
-      expect(audio.currentTime).toBe(0);
-    });
-
-    it('should not stop sounds when enabled', async () => {
-      const src = '/test-sound.mp3';
-      await soundManager.play(src);
-
-      const audio = mockAudioElements[0];
-      audio.currentTime = 5;
-      audio['_paused'] = false;
-
-      soundManager.setEnabled(true);
-
-      expect(audio.paused).toBe(false);
-      expect(audio.currentTime).toBe(5);
-    });
-  });
-
-  describe('integration tests', () => {
-    it('should handle complete workflow: enable, play, disable, enable', async () => {
-      const src = '/workflow-test.mp3';
-
-      // Initially enabled
-      expect(soundManager.isEnabled()).toBe(true);
-
-      // Play sound
-      await soundManager.play(src, { volume: 0.8, loop: true });
-      expect(mockAudioElements).toHaveLength(1);
-
-      const audio = mockAudioElements[0];
-      expect(audio.volume).toBe(0.8);
-      expect(audio.loop).toBe(true);
-
-      // Disable sound
-      soundManager.setEnabled(false);
-      expect(audio.paused).toBe(true);
-      expect(audio.currentTime).toBe(0);
-
-      // Try to play while disabled (should not create new audio)
-      await soundManager.play('/another-sound.mp3');
-      expect(mockAudioElements).toHaveLength(1); // Still only one
-
-      // Re-enable and play
-      soundManager.setEnabled(true);
-      await soundManager.play('/new-sound.mp3');
-      expect(mockAudioElements).toHaveLength(2);
-    });
-
-    it('should handle multiple sounds with different settings', async () => {
-      soundManager.setGlobalVolume(0.5);
-
-      const sounds = [
-        { src: '/sound1.mp3', options: { volume: 1.0, loop: false } },
-        { src: '/sound2.mp3', options: { volume: 0.6, loop: true } },
-        { src: '/sound3.mp3', options: { volume: 0.4 } }
-      ];
-
-      for (const sound of sounds) {
-        await soundManager.play(sound.src, sound.options);
-      }
-
-      expect(mockAudioElements).toHaveLength(3);
-
-      // Check each audio element
-      expect(mockAudioElements[0].volume).toBe(0.5); // 1.0 * 0.5
-      expect(mockAudioElements[0].loop).toBe(false);
-
-      expect(mockAudioElements[1].volume).toBe(0.3); // 0.6 * 0.5
-      expect(mockAudioElements[1].loop).toBe(true);
-
-      expect(mockAudioElements[2].volume).toBe(0.2); // 0.4 * 0.5
-      expect(mockAudioElements[2].loop).toBe(false);
-
-      // Stop all
-      soundManager.stopAll();
-      mockAudioElements.forEach(audio => {
-        expect(audio.paused).toBe(true);
-        expect(audio.currentTime).toBe(0);
+      // The constructor should have called setEngineConfig with default settings
+      expect(setEngineConfig).toHaveBeenCalledWith({
+        useTone: false,
+        preferredEngine: 'webaudio'
       });
     });
+
+    it('should delegate volume setting to engine', async () => {
+      soundManager.setGlobalVolume(0.7);
+
+      // Wait for async engine call
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(mockEngine.setVolume).toHaveBeenCalledWith(0.7);
+    });
+
+    it('should delegate stopAll to engine', async () => {
+      soundManager.stopAll();
+
+      // Wait for async engine call
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(mockEngine.stopAll).toHaveBeenCalled();
+    });
+
+    it('should apply global volume to sound definitions', async () => {
+      const testSoundMap: SoundMap = {
+        test: { tone: { type: 'sine', note: 'A4', duration: '8n' }, volume: 0.8 }
+      };
+
+      soundManager.setGlobalVolume(0.5);
+      await soundManager.playSound('test', testSoundMap);
+
+      expect(mockEngine.createSound).toHaveBeenCalledWith(
+        expect.objectContaining({
+          volume: 0.4 // 0.8 * 0.5
+        }),
+        expect.any(Object)
+      );
+    });
   });
 
-  describe('edge cases', () => {
-    it('should handle empty string source', async () => {
-      await soundManager.play('');
+  describe('Sound caching', () => {
+    it('should cache sounds to avoid recreation', async () => {
+      const testSoundMap: SoundMap = {
+        test: { tone: { type: 'sine', note: 'A4', duration: '8n' } }
+      };
 
-      expect(global.Audio).toHaveBeenCalledWith('');
-      expect(mockAudioElements).toHaveLength(1);
+      // Play the same sound twice
+      await soundManager.playSound('test', testSoundMap);
+      await soundManager.playSound('test', testSoundMap);
+
+      // Should create sound only once, play twice
+      expect(mockEngine.createSound).toHaveBeenCalledTimes(1);
+      expect(mockEngine.playSound).toHaveBeenCalledTimes(2);
     });
 
-    it('should handle undefined options', async () => {
-      await soundManager.play('/test.mp3', undefined);
+    it('should invalidate cache when volume changes', async () => {
+      const testSoundMap: SoundMap = {
+        test: { tone: { type: 'sine', note: 'A4', duration: '8n' } }
+      };
 
-      const audio = mockAudioElements[0];
-      expect(audio.volume).toBe(1);
-      expect(audio.loop).toBe(false);
+      await soundManager.playSound('test', testSoundMap);
+
+      soundManager.setGlobalVolume(0.5);
+      await soundManager.playSound('test', testSoundMap);
+
+      // Should create sound twice due to volume change
+      expect(mockEngine.createSound).toHaveBeenCalledTimes(2);
     });
 
-    it('should handle partial options', async () => {
-      await soundManager.play('/test.mp3', { volume: 0.7 });
+    it('should clear cache when stopping all sounds', async () => {
+      const testSoundMap: SoundMap = {
+        test: { tone: { type: 'sine', note: 'A4', duration: '8n' } }
+      };
 
-      const audio = mockAudioElements[0];
-      expect(audio.volume).toBe(0.7);
-      expect(audio.loop).toBe(false); // Default value
-    });
+      await soundManager.playSound('test', testSoundMap);
+      soundManager.stopAll();
+      await soundManager.playSound('test', testSoundMap);
 
-    it('should handle zero volume', async () => {
-      await soundManager.play('/test.mp3', { volume: 0 });
-
-      const audio = mockAudioElements[0];
-      expect(audio.volume).toBe(0);
-    });
-
-    it('should handle very long source URLs', async () => {
-      const longUrl = 'https://example.com/' + 'a'.repeat(1000) + '.mp3';
-
-      await soundManager.play(longUrl);
-
-      expect(global.Audio).toHaveBeenCalledWith(longUrl);
-      expect(mockAudioElements[0].src).toBe(longUrl);
+      // Should create sound twice due to cache clear
+      expect(mockEngine.createSound).toHaveBeenCalledTimes(2);
     });
   });
 });

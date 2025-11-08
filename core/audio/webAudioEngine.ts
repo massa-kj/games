@@ -1,3 +1,6 @@
+import type { ToneDefinition, WaveType, EnvelopeConfig, FilterConfig, PlayOptions } from './types.js';
+import { noteToFrequency, durationToSeconds, clamp } from './utils.js';
+
 export interface AudioNode {
   connect(destination: AudioNode | AudioParam): void;
   disconnect(): void;
@@ -346,6 +349,63 @@ export class WebAudioEngine {
   getContext(): AudioContext | null {
     return this.context;
   }
+
+  /**
+   * Create a sound from a ToneDefinition
+   *
+   * @param definition Tone configuration
+   * @param options Additional playback options
+   * @returns Promise resolving to sound ID
+   */
+  async createToneSound(definition: ToneDefinition, options?: PlayOptions): Promise<string> {
+    if (!this.context || !this.masterGain) {
+      await this.initializeAudioContext();
+    }
+
+    if (!this.context || !this.masterGain) {
+      throw new Error('AudioContext not available');
+    }
+
+    // Determine frequency
+    let frequency: number;
+    if (definition.note) {
+      frequency = noteToFrequency(definition.note);
+    } else if (definition.frequency) {
+      frequency = definition.frequency;
+    } else {
+      frequency = 440; // Default to A4
+    }
+
+    // Convert duration to seconds
+    const duration = durationToSeconds(definition.duration, 120); // Default 120 BPM
+
+    // Create appropriate source based on type
+    let source: SoundSource;
+    if (definition.type === 'noise') {
+      source = new NoiseSource(this.context, {
+        type: 'white', // Default noise type
+        duration,
+        volume: options?.volume,
+        envelope: definition.envelope,
+        filter: definition.filter
+      });
+    } else {
+      source = new OscillatorSource(this.context, {
+        frequency,
+        type: definition.type,
+        duration,
+        volume: options?.volume,
+        envelope: definition.envelope,
+        filter: definition.filter
+      });
+    }
+
+    const soundId = `tone_${Date.now()}_${Math.random()}`;
+    source.connect(this.masterGain);
+    this.sources.set(soundId, source);
+
+    return soundId;
+  }
 }
 
 // Individual sound source implementations
@@ -418,6 +478,7 @@ class OscillatorSource implements SoundSource {
   private context: AudioContext;
   private gainNode: GainNode;
   private panNode: StereoPannerNode;
+  private filterNode: BiquadFilterNode | null = null;
   private oscillator: OscillatorNode | null = null;
   private params: any;
 
@@ -429,7 +490,25 @@ class OscillatorSource implements SoundSource {
     this.gainNode = context.createGain();
     this.panNode = context.createStereoPanner();
 
-    this.gainNode.connect(this.panNode);
+    // Create filter if specified
+    if (params.filter) {
+      this.filterNode = context.createBiquadFilter();
+      this.filterNode.type = params.filter.type || 'lowpass';
+      this.filterNode.frequency.setValueAtTime(
+        params.filter.frequency || 1000,
+        context.currentTime
+      );
+      if (params.filter.Q) {
+        this.filterNode.Q.setValueAtTime(params.filter.Q, context.currentTime);
+      }
+
+      // Chain: gainNode -> filterNode -> panNode
+      this.gainNode.connect(this.filterNode);
+      this.filterNode.connect(this.panNode);
+    } else {
+      // Direct chain: gainNode -> panNode
+      this.gainNode.connect(this.panNode);
+    }
 
     const { volume = 1, pan = 0 } = params;
     this.setVolume(volume);
@@ -456,10 +535,19 @@ class OscillatorSource implements SoundSource {
       this.gainNode.gain.linearRampToValueAtTime(sustain, now + attack + decay);
       this.gainNode.gain.setValueAtTime(sustain, now + duration - release);
       this.gainNode.gain.linearRampToValueAtTime(0, now + duration);
+    } else {
+      // Simple fade out to avoid clicks
+      const now = this.context.currentTime + when;
+      const volume = this.params.volume || 1;
+      this.gainNode.gain.setValueAtTime(volume, now);
+      this.gainNode.gain.linearRampToValueAtTime(0, now + duration);
     }
 
-    this.oscillator.start(when);
-    this.oscillator.stop(when + duration);
+    const startTime = when || this.context.currentTime;
+    const stopTime = startTime + duration;
+
+    this.oscillator.start(startTime);
+    this.oscillator.stop(stopTime);
 
     // Clean up when finished
     this.oscillator.onended = () => {
@@ -475,11 +563,13 @@ class OscillatorSource implements SoundSource {
   }
 
   setVolume(volume: number): void {
-    this.gainNode.gain.setValueAtTime(volume, this.context.currentTime);
+    const clampedVolume = Math.max(0, Math.min(1, volume));
+    this.gainNode.gain.setValueAtTime(clampedVolume, this.context.currentTime);
   }
 
   setPan(pan: number): void {
-    this.panNode.pan.setValueAtTime(pan, this.context.currentTime);
+    const clampedPan = Math.max(-1, Math.min(1, pan));
+    this.panNode.pan.setValueAtTime(clampedPan, this.context.currentTime);
   }
 
   connect(destination: AudioNode): void {
@@ -497,6 +587,7 @@ class NoiseSource implements SoundSource {
   private context: AudioContext;
   private gainNode: GainNode;
   private panNode: StereoPannerNode;
+  private filterNode: BiquadFilterNode | null = null;
   private sourceNode: AudioBufferSourceNode | null = null;
   private params: any;
 
@@ -508,7 +599,25 @@ class NoiseSource implements SoundSource {
     this.gainNode = context.createGain();
     this.panNode = context.createStereoPanner();
 
-    this.gainNode.connect(this.panNode);
+    // Create filter if specified
+    if (params.filter) {
+      this.filterNode = context.createBiquadFilter();
+      this.filterNode.type = params.filter.type || 'lowpass';
+      this.filterNode.frequency.setValueAtTime(
+        params.filter.frequency || 1000,
+        context.currentTime
+      );
+      if (params.filter.Q) {
+        this.filterNode.Q.setValueAtTime(params.filter.Q, context.currentTime);
+      }
+
+      // Chain: gainNode -> filterNode -> panNode
+      this.gainNode.connect(this.filterNode);
+      this.filterNode.connect(this.panNode);
+    } else {
+      // Direct chain: gainNode -> panNode
+      this.gainNode.connect(this.panNode);
+    }
 
     const { volume = 1, pan = 0 } = params;
     this.setVolume(volume);
@@ -551,12 +660,29 @@ class NoiseSource implements SoundSource {
   start(when: number = 0): void {
     if (this.sourceNode) return; // Already started
 
-    const { type = 'white', duration = 1 } = this.params;
+    const { type = 'white', duration = 1, envelope } = this.params;
     const buffer = this.generateNoiseBuffer(type, duration);
 
     this.sourceNode = this.context.createBufferSource();
     this.sourceNode.buffer = buffer;
     this.sourceNode.connect(this.gainNode);
+
+    // Apply envelope if specified
+    if (envelope) {
+      const { attack = 0.01, decay = 0.1, sustain = 0.7, release = 0.3 } = envelope;
+      const now = this.context.currentTime + when;
+
+      this.gainNode.gain.setValueAtTime(0, now);
+      this.gainNode.gain.linearRampToValueAtTime(1, now + attack);
+      this.gainNode.gain.linearRampToValueAtTime(sustain, now + attack + decay);
+      this.gainNode.gain.setValueAtTime(sustain, now + duration - release);
+      this.gainNode.gain.linearRampToValueAtTime(0, now + duration);
+    } else {
+      // Simple fade out to avoid clicks
+      const now = this.context.currentTime + when;
+      this.gainNode.gain.setValueAtTime(this.params.volume || 1, now);
+      this.gainNode.gain.linearRampToValueAtTime(0, now + duration);
+    }
 
     this.sourceNode.start(when);
 
@@ -574,11 +700,13 @@ class NoiseSource implements SoundSource {
   }
 
   setVolume(volume: number): void {
-    this.gainNode.gain.setValueAtTime(volume, this.context.currentTime);
+    const clampedVolume = Math.max(0, Math.min(1, volume));
+    this.gainNode.gain.setValueAtTime(clampedVolume, this.context.currentTime);
   }
 
   setPan(pan: number): void {
-    this.panNode.pan.setValueAtTime(pan, this.context.currentTime);
+    const clampedPan = Math.max(-1, Math.min(1, pan));
+    this.panNode.pan.setValueAtTime(clampedPan, this.context.currentTime);
   }
 
   connect(destination: AudioNode): void {
