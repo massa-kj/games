@@ -4,6 +4,15 @@
  * Works with or without Tailwind CSS
  */
 
+/* Import design tokens first */
+@import './design-tokens.css';
+
+/* Import CSS layers in order */
+@import './base.css';
+@import './components.css';
+@import './utilities.css';
+
+
 /* -------------------- */
 /* Legacy Design Tokens */
 /* -------------------- */
@@ -141,74 +150,6 @@
 }
 
 /* Core UI Component Styles */
-.core-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.core-modal-backdrop {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.core-modal-content {
-  position: relative;
-  background-color: var(--color-bg-secondary);
-  border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-hover);
-  padding: var(--spacing-lg);
-  margin: 0 var(--spacing-md);
-  width: 100%;
-}
-
-.core-modal-content.size-sm { max-width: 24rem; }
-.core-modal-content.size-md { max-width: 28rem; }
-.core-modal-content.size-lg { max-width: 32rem; }
-.core-modal-content.size-xl { max-width: 36rem; }
-
-.core-modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--spacing-md);
-}
-
-.core-modal-title {
-  font-size: var(--text-2xl);
-  font-weight: bold;
-  color: var(--color-text);
-}
-
-.core-modal-close {
-  color: var(--color-text-light);
-  font-size: var(--text-2xl);
-  font-weight: bold;
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: none;
-  background: none;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.core-modal-close:hover {
-  color: var(--color-text);
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.core-modal-body {
-  color: var(--color-text);
-}
-
 .core-button {
   font-weight: bold;
   border-radius: var(--radius-2xl);

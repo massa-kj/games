@@ -1,0 +1,132 @@
+/**
+ * Components Layer - Reusable UI components
+ * CSS-first component system that works with or without JavaScript frameworks
+ */
+
+@layer components {
+  /* ========================================
+     Modal Component System
+     ======================================== */
+
+  .modal {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-bg-overlay);
+    animation: fade-in var(--duration-normal) var(--ease-out);
+  }
+
+  /* .modal-content {
+    position: relative;
+    background-color: var(--color-surface);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-hover);
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: auto;
+    animation: scale-in var(--duration-normal) var(--ease-spring);
+  } */
+  .modal-content {
+    position: relative;
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-hover);
+    padding: var(--spacing-lg);
+    /* margin: 0 var(--spacing-md); */
+    width: 100%;
+  }
+
+  .modal-content.size-sm { max-width: 24rem; }
+  .modal-content.size-md { max-width: 28rem; }
+  .modal-content.size-lg { max-width: 32rem; }
+  .modal-content.size-xl { max-width: 36rem; }
+
+  /* .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+  } */
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-md);
+  }
+
+  /* .modal-title {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text);
+  } */
+  .modal-title {
+    font-size: var(--text-2xl);
+    font-weight: bold;
+    color: var(--color-text);
+  }
+
+  /* .modal-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-full);
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: var(--transition-colors);
+  } */
+  .modal-close {
+    color: var(--color-text-light);
+    font-size: var(--text-2xl);
+    font-weight: bold;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  /* .modal-close:hover {
+    color: var(--color-text);
+    background-color: var(--color-surface-secondary);
+  } */
+  .modal-close:hover {
+    color: var(--color-text);
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  /* .modal-body {
+    padding: var(--space-6);
+    color: var(--color-text);
+  } */
+  .modal-body {
+    color: var(--color-text);
+  }
+
+  .modal-footer {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-6);
+    border-top: 1px solid var(--color-border);
+    justify-content: flex-end;
+  }
+
+}

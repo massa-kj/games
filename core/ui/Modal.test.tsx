@@ -42,7 +42,7 @@ describe('Modal', () => {
         </Modal>
       );
 
-      const modalContainer = container.querySelector('.core-modal');
+      const modalContainer = container.querySelector('.modal');
       expect(modalContainer).toBeInTheDocument();
     });
   });
@@ -56,7 +56,7 @@ describe('Modal', () => {
         </Modal>
       );
 
-      const backdrop = container.querySelector('.core-modal-backdrop');
+      const backdrop = container.querySelector('.modal-backdrop');
       if (backdrop) {
         fireEvent.click(backdrop);
       }

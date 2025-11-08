@@ -70,15 +70,15 @@ export function Modal({
   // if (!isOpen) return null;
 
   return (
-    // <div className="core-modal">
+    // <div className="modal">
     //   {/* Backdrop */}
     //   <div
-    //     className="core-modal-backdrop"
+    //     className="modal-backdrop"
     //     onClick={onClose}
     //   />
 
     //   {/* Modal */}
-    //   <div className={`core-modal-content size-${size} animate-bounce-in`}>
+    //   <div className={`modal-content size-${size} animate-bounce-in`}>
     <ModalMotion
       animationType={animationType}
       isOpen={isOpen}
@@ -90,17 +90,17 @@ export function Modal({
       speed={speed}
       onAnimationEnd={onAnimationEnd}
     >
-      {/* <div className={`core-modal-content size-${size}`}> */}
+      {/* <div className={`modal-content size-${size}`}> */}
         {/* Header */}
         {(title || showCloseButton) && (
-          <div className="core-modal-header">
+          <div className="modal-header">
             {title && (
-              <h2 className="core-modal-title">{title}</h2>
+              <h2 className="modal-title">{title}</h2>
             )}
             {showCloseButton && (
               <button
                 onClick={onClose}
-                className="core-modal-close"
+                className="modal-close"
                 aria-label="Close modal"
               >
                 ×
@@ -110,7 +110,7 @@ export function Modal({
         )}
 
         {/* Content */}
-        <div className="core-modal-body">
+        <div className="modal-body">
           {children}
         </div>
       {/* </div> */}

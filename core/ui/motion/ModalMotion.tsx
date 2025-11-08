@@ -107,7 +107,7 @@ export function ModalMotion({
     <AnimatePresence initial={false} mode="wait">
       {isOpen && (
         <motion.div
-          className={`core-modal ${backdropClassName || ''}`}
+          className={`modal ${backdropClassName || ''}`}
           style={{ zIndex }}
           initial={backdropVariant.initial}
           animate={backdropVariant.animate}
@@ -116,13 +116,13 @@ export function ModalMotion({
         >
           {/* Backdrop */}
           <div
-            className="core-modal-backdrop"
+            className="modal-backdrop"
             onClick={handleBackdropClick}
           />
 
           {/* Modal content */}
           <motion.div
-            className={`core-modal-content size-${size} ${className || ''}`}
+            className={`modal-content size-${size} ${className || ''}`}
             initial={contentVariant.initial}
             animate={contentVariant.animate}
             exit={contentVariant.exit}

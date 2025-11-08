@@ -1,0 +1,18 @@
+/**
+ * CSS Layers Architecture
+ * Organized styling system following CSS-first principles
+ * Provides clear separation of concerns and maintainable styles
+ */
+
+/* ========================================
+   Layer Definition
+   ======================================== */
+
+@layer tokens, base, components, utilities;
+
+/* ========================================
+   Base Layer - Reset and foundational styles
+   ======================================== */
+
+@layer base {
+}
