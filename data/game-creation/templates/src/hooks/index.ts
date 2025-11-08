@@ -4,4 +4,3 @@
  */
 
 export { default as useGameState } from './useGameState';
-export { default as useGameTimer } from './useGameTimer';
