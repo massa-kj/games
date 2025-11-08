@@ -1,22 +1,32 @@
 import { Button, GameHeader } from '@core/ui';
 import { I18nProvider } from '@core/i18n';
+import { useSound } from '@core/hooks';
 import { GameBoard } from '@/components/GameBoard';
 import { ResultModal } from '@/components/ResultModal';
 import { useGameLogic } from '@/hooks/useGameLogic';
 import { useL10n } from '@/locales';
+import { memoryCardSounds } from '@/audio/sounds';
 import type { Difficulty } from '@/types';
 import '@/styles.css';
 
 function MemoryCardsGame() {
-  const { state, startGame, flipCard, restartGame, setDifficulty, clearJustCleared } = useGameLogic();
+  const { state, timer, startGame, flipCard, restartGame, setDifficulty, clearJustCleared } = useGameLogic();
   const { t } = useL10n();
+  const { play } = useSound(memoryCardSounds);
 
   const handleStartGame = (difficulty: Difficulty) => {
+    play('buttonClick');
     setDifficulty(difficulty);
     startGame(difficulty);
   };
 
   const handlePlayAgain = () => {
+    play('buttonClick');
+    restartGame();
+  };
+
+  const handleRestartGame = () => {
+    play('buttonClick');
     restartGame();
   };
 
@@ -70,9 +80,7 @@ function MemoryCardsGame() {
             <div className="flex justify-center mb-6">
               <div className="flex gap-4">
                 <Button
-                  onClick={() => {
-                    restartGame();
-                  }}
+                  onClick={handleRestartGame}
                   className="bg-blue-500 hover:bg-blue-600 text-white"
                 >
                   New Game
@@ -84,6 +92,7 @@ function MemoryCardsGame() {
             <GameBoard
               gameState={state}
               onCardFlip={flipCard}
+              timer={timer}
             />
           </div>
         )}
@@ -92,6 +101,7 @@ function MemoryCardsGame() {
         <ResultModal
           isOpen={isResultModalOpen}
           gameState={state}
+          timer={timer}
           onPlayAgain={handlePlayAgain}
           onClose={clearJustCleared}
         />

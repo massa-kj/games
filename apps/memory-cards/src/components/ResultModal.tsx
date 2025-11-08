@@ -2,18 +2,33 @@ import { useMemo } from 'react';
 import { Modal } from '@core/ui/Modal';
 import { Button } from '@core/ui/Button';
 import { StarsRating } from '@core/ui';
+import { useSound } from '@core/hooks';
 import { useL10n } from '@/locales';
+import { memoryCardSounds } from '@/audio/sounds';
 import type { MemoryGameState, Difficulty } from '@/types';
+import type { useGameTimer } from '@/hooks/useGameTimer';
 
 interface ResultModalProps {
   isOpen: boolean;
   gameState: MemoryGameState;
+  timer: ReturnType<typeof useGameTimer>;
   onPlayAgain: () => void;
   onClose: () => void;
 }
 
-export function ResultModal({ isOpen, gameState, onPlayAgain, onClose }: ResultModalProps) {
+export function ResultModal({ isOpen, gameState, timer, onPlayAgain, onClose }: ResultModalProps) {
   const { t } = useL10n();
+  const { play } = useSound(memoryCardSounds);
+
+  const handlePlayAgain = () => {
+    play('buttonClick');
+    onPlayAgain();
+  };
+
+  const handleClose = () => {
+    play('buttonClick');
+    onClose();
+  };
 
   const score = useMemo(() => {
     const { attempts, matches } = gameState;
@@ -64,7 +79,7 @@ export function ResultModal({ isOpen, gameState, onPlayAgain, onClose }: ResultM
 
         {/* Game Stats */}
         <div className="bg-gray-50 rounded-lg p-4 mb-6">
-          <div className="grid grid-cols-2 gap-4 text-center">
+          <div className="grid grid-cols-3 gap-4 text-center">
             <div>
               <div className="text-2xl font-bold text-green-600">
                 {gameState.matches}
@@ -81,6 +96,14 @@ export function ResultModal({ isOpen, gameState, onPlayAgain, onClose }: ResultM
                 {t('attempts')}
               </div>
             </div>
+            <div>
+              <div className="text-2xl font-bold text-purple-600">
+                {timer.formattedTime}
+              </div>
+              <div className="text-sm text-gray-600">
+                {t('time')}
+              </div>
+            </div>
           </div>
           <div className="mt-3 pt-3 border-t border-gray-200">
             <div className="text-sm text-gray-600">
@@ -92,13 +115,13 @@ export function ResultModal({ isOpen, gameState, onPlayAgain, onClose }: ResultM
         {/* Action Buttons */}
         <div className="flex gap-3">
           <Button
-            onClick={onPlayAgain}
+            onClick={handlePlayAgain}
             className="flex-1 bg-green-500 hover:bg-green-600 text-white"
           >
             {t('playAgain')}
           </Button>
           <Button
-            onClick={onClose}
+            onClick={handleClose}
             className="flex-1 bg-gray-500 hover:bg-gray-600 text-white"
           >
             {t('close')}

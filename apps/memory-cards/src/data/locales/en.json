@@ -8,6 +8,7 @@
   "clickToStart": "Press the Start button to begin the game!",
   "matches": "Pairs Found",
   "attempts": "Attempts",
+  "time": "Time",
   "difficulty": {
     "easy": "Easy (2×2)",
     "medium": "Medium (3×2)",

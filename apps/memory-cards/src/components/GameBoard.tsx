@@ -2,14 +2,16 @@ import { GameContainer } from '@core/ui/GameContainer';
 import { Card } from '@/components/Card';
 import { useL10n } from '@/locales';
 import type { MemoryGameState, Difficulty } from '@/types';
+import type { useGameTimer } from '@/hooks/useGameTimer';
 import { DIFFICULTY_CONFIGS } from '@/types';
 
 interface GameBoardProps {
   gameState: MemoryGameState;
   onCardFlip: (cardId: string) => void;
+  timer: ReturnType<typeof useGameTimer>;
 }
 
-export function GameBoard({ gameState, onCardFlip }: GameBoardProps) {
+export function GameBoard({ gameState, onCardFlip, timer }: GameBoardProps) {
   const { cards, isLocked, difficulty } = gameState;
   const config = DIFFICULTY_CONFIGS[difficulty];
   const { t } = useL10n();
@@ -51,6 +53,12 @@ export function GameBoard({ gameState, onCardFlip }: GameBoardProps) {
           <div className="text-sm text-gray-600">{t('attempts')}</div>
           <div className="text-2xl font-bold text-blue-600">
             {gameState.attempts}
+          </div>
+        </div>
+        <div className="bg-white rounded-lg px-4 py-2 shadow-md">
+          <div className="text-sm text-gray-600">{t('time')}</div>
+          <div className="text-2xl font-bold text-purple-600">
+            {timer.formattedTime}
           </div>
         </div>
       </div>

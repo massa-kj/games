@@ -1,6 +1,10 @@
 import { useSettings } from '@core/hooks/useSettings';
 import { FlipCard } from '@core/ui';
+import { useEffect } from 'react';
+import { useSound } from '@core/hooks';
 import type { Card as CardType } from '@/types';
+import { memoryCardSounds } from '@/audio/sounds';
+import '@/styles.css';
 
 interface CardProps {
   card: CardType;
@@ -12,13 +16,23 @@ export function Card({ card, onFlip, disabled = false }: CardProps) {
   const { settings } = useSettings();
   const currentLang = settings.lang;
 
+  // Initialize sound system with Memory Cards sounds
+  const { play } = useSound(memoryCardSounds);
+
+  // Play cardFlip sound when card is flipped
+  useEffect(() => {
+    if (card.isFlipped && !card.isMatched) {
+      play('cardFlip');
+    }
+  }, [card.isFlipped, card.isMatched, play]);
+
   const handleClick = () => {
     if (!card.isFlipped && !card.isMatched) {
+      // Play card select sound when card is clicked
+      play('cardSelect');
       onFlip(card.id);
     }
-  };
-
-  const animalName = card.animal[currentLang] || card.animal.en;
+  };  const animalName = card.animal[currentLang] || card.animal.en;
 
   const backContent = (
     <div className="text-4xl">❓</div>

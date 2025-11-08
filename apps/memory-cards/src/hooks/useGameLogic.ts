@@ -1,4 +1,4 @@
-import { useReducer, useCallback, useEffect } from 'react';
+import { useReducer, useCallback, useEffect, useRef } from 'react';
 import { shuffle } from '@core/utils/array';
 import { delay } from '@core/utils/time';
 import type {
@@ -9,6 +9,8 @@ import type {
   Difficulty
 } from '@/types';
 import { DIFFICULTY_CONFIGS } from '@/types';
+import { useGameAudio } from './useGameAudio';
+import { useGameTimer } from './useGameTimer';
 import animalsData from '@/data/animals.json';
 
 const animals = animalsData as Animal[];
@@ -167,11 +169,25 @@ function generateCards(difficulty: Difficulty): Card[] {
 
 export function useGameLogic() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
+  const prevStateRef = useRef<MemoryGameState>();
+
+  // Use audio system for game feedback
+  useGameAudio(state, prevStateRef.current);
+
+  // Use timer system for tracking game time
+  const timer = useGameTimer();
+
+  // Update previous state reference
+  useEffect(() => {
+    prevStateRef.current = state;
+  });
 
   const startGame = useCallback((difficulty: Difficulty) => {
     const cards = generateCards(difficulty);
     dispatch({ type: 'START_GAME', difficulty, cards });
-  }, []);
+    timer.resetTimer();
+    timer.startTimer();
+  }, [timer]);
 
   const flipCard = useCallback((cardId: string) => {
     dispatch({ type: 'FLIP_CARD', cardId });
@@ -179,7 +195,8 @@ export function useGameLogic() {
 
   const restartGame = useCallback(() => {
     dispatch({ type: 'RESTART_GAME' });
-  }, []);
+    timer.resetTimer();
+  }, [timer]);
 
   const setDifficulty = useCallback((difficulty: Difficulty) => {
     dispatch({ type: 'SET_DIFFICULTY', difficulty });
@@ -208,8 +225,16 @@ export function useGameLogic() {
     }
   }, [state.firstCard, state.secondCard, state.isLocked]);
 
+  // Stop timer when game is completed
+  useEffect(() => {
+    if (state.cleared) {
+      timer.stopTimer();
+    }
+  }, [state.cleared, timer]);
+
   return {
     state,
+    timer,
     startGame,
     flipCard,
     restartGame,
