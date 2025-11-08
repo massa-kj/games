@@ -18,7 +18,7 @@ program
   .option(
     '--modules <patterns...>',
     'Glob patterns for target files',
-    ['core/{ui,hooks,utils}/**/*.{ts,tsx}']
+    ['core/{audio,hooks,i18n,storage,themes,ui,utils}/**/*.{ts,tsx}']
   )
   .option(
     '--out <path>',
