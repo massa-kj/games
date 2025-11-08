@@ -1,3 +1,13 @@
+/**
+ * Framework-Agnostic Theme System
+ * Entry point for the CSS-first design system
+ * Works with or without Tailwind CSS
+ */
+
+/* -------------------- */
+/* Legacy Design Tokens */
+/* -------------------- */
+
 :root {
   /* Colors */
   --color-bg: #FFF8E1;
