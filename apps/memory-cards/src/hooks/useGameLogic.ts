@@ -185,8 +185,8 @@ export function useGameLogic() {
   const startGame = useCallback((difficulty: Difficulty) => {
     const cards = generateCards(difficulty);
     dispatch({ type: 'START_GAME', difficulty, cards });
-    timer.resetTimer();
-    timer.startTimer();
+    timer.reset();
+    timer.start();
   }, [timer]);
 
   const flipCard = useCallback((cardId: string) => {
@@ -195,7 +195,7 @@ export function useGameLogic() {
 
   const restartGame = useCallback(() => {
     dispatch({ type: 'RESTART_GAME' });
-    timer.resetTimer();
+    timer.reset();
   }, [timer]);
 
   const setDifficulty = useCallback((difficulty: Difficulty) => {
@@ -228,7 +228,7 @@ export function useGameLogic() {
   // Stop timer when game is completed
   useEffect(() => {
     if (state.cleared) {
-      timer.stopTimer();
+      timer.pause();
     }
   }, [state.cleared, timer]);
 

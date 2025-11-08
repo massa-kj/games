@@ -1,76 +1,52 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 import { useSound } from '@core/hooks';
+import { useGameTimer as useCoreGameTimer } from '@core/hooks';
 import { memoryCardSounds } from '@/audio/sounds';
 
 /**
  * Custom hook for game timer with audio feedback
  */
 export function useGameTimer() {
-  const [timeElapsed, setTimeElapsed] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout>();
+  const timer = useCoreGameTimer({
+    mode: 'countup',
+    initialTime: 0
+  });
+
   const tickCountRef = useRef(0);
   const { play } = useSound(memoryCardSounds);
 
+  // Override the start timer to include tick counting
   const startTimer = useCallback(() => {
-    if (!isRunning) {
-      setIsRunning(true);
+    if (!timer.isRunning) {
+      timer.start();
       tickCountRef.current = 0;
     }
-  }, [isRunning]);
+  }, [timer]);
 
-  const stopTimer = useCallback(() => {
-    setIsRunning(false);
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-    }
-  }, []);
-
+  // Override the reset timer to reset tick count
   const resetTimer = useCallback(() => {
-    setTimeElapsed(0);
-    setIsRunning(false);
+    timer.reset();
     tickCountRef.current = 0;
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-    }
-  }, []);
+  }, [timer]);
 
-  // Timer logic
+  // Override the core timer's behavior to add sound feedback
   useEffect(() => {
-    if (isRunning) {
-      intervalRef.current = setInterval(() => {
-        setTimeElapsed(prev => prev + 1);
+    if (timer.isRunning) {
+      const interval = setInterval(() => {
         tickCountRef.current += 1;
-
         // Play tick sound every 10 seconds for subtle audio feedback
         if (tickCountRef.current % 10 === 0) {
           play('timerTick');
         }
       }, 1000);
-    } else if (intervalRef.current) {
-      clearInterval(intervalRef.current);
+
+      return () => clearInterval(interval);
     }
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [isRunning, play]);
-
-  // Format time for display (MM:SS)
-  const formatTime = useCallback((seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
-  }, []);
+  }, [timer.isRunning, play]);
 
   return {
-    timeElapsed,
-    formattedTime: formatTime(timeElapsed),
-    isRunning,
-    startTimer,
-    stopTimer,
-    resetTimer,
+    ...timer,
+    start: startTimer,
+    reset: resetTimer
   };
 }
