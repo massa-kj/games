@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { Settings, Lang } from '../types.js';
 import { changeLanguage } from '../i18n/i18n.js';
+import { soundManager } from '../audio/soundManager.js';
 
 const DEFAULT_SETTINGS: Settings = {
   lang: 'en',
@@ -28,6 +29,9 @@ export function useSettings() {
 
       // Apply language change
       changeLanguage(settings.lang);
+
+      // Apply sound setting
+      soundManager.setEnabled(settings.sound);
     } catch (error) {
       console.warn('Failed to save settings:', error);
     }
