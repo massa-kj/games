@@ -64,19 +64,77 @@ export interface ToneDefinition {
 }
 
 /**
- * Complete sound definition supporting both file-based and generated audio
+ * Individual note in a melody sequence
+ */
+export interface MelodyNote {
+  /** Musical note (e.g., 'C4', 'A#5') - use 'rest' for silence */
+  note: string | 'rest';
+  /** Duration in note values or seconds */
+  duration: NoteDuration;
+  /** Optional velocity/volume for this note (0-1) */
+  velocity?: number;
+  /** Optional tie to next note (extends duration) */
+  tie?: boolean;
+}
+
+/**
+ * Complete melody definition with sequence and properties
+ */
+export interface MelodyDefinition {
+  /** Sequence of notes to play */
+  notes: MelodyNote[];
+  /** Tempo in beats per minute */
+  bpm?: number;
+  /** Waveform type for all notes */
+  type?: WaveType;
+  /** Volume envelope for all notes */
+  envelope?: EnvelopeConfig;
+  /** Audio filter for all notes */
+  filter?: FilterConfig;
+  /** Whether to loop the melody */
+  loop?: boolean;
+  /** Tags for categorization */
+  tags?: string[];
+}
+
+/**
+ * Audio engine capabilities
+ */
+export interface AudioEngineCapabilities {
+  /** Supports file-based audio playback */
+  supportsFiles: boolean;
+  /** Supports procedural tone generation */
+  supportsTones: boolean;
+  /** Supports melody sequences */
+  supportsMelodies: boolean;
+  /** Supports advanced features like effects and filters */
+  supportsAdvancedFeatures: boolean;
+  /** Supports real-time audio analysis */
+  supportsAnalysis: boolean;
+  /** Maximum concurrent sounds */
+  maxConcurrentSounds?: number;
+  /** Supported audio formats */
+  supportedFormats?: string[];
+}
+
+/**
+ * Complete sound definition supporting file-based, generated audio, and melodies
  */
 export interface SoundDefinition {
   /** Path to audio file */
   src?: string;
   /** Procedural tone definition */
   tone?: ToneDefinition;
+  /** Melody definition for sequence of notes */
+  melody?: MelodyDefinition;
   /** Default volume level */
   volume?: number;
   /** Whether to loop the sound */
   loop?: boolean;
   /** Tags for categorization */
   tags?: string[];
+  /** Fallback sound definition if primary is not supported */
+  fallback?: Pick<SoundDefinition, 'src' | 'tone'>;
 }
 
 /**
@@ -100,6 +158,11 @@ export interface AdvancedSoundManager extends SoundManager {
   playTone(frequency: number, duration?: number, options?: SoundOptions): Promise<string>;
   playBeep(options?: { frequency?: number; duration?: number }): Promise<string>;
   playNoise(type: 'white' | 'pink', duration?: number, options?: SoundOptions): Promise<string>;
+
+  // Melody playback methods
+  playMelody(melodyDefinition: MelodyDefinition, options?: PlayOptions): Promise<string>;
+  registerMelody(name: string, melodyDefinition: MelodyDefinition): void;
+  playRegisteredMelody(name: string, options?: PlayOptions): Promise<string>;
 
   // Effect management
   createEffect(type: string, params?: Record<string, any>): string;

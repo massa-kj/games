@@ -1,6 +1,6 @@
 import { useCallback, useRef, useEffect } from 'react';
 import { soundManager } from '../audio/soundManager.js';
-import type { SoundOptions, SoundMap, PlayOptions } from '../audio/types.js';
+import type { SoundOptions, SoundMap, PlayOptions, MelodyDefinition } from '../audio/types.js';
 
 /**
  * Configuration for useSound hook
@@ -13,10 +13,32 @@ export interface UseSoundConfig {
 }
 
 /**
- * Enhanced useSound hook with SoundMap support
+ * Enhanced useSound hook with SoundMap and Melody support
+ *
+ * Provides unified interface for playing sounds, effects, and melodies.
+ * Supports both file-based audio and procedurally generated content.
  *
  * @param soundMap Optional SoundMap to use for this hook instance
  * @param config Configuration options
+ *
+ * @example
+ * ```typescript
+ * // Basic usage with SoundMap
+ * const { play } = useSound(gameSounds);
+ * await play('victory'); // Plays sound or melody from SoundMap
+ *
+ * // Direct melody playback
+ * const { playMelody } = useSound();
+ * await playMelody({
+ *   notes: [{ note: 'C4', duration: '4n' }],
+ *   bpm: 120
+ * });
+ *
+ * // Unified API
+ * const { playAudio } = useSound(gameSounds);
+ * await playAudio('victory'); // From SoundMap
+ * await playAudio(melodyDefinition); // Direct melody
+ * ```
  */
 export function useSound(soundMap?: SoundMap, config: UseSoundConfig = {}) {
   const soundMapRef = useRef(soundMap);
@@ -129,11 +151,75 @@ export function useSound(soundMap?: SoundMap, config: UseSoundConfig = {}) {
     return soundMapRef.current ? soundName in soundMapRef.current : false;
   }, []);
 
+  /**
+   * Play a melody directly (unified with sound playback)
+   */
+  const playMelody = useCallback(async (melodyDefinition: MelodyDefinition, options?: PlayOptions) => {
+    try {
+      const mergedOptions: PlayOptions = {
+        ...configRef.current.defaultOptions,
+        ...options,
+        volume: (options?.volume ?? 1) * (configRef.current.volume ?? 1)
+      };
+      await soundManager.playMelody(melodyDefinition, mergedOptions);
+    } catch (error) {
+      console.warn('Failed to play melody:', error);
+    }
+  }, []);
+
+  /**
+   * Register a melody for reuse (unified with sound management)
+   */
+  const registerMelody = useCallback((name: string, melodyDefinition: MelodyDefinition) => {
+    soundManager.registerMelody(name, melodyDefinition);
+  }, []);
+
+  /**
+   * Play a registered melody by name (unified with sound playback)
+   */
+  const playRegisteredMelody = useCallback(async (name: string, options?: PlayOptions) => {
+    try {
+      const mergedOptions: PlayOptions = {
+        ...configRef.current.defaultOptions,
+        ...options,
+        volume: (options?.volume ?? 1) * (configRef.current.volume ?? 1)
+      };
+      await soundManager.playRegisteredMelody(name, mergedOptions);
+    } catch (error) {
+      console.warn(`Failed to play registered melody '${name}':`, error);
+    }
+  }, []);
+
+  /**
+   * Unified play method that works with both sounds and melodies
+   * Automatically detects if the sound definition contains a melody
+   */
+  const playAudio = useCallback(async (nameOrDefinition: string | MelodyDefinition, options?: PlayOptions) => {
+    if (typeof nameOrDefinition === 'string') {
+      // String: play from SoundMap or registered melody
+      if (soundMapRef.current && nameOrDefinition in soundMapRef.current) {
+        return playSoundFromMap(nameOrDefinition, options);
+      } else {
+        // Try as registered melody
+        return playRegisteredMelody(nameOrDefinition, options);
+      }
+    } else {
+      // MelodyDefinition: play directly
+      return playMelody(nameOrDefinition, options);
+    }
+  }, [playSoundFromMap, playRegisteredMelody, playMelody]);
+
   return {
-    // Primary methods (new API)
+    // Primary methods (new unified API)
     play: soundMapRef.current ? playSoundFromMap : playSound,
+    playAudio, // Unified method for sounds and melodies
     playSoundFromMap,
     playSoundWithMap,
+
+    // Melody-specific methods
+    playMelody,
+    registerMelody,
+    playRegisteredMelody,
 
     // Legacy method (backward compatibility)
     playSound,

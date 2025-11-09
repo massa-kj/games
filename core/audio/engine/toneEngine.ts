@@ -34,9 +34,8 @@ export class ToneEngine implements AudioEngine {
     throw new Error('Tone.js engine not implemented. Install tone package and implement this engine.');
   }
 
-  async createSound(definition: SoundDefinition, _options?: PlayOptions): Promise<string> {
+  async createSound(_definition: SoundDefinition, _options?: PlayOptions): Promise<string> {
     // Placeholder implementation
-    console.log('ToneEngine: createSound called with', definition);
     throw new Error('Tone.js engine not implemented');
   }
 

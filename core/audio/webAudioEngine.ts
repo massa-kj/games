@@ -1,5 +1,6 @@
-import type { ToneDefinition, WaveType, EnvelopeConfig, FilterConfig, PlayOptions } from './types.js';
-import { noteToFrequency, durationToSeconds, clamp } from './utils.js';
+import type { ToneDefinition, PlayOptions, SoundDefinition, MelodyDefinition, MelodyNote } from './types.js';
+import type { AudioEngine } from './engine/index.js';
+import { noteToFrequency, durationToSeconds } from './utils.js';
 
 export interface AudioNode {
   connect(destination: AudioNode | AudioParam): void;
@@ -29,7 +30,9 @@ export interface AudioTemplate {
   create(context: AudioContext, params?: Record<string, any>): SoundSource;
 }
 
-export class WebAudioEngine {
+export class WebAudioEngine implements AudioEngine {
+  readonly name = 'WebAudio';
+
   private context: AudioContext | null = null;
   private masterGain: GainNode | null = null;
   private compressor: DynamicsCompressorNode | null = null;
@@ -42,6 +45,14 @@ export class WebAudioEngine {
   constructor() {
     this.initializeAudioContext();
     this.registerDefaultTemplates();
+  }
+
+  isSupported(): boolean {
+    return !!(window.AudioContext || (window as any).webkitAudioContext);
+  }
+
+  async initialize(): Promise<void> {
+    await this.initializeAudioContext();
   }
 
   private async initializeAudioContext(): Promise<void> {
@@ -132,7 +143,63 @@ export class WebAudioEngine {
   }
 
   async createSound(
-    template: string | AudioBuffer | string,
+    definition: SoundDefinition,
+    options?: PlayOptions
+  ): Promise<string> {
+    if (!this.context || !this.masterGain) {
+      await this.initializeAudioContext();
+    }
+
+    if (!this.context || !this.masterGain) {
+      throw new Error('AudioContext not available');
+    }
+
+    // Handle different sound types
+    if (definition.melody) {
+      return this.createMelody(definition.melody, options);
+    } else if (definition.tone) {
+      return this.createToneSound(definition.tone, options);
+    } else if (definition.src) {
+      const buffer = await this.loadAudioBuffer(definition.src);
+      if (!buffer) throw new Error(`Failed to load audio: ${definition.src}`);
+      return this.createSoundFromTemplate(buffer, { volume: definition.volume });
+    } else {
+      throw new Error('Invalid sound definition');
+    }
+  }
+
+  async createMelody(definition: MelodyDefinition, options?: PlayOptions): Promise<string> {
+    if (!this.context || !this.masterGain) {
+      await this.initializeAudioContext();
+    }
+
+    if (!this.context || !this.masterGain) {
+      throw new Error('AudioContext not available');
+    }
+
+    const melodyId = `melody_${Date.now()}_${Math.random()}`;
+    const bpm = definition.bpm || 120;
+
+    // Create a melody source that schedules all notes
+    const melodySource = new MelodySource(this.context, {
+      notes: definition.notes,
+      bpm,
+      type: definition.type || 'sine',
+      envelope: definition.envelope,
+      filter: definition.filter,
+      loop: definition.loop || false,
+      volume: options?.volume || 1
+    });
+
+    melodySource.connect(this.masterGain);
+    this.sources.set(melodyId, melodySource);
+
+    return melodyId;
+  }
+
+  // Legacy createSound method renamed
+  async createSoundFromTemplate(
+    template: string | AudioBuffer,
     params?: Record<string, any>
   ): Promise<string> {
     if (!this.context || !this.masterGain) {
@@ -171,7 +238,25 @@ export class WebAudioEngine {
     return soundId;
   }
 
-  playSound(soundId: string, when?: number): void {
+  async playSound(soundId: string, options?: PlayOptions): Promise<void> {
+    if (!this.enabled) return;
+
+    console.log('playSound called with soundId:', soundId, 'options:', options);
+
+    const source = this.sources.get(soundId);
+    console.log('Found source:', source ? source.type : 'null');
+
+    if (source) {
+      const when = options?.when || 0;
+      console.log('Starting source at time:', when);
+      source.start(when);
+    } else {
+      console.warn('No source found for soundId:', soundId);
+    }
+  }
+
+  // Legacy playSound method renamed
+  playSoundLegacy(soundId: string, when?: number): void {
     if (!this.enabled) return;
 
     const source = this.sources.get(soundId);
@@ -193,6 +278,23 @@ export class WebAudioEngine {
       source.stop();
       this.sources.delete(id);
     });
+  }
+
+  // AudioEngine interface methods
+  stopAll(): void {
+    this.stopAllSounds();
+  }
+
+  setVolume(volume: number): void {
+    this.setMasterVolume(volume);
+  }
+
+  dispose(): void {
+    this.stopAll();
+    if (this.context) {
+      this.context.close();
+      this.context = null;
+    }
   }
 
   setMasterVolume(volume: number): void {
@@ -697,6 +799,140 @@ class NoiseSource implements SoundSource {
       this.sourceNode.stop(when);
       this.sourceNode = null;
     }
+  }
+
+  setVolume(volume: number): void {
+    const clampedVolume = Math.max(0, Math.min(1, volume));
+    this.gainNode.gain.setValueAtTime(clampedVolume, this.context.currentTime);
+  }
+
+  setPan(pan: number): void {
+    const clampedPan = Math.max(-1, Math.min(1, pan));
+    this.panNode.pan.setValueAtTime(clampedPan, this.context.currentTime);
+  }
+
+  connect(destination: AudioNode): void {
+    this.panNode.connect(destination as any);
+  }
+
+  disconnect(): void {
+    this.panNode.disconnect();
+  }
+}
+
+/**
+ * Melody source for playing sequences of notes
+ */
+class MelodySource implements SoundSource {
+  public id: string;
+  public type: 'buffer' = 'buffer';
+  private context: AudioContext;
+  private gainNode: GainNode;
+  private panNode: StereoPannerNode;
+  private params: any;
+  private isPlaying = false;
+  private scheduledSources: OscillatorNode[] = [];
+
+  constructor(context: AudioContext, params: any = {}) {
+    this.id = `melody_${Date.now()}_${Math.random()}`;
+    this.context = context;
+    this.params = params;
+
+    this.gainNode = context.createGain();
+    this.panNode = context.createStereoPanner();
+    this.gainNode.connect(this.panNode);
+
+    const { volume = 1, pan = 0 } = params;
+    this.setVolume(volume);
+    this.setPan(pan);
+  }
+
+  start(when: number = 0): void {
+    if (this.isPlaying) return;
+
+    const { notes, bpm = 120, type = 'sine', envelope } = this.params;
+    let currentTime = this.context.currentTime + when;
+
+    // Schedule each note
+    notes.forEach((note: MelodyNote) => {
+      const duration = durationToSeconds(note.duration, bpm);
+
+      if (note.note === 'rest') {
+        // Silent note - just advance time
+        currentTime += duration;
+        return;
+      }
+
+      try {
+        const frequency = noteToFrequency(note.note);
+        const velocity = note.velocity || 1;
+
+        // Create oscillator for this note
+        const oscillator = this.context.createOscillator();
+        const noteGain = this.context.createGain();
+
+        oscillator.type = type;
+        oscillator.frequency.setValueAtTime(frequency, currentTime);
+
+        // Connect: oscillator -> noteGain -> this.gainNode
+        oscillator.connect(noteGain);
+        noteGain.connect(this.gainNode);
+
+        // Apply envelope if specified
+        if (envelope) {
+          const { attack = 0.01, decay = 0.1, sustain = 0.7, release = 0.3 } = envelope;
+          const noteVolume = velocity * (this.params.volume || 1);
+
+          noteGain.gain.setValueAtTime(0, currentTime);
+          noteGain.gain.linearRampToValueAtTime(noteVolume, currentTime + attack);
+          noteGain.gain.linearRampToValueAtTime(noteVolume * sustain, currentTime + attack + decay);
+          noteGain.gain.setValueAtTime(noteVolume * sustain, currentTime + duration - release);
+          noteGain.gain.linearRampToValueAtTime(0, currentTime + duration);
+        } else {
+          // Simple fade to avoid clicks
+          const noteVolume = velocity * (this.params.volume || 1);
+          noteGain.gain.setValueAtTime(noteVolume, currentTime);
+          noteGain.gain.linearRampToValueAtTime(0, currentTime + duration - 0.01);
+        }
+
+        oscillator.start(currentTime);
+        oscillator.stop(currentTime + duration);
+        this.scheduledSources.push(oscillator);
+
+        // Clean up when note ends
+        oscillator.onended = () => {
+          const sourceIndex = this.scheduledSources.indexOf(oscillator);
+          if (sourceIndex > -1) {
+            this.scheduledSources.splice(sourceIndex, 1);
+          }
+        };
+
+        // Advance time for next note
+        currentTime += duration;
+      } catch (error) {
+        // Still advance time even if note fails
+        currentTime += duration;
+      }
+    });
+
+    this.isPlaying = true;
+
+    // Mark as stopped when all notes complete
+    setTimeout(() => {
+      this.isPlaying = false;
+    }, (currentTime - this.context.currentTime - when) * 1000);
+  }
+
+  stop(when: number = 0): void {
+    this.scheduledSources.forEach(source => {
+      try {
+        source.stop(when);
+      } catch (error) {
+        // Source may already be stopped
+      }
+    });
+    this.scheduledSources = [];
+    this.isPlaying = false;
   }
 
   setVolume(volume: number): void {

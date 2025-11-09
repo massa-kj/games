@@ -1,9 +1,12 @@
-import type { SoundOptions, SoundMap, SoundDefinition, PlayOptions } from './types';
+import type { SoundOptions, SoundMap, SoundDefinition, PlayOptions, MelodyDefinition } from './types';
 import { getAudioEngine, setEngineConfig } from './engine/index.js';
 
 export interface SoundManager {
   play(src: string, options?: SoundOptions): Promise<void>;
   playSound(soundName: string, soundMap: SoundMap, options?: PlayOptions): Promise<void>;
+  playMelody(melodyDefinition: MelodyDefinition, options?: PlayOptions): Promise<void>;
+  registerMelody(name: string, melodyDefinition: MelodyDefinition): void;
+  playRegisteredMelody(name: string, options?: PlayOptions): Promise<void>;
   stopAll(): void;
   setGlobalVolume(volume: number): void;
   isEnabled(): boolean;
@@ -15,6 +18,7 @@ export interface SoundManager {
  */
 class EnhancedSoundManager implements SoundManager {
   private soundMaps: Map<string, SoundMap> = new Map();
+  private melodyDefinitions: Map<string, MelodyDefinition> = new Map();
   private soundCache: Map<string, string> = new Map(); // soundName -> soundId
   private globalVolume = 1;
   private enabled = true;
@@ -73,7 +77,23 @@ class EnhancedSoundManager implements SoundManager {
 
       const engine = await getAudioEngine();
 
-      // Create cache key for this sound
+      // Handle melody definitions
+      if (soundDefinition.melody) {
+        if (engine.createMelody) {
+          const melodyId = await engine.createMelody(soundDefinition.melody, options);
+          await engine.playSound(melodyId, options);
+          return;
+        } else if (soundDefinition.fallback) {
+          // Use fallback if melody is not supported
+          const fallbackDefinition: SoundDefinition = { ...soundDefinition.fallback };
+          return this.playSound(soundName, { [soundName]: fallbackDefinition }, options);
+        } else {
+          console.warn(`Engine '${engine.name}' does not support melodies. Consider using fallback or WebAudioEngine.`);
+          return;
+        }
+      }
+
+      // Handle regular sounds (existing logic)
       const cacheKey = `${JSON.stringify(soundDefinition)}_${this.globalVolume}`;
 
       let soundId = this.soundCache.get(cacheKey);
@@ -134,6 +154,50 @@ class EnhancedSoundManager implements SoundManager {
     }
 
     return this.playSound(soundName, soundMap, options);
+  }
+
+  /**
+   * Play a melody from a MelodyDefinition
+   */
+  async playMelody(melodyDefinition: MelodyDefinition, options: PlayOptions = {}): Promise<void> {
+    if (!this.enabled) return;
+
+    try {
+      await this.resumeAudioContext();
+      const engine = await getAudioEngine();
+
+      // Check if engine supports melody creation
+      if (!engine.createMelody) {
+        console.warn(`Engine '${engine.name}' does not support direct melody playback. Consider using WebAudioEngine.`);
+        return;
+      }
+
+      // Create the melody sound
+      const soundId = await engine.createMelody(melodyDefinition, options);
+      await engine.playSound(soundId, options);
+    } catch (error) {
+      console.warn('Failed to play melody:', error);
+    }
+  }
+
+  /**
+   * Register a melody definition for reuse
+   */
+  registerMelody(name: string, melodyDefinition: MelodyDefinition): void {
+    this.melodyDefinitions.set(name, melodyDefinition);
+  }
+
+  /**
+   * Play a registered melody by name
+   */
+  async playRegisteredMelody(name: string, options?: PlayOptions): Promise<void> {
+    const melodyDefinition = this.melodyDefinitions.get(name);
+    if (!melodyDefinition) {
+      console.warn(`Melody '${name}' not found`);
+      return;
+    }
+
+    return this.playMelody(melodyDefinition, options);
   }
 
   stopAll(): void {

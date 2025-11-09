@@ -2,7 +2,8 @@
  * Audio engine abstraction layer for different audio implementations
  */
 
-import type { SoundDefinition, PlayOptions } from '../types.js';
+import type { SoundDefinition, PlayOptions, MelodyDefinition, AudioEngineCapabilities } from '../types.js';
+import { WebAudioEngine } from '../webAudioEngine.js';
 
 /**
  * Abstract interface for audio engines
@@ -10,6 +11,9 @@ import type { SoundDefinition, PlayOptions } from '../types.js';
 export interface AudioEngine {
   /** Engine name for identification */
   readonly name: string;
+
+  /** Engine capabilities (optional for backward compatibility) */
+  readonly capabilities?: AudioEngineCapabilities;
 
   /** Whether this engine is supported in current environment */
   isSupported(): boolean;
@@ -19,6 +23,9 @@ export interface AudioEngine {
 
   /** Create a sound from definition and return unique ID */
   createSound(definition: SoundDefinition, options?: PlayOptions): Promise<string>;
+
+  /** Create and schedule a melody sequence (optional - check capabilities.supportsMelodies) */
+  createMelody?(definition: MelodyDefinition, options?: PlayOptions): Promise<string>;
 
   /** Play a sound by ID */
   playSound(soundId: string, options?: PlayOptions): Promise<void>;
@@ -129,7 +136,6 @@ async function selectBestEngine(): Promise<AudioEngine> {
   }
 
   // Add WebAudio engine
-  const { WebAudioEngine } = await import('./webAudioEngine.js');
   const webAudioEngine = new WebAudioEngine();
   if (webAudioEngine.isSupported()) {
     engines.push({ engine: webAudioEngine, priority: AudioEnginePriority.WEB_AUDIO });
@@ -161,7 +167,6 @@ async function createEngineByName(name: string): Promise<AudioEngine | null> {
         const { ToneEngine } = await import('./toneEngine.js');
         return new ToneEngine();
       case 'webaudio':
-        const { WebAudioEngine } = await import('./webAudioEngine.js');
         return new WebAudioEngine();
       case 'html':
       case 'htmlaudio':
@@ -199,7 +204,7 @@ export async function switchEngine(engineName: string): Promise<AudioEngine> {
 export async function getAvailableEngines(): Promise<Array<{ name: string; supported: boolean }>> {
   const engines = [
     { name: 'HTML Audio', className: 'HTMLAudioEngine', modulePath: './htmlAudioEngine.js' },
-    { name: 'Web Audio', className: 'WebAudioEngine', modulePath: './webAudioEngine.js' },
+    { name: 'Web Audio', className: 'WebAudioEngine', modulePath: '../webAudioEngine.js' },
     { name: 'Tone.js', className: 'ToneEngine', modulePath: './toneEngine.js' }
   ];
 
