@@ -231,7 +231,7 @@ export function GameHeader({
           {actions.map((action) => renderAction(action))}
 
           {/* Settings button */}
-          {showSettingsButton && gameSettings.length > 0 && (
+          {showSettingsButton && (
             <Button
               variant="secondary"
               size="md"
