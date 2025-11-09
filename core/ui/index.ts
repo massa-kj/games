@@ -13,6 +13,9 @@ export type { FlipCardProps } from './FlipCard.js';
 export { Modal } from './Modal.js';
 export type { ModalProps } from './Modal.js';
 
+export { Tabs } from './Tabs.js';
+export type { TabsProps, TabItem } from './Tabs.js';
+
 export { GameSettingsModal } from './GameSettingsModal.js';
 export type { GameSettingsModalProps, GameSettingControl } from './GameSettingsModal.js';
 

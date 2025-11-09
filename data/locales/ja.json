@@ -3,10 +3,14 @@
     "settings": {
       "title": "せってい",
       "language": "ことば",
+      "languageDescription": "つかいたいことばをえらんでください",
       "sound": "おと",
+      "soundDescription": "おとをだすばあいはオンにしてください",
       "soundEnabled": "おとをだす",
       "reset": "デフォルトにリセット",
-      "close": "とじる"
+      "close": "とじる",
+      "commonTab": "きほん",
+      "gameTab": "ゲーム"
     }
   },
   "site": {

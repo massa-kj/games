@@ -3,10 +3,14 @@
     "settings": {
       "title": "Settings",
       "language": "Language",
+      "languageDescription": "Select your preferred language",
       "sound": "Sound",
+      "soundDescription": "Turn it on if you want to make sound",
       "soundEnabled": "Sound Enabled",
       "reset": "Reset to Default",
-      "close": "Close"
+      "close": "Close",
+      "commonTab": "General",
+      "gameTab": "Game"
     }
   },
   "site": {
