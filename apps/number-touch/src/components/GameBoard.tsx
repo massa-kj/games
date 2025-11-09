@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useSettings } from '@core/hooks';
 import { GameContainer } from '@core/ui/GameContainer';
 import { NumberButton } from '@/components/NumberButton';
 import { NumberButton as NumberButtonType, DIFFICULTY_CONFIGS, Difficulty } from '@/types';
-
-// Import locale data
-import enLocale from '@/data/locales/en.json';
-import jaLocale from '@/data/locales/ja.json';
+import { useL10n } from '@/locales';
 import { GameHeader, GameSettingControl } from '@core/ui';
-
-const locales = {
-  en: enLocale,
-  ja: jaLocale
-};
 
 interface GameBoardProps {
   numbers: NumberButtonType[];
@@ -49,21 +40,8 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   onRestartGame,
   gameSettings,
 }) => {
-  const { settings } = useSettings();
+  const { t } = useL10n();
   const [currentTime, setCurrentTime] = useState('0.000');
-
-  // Simple translation function
-  const t = (key: string): string => {
-    const currentLocale = locales[settings.lang || 'en'];
-    const keys = key.split('.');
-    let value: any = currentLocale;
-
-    for (const k of keys) {
-      value = value?.[k];
-    }
-
-    return value || key;
-  };
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -141,11 +119,11 @@ export const GameBoard: React.FC<GameBoardProps> = ({
           <div className="absolute inset-0 flex items-center justify-center bg-white/95 rounded-xl">
             <div className="text-center px-4">
               <div className="text-xl sm:text-2xl font-bold text-gray-700 mb-4">
-                {gameCompleted ? t('game.gameComplete') : t('game.ready')}
+                {gameCompleted ? t('results.gameComplete') : t('game.ready')}
               </div>
               <div className="text-sm sm:text-base text-gray-600">
                 {gameCompleted
-                  ? t('game.clickStartToPlayAgain')
+                  ? t('results.playAgain')
                   : t('game.instructions').replace('{{count}}', numbers.length.toString())
                 }
               </div>

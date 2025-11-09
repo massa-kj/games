@@ -1,11 +1,12 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@core/ui';
+import { Button, GameSettingsModal } from '@core/ui';
 import { useSettings } from '@core/hooks';
 
 function Header() {
   const { t } = useTranslation();
-  const { settings } = useSettings();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   return (
     <header className="bg-bg-secondary shadow-card">
@@ -18,16 +19,25 @@ function Header() {
           </Link>
 
           <nav className="flex items-center gap-4">
-            <Link to="/settings">
-              <Button variant="secondary" size="sm">
-                {t('site.nav.settings')}
-              </Button>
-            </Link>
             <Link to="/about">
               <Button variant="secondary" size="sm">
                 {t('site.nav.about')}
               </Button>
             </Link>
+
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setIsSettingsOpen(true)}
+            >
+              {t('core.settings.title')}
+            </Button>
+
+            <GameSettingsModal
+              title={t('core.settings.title')}
+              isOpen={isSettingsOpen}
+              onClose={() => setIsSettingsOpen(false)}
+            />
           </nav>
         </div>
 

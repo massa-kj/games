@@ -18,14 +18,7 @@
     "subtitle": "楽しいゲームがいっぱい",
     "nav": {
       "home": "ホーム",
-      "settings": "せってい",
       "about": "このアプリについて"
-    },
-    "settings": {
-      "title": "せってい",
-      "language": "ことば",
-      "sound": "おと",
-      "soundEnabled": "おとをだす"
     },
     "about": {
       "title": "このアプリについて",
