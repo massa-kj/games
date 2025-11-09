@@ -1,5 +1,7 @@
 import { Modal } from './Modal';
 import { Tabs, type TabItem } from './Tabs';
+import { Button } from './Button';
+import { Toggle } from './Toggle';
 import { useTranslation } from 'react-i18next';
 import { useSettings } from '../hooks/useSettings.js';
 import type { Lang } from '../types.js';
@@ -11,7 +13,7 @@ export interface GameSettingControl {
   /** Unique identifier for the setting */
   id: string;
   /** Type of input control to render */
-  type: 'checkbox' | 'select' | 'radio' | 'button-group';
+  type: 'checkbox' | 'select' | 'radio' | 'button-group' | 'toggle';
   /** Display label for the setting */
   label: string;
   /** Optional description text */
@@ -58,7 +60,7 @@ export interface GameSettingsModalProps {
  * Features:
  * - Tabbed interface with common settings (language, sound) and game-specific settings
  * - Unified view option for simpler layouts
- * - Multiple control types: checkbox, select, radio, button-group
+ * - Multiple control types: checkbox, select, radio, button-group, toggle
  * - Automatic common settings integration via useSettings hook
  * - Full internationalization support
  * - Backward compatibility with existing implementations
@@ -90,6 +92,13 @@ export interface GameSettingsModalProps {
  *         { value: 'easy', label: 'Easy' },
  *         { value: 'hard', label: 'Hard' }
  *       ]
+ *     },
+ *     {
+ *       id: 'hints',
+ *       type: 'toggle',
+ *       label: 'Show Hints',
+ *       value: showHints,
+ *       onChange: setShowHints
  *     }
  *   ]}
  * />
@@ -125,7 +134,7 @@ export function GameSettingsModal({
   const commonSettings: GameSettingControl[] = [
     {
       id: 'language',
-      type: 'select',
+      type: 'button-group',
       label: t('core.settings.language'),
       description: t('core.settings.languageDescription'),
       value: settings.lang,
@@ -137,7 +146,7 @@ export function GameSettingsModal({
     },
     {
       id: 'sound',
-      type: 'checkbox',
+      type: 'toggle',
       label: t('core.settings.sound'),
       description: t('core.settings.soundDescription'),
       value: settings.sound,
@@ -196,22 +205,29 @@ export function GameSettingsModal({
 
       case 'button-group':
         return (
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex gap-3">
             {setting.options?.map((option) => (
-              <button
+              <Button
                 key={option.value}
+                variant={setting.value === option.value ? 'primary' : 'secondary'}
                 onClick={() => setting.onChange(option.value)}
                 disabled={setting.disabled}
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${setting.value === option.value
-                  ? 'bg-blue-500 text-white shadow-lg'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  } ${setting.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                 title={option.description}
+                size="sm"
               >
                 {option.label}
-              </button>
+              </Button>
             ))}
           </div>
+        );
+
+      case 'toggle':
+        return (
+          <Toggle
+            checked={setting.value}
+            onChange={(checked) => setting.onChange(checked)}
+            disabled={setting.disabled}
+          />
         );
 
       default:

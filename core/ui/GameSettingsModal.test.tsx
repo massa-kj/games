@@ -23,7 +23,7 @@ describe('GameSettingsModal', () => {
 
     it('should render close button with default text', () => {
       render(<GameSettingsModal {...defaultProps} />);
-      expect(screen.getByText('core.settings.close')).toBeInTheDocument();
+      expect(screen.getByText('Close')).toBeInTheDocument();
     });
 
     it('should render close button with custom text', () => {
@@ -120,6 +120,23 @@ describe('GameSettingsModal', () => {
       expect(screen.getByText('Option 2')).toBeInTheDocument();
     });
 
+    it('should render toggle setting', () => {
+      const gameSettings = [
+        {
+          id: 'testToggle',
+          type: 'toggle' as const,
+          label: 'Test Toggle',
+          value: true,
+          onChange: vi.fn()
+        }
+      ];
+
+      render(<GameSettingsModal {...defaultProps} gameSettings={gameSettings} />);
+
+      expect(screen.getByText('Test Toggle')).toBeInTheDocument();
+      expect(screen.getByRole('checkbox')).toBeInTheDocument();
+    });
+
     it('should render setting with description', () => {
       const gameSettings = [
         {
@@ -144,7 +161,7 @@ describe('GameSettingsModal', () => {
       const onClose = vi.fn();
       render(<GameSettingsModal {...defaultProps} onClose={onClose} />);
 
-      fireEvent.click(screen.getByText('core.settings.close'));
+      fireEvent.click(screen.getByText('Close'));
       expect(onClose).toHaveBeenCalledTimes(1);
     });
 
@@ -216,14 +233,14 @@ describe('GameSettingsModal', () => {
       const onResetSettings = vi.fn();
       render(<GameSettingsModal {...defaultProps} onResetSettings={onResetSettings} />);
 
-      expect(screen.getByText('core.settings.reset')).toBeInTheDocument();
+      expect(screen.getByText('Reset to Default')).toBeInTheDocument();
     });
 
     it('should call onResetSettings when reset button is clicked', () => {
       const onResetSettings = vi.fn();
       render(<GameSettingsModal {...defaultProps} onResetSettings={onResetSettings} />);
 
-      fireEvent.click(screen.getByText('core.settings.reset'));
+      fireEvent.click(screen.getByText('Reset to Default'));
       expect(onResetSettings).toHaveBeenCalledTimes(1);
     });
 

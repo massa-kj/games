@@ -115,7 +115,7 @@ describe('GameHeader', () => {
     fireEvent.click(settingsButton);
 
     // Settings modal should be open
-    expect(screen.getByText('core.settings.title')).toBeInTheDocument();
+    expect(screen.getByText('Settings')).toBeInTheDocument();
     expect(screen.getByText('Difficulty')).toBeInTheDocument();
   });
 
