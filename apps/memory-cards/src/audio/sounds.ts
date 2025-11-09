@@ -22,7 +22,7 @@ export const memoryCardSounds: SoundMap = {
         release: 0.05
       }
     },
-    volume: 0.6,
+    volume: 0.5,
     tags: ["interaction", "card"]
   },
 
@@ -38,24 +38,21 @@ export const memoryCardSounds: SoundMap = {
         release: 0.03
       }
     },
-    volume: 0.4,
+    volume: 0.3,
     tags: ["interaction", "ui"]
   },
 
   // Match result sounds
   correctMatch: {
-    tone: {
-      type: "triangle",
-      note: "C5",
-      duration: "8n",
-      envelope: {
-        attack: 0.01,
-        decay: 0.2,
-        sustain: 0.6,
-        release: 0.1
-      }
+    melody: {
+      notes: [
+        { note: "G5", duration: "16n" },
+        { note: "C6", duration: "16n" },
+      ],
+      bpm: 120, // Slower for more clarity
+      type: 'sine',
     },
-    volume: 0.8,
+    volume: 0.6,
     tags: ["feedback", "success"]
   },
 
@@ -76,46 +73,52 @@ export const memoryCardSounds: SoundMap = {
         Q: 2
       }
     },
-    volume: 0.5,
+    volume: 0.4,
     tags: ["feedback", "error"]
   },
 
   // Game state sounds
   levelComplete: {
-    tone: {
-      type: "sine",
-      note: "C6",
-      duration: "2n",
+    // Simple victory melody: C-E-G-C with better timing
+    melody: {
+      notes: [
+        { note: 'C5', duration: '4n', velocity: 0.8 },
+        { note: 'E5', duration: '4n', velocity: 0.9 },
+        { note: 'G5', duration: '4n', velocity: 0.9 },
+        { note: 'C6', duration: '2n', velocity: 1.0 }
+      ],
+      bpm: 120,
+      type: 'sine',
       envelope: {
-        attack: 0.1,
-        decay: 0.3,
-        sustain: 0.7,
-        release: 0.5
+        attack: 0.01,
+        decay: 0.1,
+        sustain: 0.8,
+        release: 0.2
       }
     },
-    volume: 0.9,
+    volume: 0.7,
     tags: ["achievement", "completion"]
   },
 
   gameComplete: {
-    // Grand victory fanfare with sparkly sound
-    tone: {
-      type: "triangle",
-      note: "C6", // Higher pitch for more celebratory feel
-      duration: "2n",
+    // Grand victory fanfare melody - improved spacing and timing
+    melody: {
+      notes: [
+        { note: "C5", duration: "8n" },
+        { note: "E5", duration: "8n" },
+        { note: "G5", duration: "4n" },
+        { note: "C6", duration: "2n" },
+      ],
+      bpm: 120, // Slower for more clarity
+      type: 'triangle',
       envelope: {
         attack: 0.02,
-        decay: 0.4,
+        decay: 0.1,
         sustain: 0.9,
-        release: 0.6
-      },
-      filter: {
-        type: "highpass",
-        frequency: 200,
-        Q: 0.5
+        release: 0.3
       }
     },
-    volume: 0.9,
+    volume: 0.7,
     tags: ["achievement", "victory"]
   },
 
