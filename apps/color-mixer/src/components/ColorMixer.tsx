@@ -146,9 +146,6 @@ export function ColorMixer({
                       <div className="absolute bottom-2 right-1.5 w-0.5 h-0.5 bg-purple-300 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }}></div>
                     </div>
                   </div>
-                  <div className="text-purple-600 text-xs text-center mt-2 font-semibold group-hover:text-purple-700 transition-colors duration-300">
-                    {t("clickToChoose")}
-                  </div>
 
                   {/* Energy rings */}
                   <div className="absolute inset-0 rounded-2xl border-2 border-purple-300/50 animate-ping"></div>
@@ -203,9 +200,6 @@ export function ColorMixer({
                       <div className="absolute bottom-1 left-1 w-1 h-1 bg-pink-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                       <div className="absolute bottom-2 right-1.5 w-0.5 h-0.5 bg-pink-300 rounded-full animate-bounce" style={{ animationDelay: '0.7s' }}></div>
                     </div>
-                  </div>
-                  <div className="text-pink-600 text-xs text-center mt-2 font-semibold group-hover:text-pink-700 transition-colors duration-300">
-                    {t("clickToChoose")}
                   </div>
 
                   {/* Energy rings */}

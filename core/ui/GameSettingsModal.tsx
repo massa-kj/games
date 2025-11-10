@@ -136,7 +136,6 @@ export function GameSettingsModal({
       id: 'language',
       type: 'button-group',
       label: t('core.settings.language'),
-      description: t('core.settings.languageDescription'),
       value: settings.lang,
       onChange: (value: string) => setLanguage(value as Lang),
       options: [
@@ -148,7 +147,6 @@ export function GameSettingsModal({
       id: 'sound',
       type: 'toggle',
       label: t('core.settings.sound'),
-      description: t('core.settings.soundDescription'),
       value: settings.sound,
       onChange: () => toggleSound(),
     },

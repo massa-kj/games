@@ -3,9 +3,7 @@
     "settings": {
       "title": "せってい",
       "language": "ことば",
-      "languageDescription": "つかいたいことばをえらんでください",
       "sound": "おと",
-      "soundDescription": "おとをだすばあいはオンにしてください",
       "soundEnabled": "おとをだす",
       "reset": "デフォルトにリセット",
       "close": "とじる",

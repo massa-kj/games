@@ -32,12 +32,10 @@ export interface GameTranslations {
   clearSaved: string;
   saved: string;
   newColor: string;
-  tapTwoColors: string;
   colorSaved: string;
   alchemyStation: string;
   elementA: string;
   elementB: string;
-  clickToChoose: string;
   mixingMagic: string;
   alchemicalCreation: string;
   clickToSave: string;
@@ -60,7 +58,6 @@ export interface GameTranslations {
   chamber: string;
   replace: string;
   empty: string;
-  dragInstructions: string;
   colorNames: {
     red: string;
     blue: string;

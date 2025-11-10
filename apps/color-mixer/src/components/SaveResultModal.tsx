@@ -178,13 +178,6 @@ export function SaveResultModal({
             })}
           </div>
         </div>
-
-        {/* Instructions */}
-        <div className="text-center max-w-md">
-          <p className="text-sm text-gray-500 leading-relaxed">
-            {t("dragInstructions")}
-          </p>
-        </div>
       </div>
     </Modal>
   );

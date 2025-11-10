@@ -14,8 +14,6 @@
     "instructions": "Touch numbers in order from 1 to {{count}}",
     "time": "Time",
     "next": "Next",
-    "target": "Target",
-    "progress": "Progress",
     "mistakes": "Mistakes",
     "showTargetHint": "Show target hint"
   },
