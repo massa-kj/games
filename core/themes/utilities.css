@@ -8,7 +8,15 @@
      Animation Utilities
      ======================================== */
 
-  /* .animate-bounce-gentle {
+  .animate-bounce-in {
+    animation: bounce-in 0.5s ease-out;
+  }
+
+  .animate-bounce-out {
+    animation: bounce-out 0.3s ease-in;
+  }
+
+  .animate-bounce-gentle {
     animation: bounce-gentle 0.5s ease-out;
   }
 
@@ -34,23 +42,6 @@
 
   .animate-fade-out {
     animation: fade-out var(--duration-fast) var(--ease-in);
-  } */
-
-  /* Legacy */
-  .animate-bounce-in {
-    animation: bounce-in 0.5s ease-out;
-  }
-
-  .animate-bounce-out {
-    animation: bounce-out 0.3s ease-in;
-  }
-
-  .animate-wiggle {
-    animation: wiggle 0.8s ease-in-out infinite;
-  }
-
-  .animate-pulse-gentle {
-    animation: pulse-gentle 2s ease-in-out infinite;
   }
 
   /* ========================================

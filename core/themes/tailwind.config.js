@@ -83,13 +83,13 @@ const baseTheme = {
       'custom-xl': 'var(--radius-xl)',
       'custom-2xl': 'var(--radius-2xl)',
     },
-    spacing: {
-      'custom-xs': 'var(--spacing-xs)',
-      'custom-sm': 'var(--spacing-sm)',
-      'custom-md': 'var(--spacing-md)',
-      'custom-lg': 'var(--spacing-lg)',
-      'custom-xl': 'var(--spacing-xl)',
-      'custom-2xl': 'var(--spacing-2xl)',
+    space: {
+      'custom-xs': 'var(--space-xs)',
+      'custom-sm': 'var(--space-sm)',
+      'custom-md': 'var(--space-md)',
+      'custom-lg': 'var(--space-lg)',
+      'custom-xl': 'var(--space-xl)',
+      'custom-2xl': 'var(--space-2xl)',
     },
     fontSize: {
       'custom-xs': 'var(--text-xs)',

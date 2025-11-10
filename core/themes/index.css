@@ -148,6 +148,8 @@
     --shadow-hover: none;
   }
 
+  .animate-bounce-in,
+  .animate-bounce-out,
   .animate-bounce-gentle,
   .animate-wiggle,
   .animate-pulse-gentle,

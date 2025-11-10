@@ -57,8 +57,8 @@
     --color-info-light: #dbeafe;
 
     /* Context-based Color Assignments */
-    --color-bg: var(--color-primary-50);
-    --color-bg-secondary: var(--color-neutral-50);
+    --color-bg: var(--color-primary-100);
+    --color-bg-secondary: var(--color-primary-50);
     --color-bg-elevated: var(--color-neutral-100);
     --color-bg-overlay: rgba(0, 0, 0, 0.5);
 
@@ -82,16 +82,10 @@
     --color-interactive-secondary-hover: var(--color-accent-500);
 
     /* Legacy */
-    --color-bg: #FFF8E1;
-    --color-bg-secondary: #FFFFFF;
     --color-primary: #FFD54F;
     --color-primary-dark: #FFC107;
     --color-accent: #FF7043;
     --color-accent-dark: #FF5722;
-    --color-success: #4CAF50;
-    --color-warning: #FF9800;
-    --color-error: #F44336;
-    --color-text: #333333;
     --color-text-light: #666666;
     --color-text-white: #FFFFFF;
 
@@ -134,14 +128,6 @@
     --space-3xl: var(--space-16);
     --space-4xl: var(--space-20);
 
-    /* Legacy */
-    --spacing-xs: 0.25rem;
-    --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
-    --spacing-2xl: 3rem;
-
     /* ========================================
        Typography System
        ======================================== */
@@ -165,16 +151,6 @@
     --text-7xl: 4.5rem;     /* 72px */
     --text-8xl: 6rem;       /* 96px */
     --text-9xl: 8rem;       /* 128px */
-
-    /* Legacy */
-    --text-xs: 0.75rem;
-    --text-sm: 0.875rem;
-    --text-base: 1rem;
-    --text-lg: 1.125rem;
-    --text-xl: 1.25rem;
-    --text-2xl: 1.5rem;
-    --text-3xl: 1.875rem;
-    --text-4xl: 2.25rem;
 
     /* Line Heights */
     --leading-3: 0.75rem;    /* 12px */
@@ -215,14 +191,8 @@
     --radius-xl: 0.75rem;    /* 12px */
     --radius-2xl: 1rem;      /* 16px */
     --radius-3xl: 1.5rem;    /* 24px */
+    --radius-4xl: 2rem;      /* 32px */
     --radius-full: 9999px;
-
-    /* Legacy */
-    --radius-sm: 0.5rem;
-    --radius-md: 0.75rem;
-    --radius-lg: 1rem;
-    --radius-xl: 1.5rem;
-    --radius-2xl: 2rem;
 
     /* ========================================
        Shadow System
@@ -241,13 +211,8 @@
     /* Semantic Shadows */
     --shadow-card: var(--shadow-lg);
     --shadow-button: var(--shadow-base);
-    --shadow-hover: var(--shadow-xl);
+    --shadow-hover: var(--shadow-md);
     --shadow-focus: 0 0 0 3px rgba(59, 130, 246, 0.1); /* blue-500 with opacity */
-
-    /* Legacy */
-    --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.08);
-    --shadow-button: 0 4px 12px rgba(0, 0, 0, 0.12);
-    --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.15);
 
     /* ========================================
        Animation & Transition System
@@ -285,10 +250,9 @@
     --transition-transform: transform var(--duration-normal) var(--ease-in-out);
     --transition-all: all var(--duration-normal) var(--ease-in-out);
 
-    /* Legacy */
-    --transition-fast: 150ms ease-in-out;
-    --transition-normal: 250ms ease-in-out;
-    --transition-slow: 350ms ease-in-out;
+    --transition-fast: var(--duration-150) ease-in-out;
+    --transition-normal: var(--duration-300) ease-in-out;
+    --transition-slow: var(--duration-400) ease-in-out;
 
     /* ========================================
        Z-Index System
