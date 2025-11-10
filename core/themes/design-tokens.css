@@ -81,6 +81,20 @@
     --color-interactive-secondary: var(--color-accent-400);
     --color-interactive-secondary-hover: var(--color-accent-500);
 
+    /* Legacy */
+    --color-bg: #FFF8E1;
+    --color-bg-secondary: #FFFFFF;
+    --color-primary: #FFD54F;
+    --color-primary-dark: #FFC107;
+    --color-accent: #FF7043;
+    --color-accent-dark: #FF5722;
+    --color-success: #4CAF50;
+    --color-warning: #FF9800;
+    --color-error: #F44336;
+    --color-text: #333333;
+    --color-text-light: #666666;
+    --color-text-white: #FFFFFF;
+
     /* ========================================
        Spacing System
        ======================================== */
@@ -120,6 +134,14 @@
     --space-3xl: var(--space-16);
     --space-4xl: var(--space-20);
 
+    /* Legacy */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+
     /* ========================================
        Typography System
        ======================================== */
@@ -143,6 +165,16 @@
     --text-7xl: 4.5rem;     /* 72px */
     --text-8xl: 6rem;       /* 96px */
     --text-9xl: 8rem;       /* 128px */
+
+    /* Legacy */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+    --text-4xl: 2.25rem;
 
     /* Line Heights */
     --leading-3: 0.75rem;    /* 12px */
@@ -185,6 +217,13 @@
     --radius-3xl: 1.5rem;    /* 24px */
     --radius-full: 9999px;
 
+    /* Legacy */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-2xl: 2rem;
+
     /* ========================================
        Shadow System
        ======================================== */
@@ -204,6 +243,11 @@
     --shadow-button: var(--shadow-base);
     --shadow-hover: var(--shadow-xl);
     --shadow-focus: 0 0 0 3px rgba(59, 130, 246, 0.1); /* blue-500 with opacity */
+
+    /* Legacy */
+    --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.08);
+    --shadow-button: 0 4px 12px rgba(0, 0, 0, 0.12);
+    --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.15);
 
     /* ========================================
        Animation & Transition System
@@ -240,6 +284,11 @@
     --transition-shadow: box-shadow var(--duration-normal) var(--ease-in-out);
     --transition-transform: transform var(--duration-normal) var(--ease-in-out);
     --transition-all: all var(--duration-normal) var(--ease-in-out);
+
+    /* Legacy */
+    --transition-fast: 150ms ease-in-out;
+    --transition-normal: 250ms ease-in-out;
+    --transition-slow: 350ms ease-in-out;
 
     /* ========================================
        Z-Index System
@@ -281,13 +330,23 @@
     --card-size-md: 80px;
     --card-size-lg: 100px;
     --card-size-xl: 120px;
+
+    /* ========================================
+       Motion System Tokens
+       ======================================== */
+    --motion-duration-fast: 0.15;
+    --motion-duration-normal: 0.3;
+    --motion-duration-slow: 0.6;
+    --motion-spring-bounce: 0.25;
+    --motion-spring-stiffness: 400;
+    --motion-spring-damping: 25;
   }
 
   /* ========================================
      Dark Mode Support (Optional)
      ======================================== */
 
-  @media (prefers-color-scheme: dark) {
+  /* @media (prefers-color-scheme: dark) {
     :root {
       --color-bg: var(--color-neutral-900);
       --color-bg-secondary: var(--color-neutral-800);
@@ -305,5 +364,5 @@
       --color-border: var(--color-neutral-700);
       --color-border-secondary: var(--color-neutral-600);
     }
-  }
+  } */
 }

@@ -12,505 +12,430 @@
 @import './components.css';
 @import './utilities.css';
 
+/**
+ * Theme System Configuration
+ * Allows runtime theme switching and customization
+ */
 
-/* -------------------- */
-/* Legacy Design Tokens */
-/* -------------------- */
+/* Default theme is already defined in design-tokens.css */
 
-:root {
-  /* Colors */
-  --color-bg: #FFF8E1;
-  --color-bg-secondary: #FFFFFF;
-  --color-primary: #FFD54F;
-  --color-primary-dark: #FFC107;
-  --color-accent: #FF7043;
-  --color-accent-dark: #FF5722;
-  --color-success: #4CAF50;
-  --color-warning: #FF9800;
-  --color-error: #F44336;
-  --color-text: #333333;
-  --color-text-light: #666666;
-  --color-text-white: #FFFFFF;
-
-  /* Shadows */
-  --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.08);
-  --shadow-button: 0 4px 12px rgba(0, 0, 0, 0.12);
-  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.15);
-
-  /* Border radius */
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.5rem;
-  --radius-2xl: 2rem;
-
-  /* Spacing */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-
-  /* Font sizes */
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 1.875rem;
-  --text-4xl: 2.25rem;
-
-  /* Transitions */
-  --transition-fast: 150ms ease-in-out;
-  --transition-normal: 250ms ease-in-out;
-  --transition-slow: 350ms ease-in-out;
-
-  /* Motion System Variables */
-  --motion-duration-fast: 0.15;
-  --motion-duration-normal: 0.3;
-  --motion-duration-slow: 0.6;
-  --motion-spring-bounce: 0.25;
-  --motion-spring-stiffness: 400;
-  --motion-spring-damping: 25;
+/*
+ * Alternative theme variants can be defined here
+ * Example: High contrast theme
+ */
+.theme-high-contrast {
+  --color-bg: #000000;
+  --color-bg-secondary: #1a1a1a;
+  --color-text: #ffffff;
+  --color-text-secondary: #cccccc;
+  --color-border: #ffffff;
+  --color-primary-400: #ffff00;
+  --color-accent-400: #ff6600;
+  --shadow-card: 0 4px 6px -1px rgba(255, 255, 255, 0.1);
 }
 
-/* Child-friendly animations */
-@keyframes bounce-in {
-  0% {
-    transform: scale(0.8);
-    opacity: 0;
-  }
+/*
+ * Game-specific theme overrides
+ * Each game can override specific tokens while maintaining consistency
+ */
+.theme-memory-cards {
+  --card-aspect-ratio: 1;
+  --card-size-md: 90px;
+  --color-primary-400: #4ade80; /* Green for memory games */
+}
 
-  60% {
-    transform: scale(1.05);
-    opacity: 1;
-  }
+.theme-tic-tac-toe {
+  --color-primary-400: #60a5fa; /* Blue for strategy games */
+  --color-accent-400: #f87171;  /* Red for opponent */
+}
 
-  100% {
-    transform: scale(1);
+.theme-number-touch {
+  --color-primary-400: #a78bfa; /* Purple for number games */
+  --card-aspect-ratio: 1;
+}
+
+.theme-color-mixer {
+  --color-primary-400: #fb7185; /* Pink for creative games */
+  --radius-2xl: 2rem; /* More rounded for artistic feel */
+}
+
+/*
+ * Accessibility theme overrides
+ */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: var(--color-neutral-900);
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-button: 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 8px 16px -4px rgba(0, 0, 0, 0.4);
   }
 }
 
-@keyframes bounce-out {
-  0% {
-    transform: scale(1);
-    opacity: 1;
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
   }
 
-  100% {
-    transform: scale(0.1);
-    opacity: 0;
-  }
-}
-
-@keyframes wiggle {
-
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-
-  25% {
-    transform: rotate(-5deg);
-  }
-
-  75% {
-    transform: rotate(5deg);
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
-@keyframes pulse-gentle {
-
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-.animate-bounce-in {
-  animation: bounce-in 0.5s ease-out;
-}
-
-.animate-bounce-out {
-  animation: bounce-out 0.3s ease-in;
-}
-
-.animate-wiggle {
-  animation: wiggle 0.8s ease-in-out infinite;
-}
-
-.animate-pulse-gentle {
-  animation: pulse-gentle 2s ease-in-out infinite;
-}
-
-/* Core UI Component Styles */
-.core-button {
-  font-weight: bold;
-  border-radius: var(--radius-2xl);
-  transition: all 200ms;
-  box-shadow: var(--shadow-button);
-  border: none;
-  cursor: pointer;
-  outline: none;
-  position: relative;
-}
-
-.core-button:hover {
-  box-shadow: var(--shadow-hover);
-}
-
-.core-button:active {
-  transform: scale(0.95);
-}
-
-.core-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.core-button:focus {
-  outline: 4px solid rgba(0, 0, 0, 0.1);
-}
-
-/* Button Variants */
-.core-button.variant-primary {
-  background-color: var(--color-primary);
-  color: var(--color-text);
-}
-
-.core-button.variant-primary:hover {
-  background-color: var(--color-primary-dark);
-}
-
-.core-button.variant-secondary {
-  background-color: var(--color-bg-secondary);
-  color: var(--color-text);
-  border: 2px solid #e5e7eb;
-}
-
-.core-button.variant-secondary:hover {
-  background-color: #f3f4f6;
-}
-
-.core-button.variant-accent {
-  background-color: var(--color-accent);
-  color: var(--color-text-white);
-}
-
-.core-button.variant-accent:hover {
-  background-color: var(--color-accent-dark);
-}
-
-.core-button.variant-success {
-  background-color: var(--color-success);
-  color: var(--color-text-white);
-}
-
-.core-button.variant-success:hover {
-  background-color: #45a049;
-}
-
-.core-button.variant-warning {
-  background-color: var(--color-warning);
-  color: var(--color-text-white);
-}
-
-.core-button.variant-warning:hover {
-  background-color: #f57c00;
-}
-
-.core-button.variant-error {
-  background-color: var(--color-error);
-  color: var(--color-text-white);
-}
-
-.core-button.variant-error:hover {
-  background-color: #d32f2f;
-}
-
-/* Button Sizes */
-.core-button.size-sm {
-  padding: var(--spacing-sm) var(--spacing-md);
-  font-size: var(--text-sm);
-}
-
-.core-button.size-md {
-  padding: var(--spacing-md) var(--spacing-lg);
-  font-size: var(--text-base);
-}
-
-.core-button.size-lg {
-  padding: var(--spacing-md) var(--spacing-xl);
-  font-size: var(--text-lg);
-}
-
-.core-button.size-xl {
-  padding: var(--spacing-lg) calc(var(--spacing-xl) + var(--spacing-sm));
-  font-size: var(--text-xl);
-}
-
-.core-card {
-  background-color: var(--color-bg-secondary);
-  border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-card);
-  transition: all var(--transition-normal);
-  border: none;
-  cursor: default;
-}
-
-.core-card.interactive {
-  cursor: pointer;
-}
-
-.core-card.interactive:hover {
-  box-shadow: var(--shadow-hover);
-  transform: scale(1.05);
-}
-
-.core-card.interactive:active {
-  transform: scale(0.98);
-}
-
-/* Card Padding Sizes */
-.core-card.padding-sm {
-  padding: var(--spacing-sm);
-}
-
-.core-card.padding-md {
-  padding: var(--spacing-lg);
-}
-
-.core-card.padding-lg {
-  padding: var(--spacing-xl);
-}
-
-.core-card.padding-xl {
-  padding: var(--spacing-2xl);
-}
-
-/* FlipCard Component */
-.core-flip-card {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  cursor: pointer;
-  transition: transform var(--transition-normal);
-  user-select: none;
-  -webkit-touch-callout: none;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-
-.core-flip-card:hover {
-  transform: scale(1.05);
-}
-
-.core-flip-card.disabled {
-  cursor: not-allowed;
-  opacity: 0.75;
-}
-
-.core-flip-card.disabled:hover {
-  transform: none;
-}
-
-.core-flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform var(--flip-duration, 500ms);
-  transform-style: preserve-3d;
-}
-
-.core-flip-card-inner.flipped {
-  transform: rotateY(180deg);
-}
-
-.core-flip-card-back,
-.core-flip-card-front {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: var(--border-radius, var(--radius-lg));
-  box-shadow: var(--shadow-card);
-  border: 2px solid;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-}
-
-.core-flip-card-back {
-  /* Default neutral styling - games should override */
-  background-color: var(--color-bg-secondary);
-  border-color: var(--color-text-light);
-  color: var(--color-text);
-}
-
-.core-flip-card-front {
-  /* Default neutral styling - games should override */
-  background-color: var(--color-bg-secondary);
-  border-color: var(--color-text-light);
-  color: var(--color-text);
-  transform: rotateY(180deg);
-  flex-direction: column;
-}
-
-.core-flip-card-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* Drag and Drop System Styles */
-.core-draggable {
-  user-select: none;
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: none;
-  cursor: grab;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-}
-
-.core-draggable:active {
-  cursor: grabbing;
-  z-index: 1000;
-}
-
-.core-draggable.dragging {
-  cursor: grabbing;
-  transform: scale(1.1) !important;
-  box-shadow: var(--shadow-hover);
-  z-index: 1000;
-}
-
-.core-drop-zone {
-  transition: all var(--transition-fast);
-  border-radius: var(--radius-lg);
-}
-
-.core-drop-zone.drop-zone-active {
-  /* background-color: rgba(var(--color-success-rgb, 76, 175, 80), 0.1);
-  border: 2px dashed var(--color-success);
-  transform: scale(1.05); */
-}
-
-.core-drop-zone.drop-zone-hover:not(.drop-zone-active) {
-  /* background-color: rgba(var(--color-primary-rgb, 255, 213, 79), 0.1);
-  border: 2px dashed var(--color-primary); */
-}
-
-.core-drop-zone.drop-zone-dragging {
-  /* background-color: rgba(var(--color-text-rgb, 51, 51, 51), 0.05);
-  border: 2px dashed var(--color-text-light); */
-}
-
-.core-drop-zone.snap-target {
-  /* animation: pulse-gentle 1s ease-in-out infinite;
-  background-color: rgba(var(--color-accent-rgb, 255, 112, 67), 0.2);
-  border: 2px solid var(--color-accent);
-  transform: scale(1.08); */
-}
-
-.core-snap-container {
-  position: relative;
-}
-
-.core-draggable-image,
-.core-draggable-button {
-  display: inline-block;
-}
-
-.core-draggable-image img {
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.core-draggable-button .core-button {
-  pointer-events: none;
-}
-
-/* Drag animations */
-@keyframes drag-enter {
-  0% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1.05);
-    opacity: 1;
-  }
-}
-
-@keyframes drag-leave {
-  0% {
-    transform: scale(1.05);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-}
-
-@keyframes snap-animation {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.drag-enter-animation {
-  animation: drag-enter 0.3s ease-out;
-}
-
-.drag-leave-animation {
-  animation: drag-leave 0.2s ease-in;
-}
-
-.snap-animation {
-  animation: snap-animation 0.4s ease-out;
-}
-
-/* Responsive drag improvements for mobile */
+/*
+ * Mobile-specific optimizations
+ */
 @media (max-width: 768px) {
-  .core-draggable {
-    /* Increase touch target size on mobile */
-    min-width: 44px;
-    min-height: 44px;
+  :root {
+    /* Larger touch targets on mobile */
+    --touch-target-min: 48px;
+    --touch-target-comfortable: 52px;
+
+    /* Slightly larger cards for better touch interaction */
+    --card-size-sm: 70px;
+    --card-size-md: 90px;
+    --card-size-lg: 110px;
+
+    /* More generous spacing on mobile */
+    --space-md: 1.25rem;
+    --space-lg: 2rem;
+  }
+}
+
+/*
+ * Large screen optimizations
+ */
+@media (min-width: 1024px) {
+  :root {
+    /* Larger cards for desktop */
+    --card-size-md: 100px;
+    --card-size-lg: 120px;
+    --card-size-xl: 140px;
+
+    /* More subtle hover effects on desktop */
+    --feedback-scale-hover: 1.03;
+  }
+}
+
+/*
+ * CSS-only theme switching utility
+ * Allows themes to be switched without JavaScript
+ */
+:root:has(#theme-high-contrast:checked) {
+  --color-bg: #000000;
+  --color-bg-secondary: #1a1a1a;
+  --color-text: #ffffff;
+  --color-text-secondary: #cccccc;
+  --color-border: #ffffff;
+  --color-primary-400: #ffff00;
+  --color-accent-400: #ff6600;
+}
+
+/*
+ * Print styles for documentation and game instructions
+ */
+@media print {
+  :root {
+    --color-bg: #ffffff;
+    --color-text: #000000;
+    --shadow-card: none;
+    --shadow-button: none;
+    --shadow-hover: none;
   }
 
-  .core-drop-zone {
-    /* Larger drop zones on mobile for easier targeting */
-    min-width: 60px;
-    min-height: 60px;
+  .animate-bounce-gentle,
+  .animate-wiggle,
+  .animate-pulse-gentle,
+  .animate-scale-in,
+  .animate-scale-out {
+    animation: none !important;
   }
+}
 
-  .core-draggable.dragging {
-    /* More pronounced scaling on mobile for better feedback */
-    transform: scale(1.2) !important;
-  }
+/*
+ * Component API for framework integration
+ * These classes provide a stable API for component libraries
+ */
+
+/* Button API */
+.ui-button {
+  /* Extends btn, btn-md, btn-primary */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-semibold);
+  border-radius: var(--radius-2xl);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-all);
+  text-decoration: none;
+  user-select: none;
+  touch-action: manipulation;
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  box-shadow: var(--shadow-button);
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-base);
+  gap: var(--space-2);
+  background-color: var(--color-interactive-primary);
+  color: var(--color-text);
+}
+
+.ui-button:hover {
+  box-shadow: var(--shadow-hover);
+  transform: scale(var(--feedback-scale-hover));
+  background-color: var(--color-interactive-primary-hover);
+}
+
+.ui-button:active {
+  transform: scale(var(--feedback-scale-active));
+}
+
+.ui-button-secondary {
+  /* Extends btn, btn-md, btn-secondary */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-semibold);
+  border-radius: var(--radius-2xl);
+  cursor: pointer;
+  transition: var(--transition-all);
+  text-decoration: none;
+  user-select: none;
+  touch-action: manipulation;
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  box-shadow: var(--shadow-button);
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-base);
+  gap: var(--space-2);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 2px solid var(--color-border);
+}
+
+.ui-button-secondary:hover {
+  box-shadow: var(--shadow-hover);
+  transform: scale(var(--feedback-scale-hover));
+  background-color: var(--color-surface-secondary);
+  border-color: var(--color-border-secondary);
+}
+
+.ui-button-small {
+  /* Extends btn, btn-sm, btn-primary */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-semibold);
+  border-radius: var(--radius-2xl);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-all);
+  text-decoration: none;
+  user-select: none;
+  touch-action: manipulation;
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  box-shadow: var(--shadow-button);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  gap: var(--space-1);
+  background-color: var(--color-interactive-primary);
+  color: var(--color-text);
+}
+
+.ui-button-large {
+  /* Extends btn, btn-lg, btn-primary */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-semibold);
+  border-radius: var(--radius-2xl);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-all);
+  text-decoration: none;
+  user-select: none;
+  touch-action: manipulation;
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  box-shadow: var(--shadow-button);
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--text-lg);
+  gap: var(--space-2);
+  background-color: var(--color-interactive-primary);
+  color: var(--color-text);
+}
+
+/* Card API */
+.ui-card {
+  /* Extends card, card-md */
+  background-color: var(--color-surface);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border);
+  transition: var(--transition-all);
+  padding: var(--space-6);
+}
+
+.ui-card-interactive {
+  /* Extends card, card-md, card-interactive */
+  background-color: var(--color-surface);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border);
+  transition: var(--transition-all);
+  padding: var(--space-6);
+  cursor: pointer;
+}
+
+.ui-card-interactive:hover {
+  box-shadow: var(--shadow-hover);
+  transform: scale(var(--feedback-scale-hover));
+}
+
+.ui-card-interactive:active {
+  transform: scale(var(--feedback-scale-active));
+}
+
+/* Game Card API */
+.ui-game-card {
+  /* Extends game-card, card, flip-card */
+  position: relative;
+  aspect-ratio: var(--card-aspect-ratio);
+  cursor: pointer;
+  transition: var(--transition-transform);
+  user-select: none;
+  touch-action: manipulation;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border);
+  perspective: 1000px;
+}
+
+.ui-game-card-small {
+  width: var(--card-size-sm);
+  height: var(--card-size-sm);
+}
+
+.ui-game-card-medium {
+  width: var(--card-size-md);
+  height: var(--card-size-md);
+}
+
+.ui-game-card-large {
+  width: var(--card-size-lg);
+  height: var(--card-size-lg);
+}
+
+/* Layout API */
+.ui-container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+.ui-grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.ui-flex {
+  display: flex;
+  gap: var(--space-4);
+}
+
+/*
+ * Framework compatibility layer
+ * Provides compatibility with popular CSS frameworks
+ */
+
+/* Bootstrap-like utilities */
+.container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+.row {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-left: calc(var(--space-2) * -1);
+  margin-right: calc(var(--space-2) * -1);
+}
+
+.col {
+  flex: 1;
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
+}
+
+/* Material-like utilities */
+.elevation-1 { box-shadow: var(--shadow-sm); }
+.elevation-2 { box-shadow: var(--shadow-base); }
+.elevation-3 { box-shadow: var(--shadow-md); }
+.elevation-4 { box-shadow: var(--shadow-lg); }
+.elevation-5 { box-shadow: var(--shadow-xl); }
+
+/* Chakra-like utilities */
+.chakra-button {
+  /* Copy ui-button styles */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-semibold);
+  border-radius: var(--radius-2xl);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-all);
+  text-decoration: none;
+  user-select: none;
+  touch-action: manipulation;
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  box-shadow: var(--shadow-button);
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-base);
+  gap: var(--space-2);
+  background-color: var(--color-interactive-primary);
+  color: var(--color-text);
+}
+
+.chakra-card {
+  /* Copy ui-card styles */
+  background-color: var(--color-surface);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border);
+  transition: var(--transition-all);
+  padding: var(--space-6);
+}
+
+/*
+ * Debug utilities (development only)
+ */
+.debug-grid {
+  background-image:
+    linear-gradient(rgba(255, 0, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 1rem 1rem;
+}
+
+.debug-outline * {
+  outline: 1px solid red !important;
+}
+
+.debug-spacing * {
+  background-color: rgba(255, 0, 0, 0.1) !important;
 }

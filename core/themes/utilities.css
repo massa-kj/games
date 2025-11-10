@@ -4,4 +4,321 @@
  */
 
 @layer utilities {
+  /* ========================================
+     Animation Utilities
+     ======================================== */
+
+  /* .animate-bounce-gentle {
+    animation: bounce-gentle 0.5s ease-out;
+  }
+
+  .animate-wiggle {
+    animation: wiggle 0.8s ease-in-out;
+  }
+
+  .animate-pulse-gentle {
+    animation: pulse-gentle 2s ease-in-out infinite;
+  }
+
+  .animate-scale-in {
+    animation: scale-in var(--duration-normal) var(--ease-spring);
+  }
+
+  .animate-scale-out {
+    animation: scale-out var(--duration-fast) var(--ease-in);
+  }
+
+  .animate-fade-in {
+    animation: fade-in var(--duration-normal) var(--ease-out);
+  }
+
+  .animate-fade-out {
+    animation: fade-out var(--duration-fast) var(--ease-in);
+  } */
+
+  /* Legacy */
+  .animate-bounce-in {
+    animation: bounce-in 0.5s ease-out;
+  }
+
+  .animate-bounce-out {
+    animation: bounce-out 0.3s ease-in;
+  }
+
+  .animate-wiggle {
+    animation: wiggle 0.8s ease-in-out infinite;
+  }
+
+  .animate-pulse-gentle {
+    animation: pulse-gentle 2s ease-in-out infinite;
+  }
+
+  /* ========================================
+     Interaction Utilities
+     ======================================== */
+
+  .interactive {
+    cursor: pointer;
+    transition: var(--transition-transform);
+  }
+
+  .interactive:hover {
+    transform: scale(var(--feedback-scale-hover));
+  }
+
+  .interactive:active {
+    transform: scale(var(--feedback-scale-active));
+  }
+
+  .interactive-gentle {
+    cursor: pointer;
+    transition: var(--transition-transform);
+  }
+
+  .interactive-gentle:hover {
+    transform: scale(var(--feedback-scale-focus));
+  }
+
+  .interactive-gentle:active {
+    transform: scale(1);
+  }
+
+  /* Touch-friendly utilities */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  .touch-none {
+    touch-action: none;
+  }
+
+  .select-none {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* ========================================
+     Layout Utilities
+     ======================================== */
+
+  .center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .center-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .aspect-card {
+    aspect-ratio: var(--card-aspect-ratio);
+  }
+
+  .aspect-square {
+    aspect-ratio: 1;
+  }
+
+  .aspect-video {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* Grid utilities for game boards */
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .grid-5 { grid-template-columns: repeat(5, 1fr); }
+  .grid-6 { grid-template-columns: repeat(6, 1fr); }
+
+  /* ========================================
+     Accessibility Utilities
+     ======================================== */
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+
+  .focus-visible:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* High contrast mode utilities */
+  @media (prefers-contrast: high) {
+    .high-contrast-border {
+      border-width: 2px;
+      border-color: var(--color-text);
+    }
+
+    .high-contrast-text {
+      color: var(--color-text);
+      font-weight: var(--font-semibold);
+    }
+  }
+
+  /* Reduced motion utilities */
+  @media (prefers-reduced-motion: reduce) {
+    .motion-safe {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .motion-reduce {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* ========================================
+     Game-specific Utilities
+     ======================================== */
+
+  .game-card-sm {
+    width: var(--card-size-sm);
+    height: var(--card-size-sm);
+  }
+
+  .game-card-md {
+    width: var(--card-size-md);
+    height: var(--card-size-md);
+  }
+
+  .game-card-lg {
+    width: var(--card-size-lg);
+    height: var(--card-size-lg);
+  }
+
+  .game-card-xl {
+    width: var(--card-size-xl);
+    height: var(--card-size-xl);
+  }
+
+  /* State utilities */
+  .state-success {
+    background-color: var(--color-success-light);
+    border-color: var(--color-success);
+    color: var(--color-success);
+  }
+
+  .state-warning {
+    background-color: var(--color-warning-light);
+    border-color: var(--color-warning);
+    color: var(--color-warning);
+  }
+
+  .state-error {
+    background-color: var(--color-error-light);
+    border-color: var(--color-error);
+    color: var(--color-error);
+  }
+
+  .state-info {
+    background-color: var(--color-info-light);
+    border-color: var(--color-info);
+    color: var(--color-info);
+  }
+
+  /* ========================================
+     Theme Utilities
+     ======================================== */
+
+  .theme-surface {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .theme-surface-secondary {
+    background-color: var(--color-surface-secondary);
+    color: var(--color-text);
+  }
+
+  .theme-primary {
+    background-color: var(--color-primary-500);
+    color: var(--color-text-inverse);
+  }
+
+  .theme-accent {
+    background-color: var(--color-accent-500);
+    color: var(--color-text-inverse);
+  }
+
+  /* ========================================
+     Performance Utilities
+     ======================================== */
+
+  .gpu-accelerate {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .contain-layout {
+    contain: layout;
+  }
+
+  .contain-paint {
+    contain: paint;
+  }
+
+  .contain-size {
+    contain: size;
+  }
+
+  .contain-style {
+    contain: style;
+  }
+
+  /* ========================================
+     Print Utilities
+     ======================================== */
+
+  @media print {
+    .print-hidden {
+      display: none !important;
+    }
+
+    .print-visible {
+      display: block !important;
+    }
+  }
+
+  /* ========================================
+     Dark Mode Utilities (Optional)
+     ======================================== */
+
+  @media (prefers-color-scheme: dark) {
+    .dark-mode-only {
+      display: block;
+    }
+
+    .light-mode-only {
+      display: none;
+    }
+  }
+
+  @media (prefers-color-scheme: light) {
+    .dark-mode-only {
+      display: none;
+    }
+
+    .light-mode-only {
+      display: block;
+    }
+  }
 }
