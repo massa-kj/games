@@ -392,20 +392,28 @@
      Game Card Component System
      ======================================== */
 
-  /* .game-card {
-    position: relative;
-    aspect-ratio: var(--card-aspect-ratio);
-    cursor: pointer;
-    transition: var(--transition-transform);
+  .game-card {
+    /* position: relative; */
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-4xl);
+    box-shadow: var(--shadow-card);
+    border: none;
+    cursor: default;
+    transition: all var(--transition-normal);
     user-select: none;
     touch-action: manipulation;
   }
 
-  .game-card:hover {
+  .game-card.interactive {
+    cursor: pointer;
+  }
+
+  .game-card.interactive:hover {
+    box-shadow: var(--shadow-hover);
     transform: scale(var(--feedback-scale-hover));
   }
 
-  .game-card:active {
+  .game-card.interactive:active {
     transform: scale(var(--feedback-scale-active));
   }
 
@@ -416,45 +424,22 @@
 
   .game-card-disabled:hover {
     transform: none;
-  } */
-
-  /* Legacy */
-  .core-card {
-    background-color: var(--color-bg-secondary);
-    border-radius: var(--radius-4xl);
-    box-shadow: var(--shadow-card);
-    transition: all var(--transition-normal);
-    border: none;
-    cursor: default;
-  }
-
-  .core-card.interactive {
-    cursor: pointer;
-  }
-
-  .core-card.interactive:hover {
-    box-shadow: var(--shadow-hover);
-    transform: scale(1.05);
-  }
-
-  .core-card.interactive:active {
-    transform: scale(0.98);
   }
 
   /* Card Padding Sizes */
-  .core-card.padding-sm {
+  .game-card.padding-sm {
     padding: var(--space-sm);
   }
 
-  .core-card.padding-md {
+  .game-card.padding-md {
     padding: var(--space-lg);
   }
 
-  .core-card.padding-lg {
+  .game-card.padding-lg {
     padding: var(--space-xl);
   }
 
-  .core-card.padding-xl {
+  .game-card.padding-xl {
     padding: var(--space-2xl);
   }
 

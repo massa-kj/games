@@ -22,7 +22,7 @@ describe('Card', () => {
       render(<Card>Test</Card>);
 
       const card = screen.getByText('Test');
-      expect(card).toHaveClass('core-card');
+      expect(card).toHaveClass('game-card');
     });
 
     it('should apply padding classes', () => {

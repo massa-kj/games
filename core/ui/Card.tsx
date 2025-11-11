@@ -38,7 +38,7 @@ export function Card({
   const isInteractive = hoverable || onClick;
 
   const classes = [
-    'core-card',
+    'game-card',
     `padding-${padding}`,
     isInteractive ? 'interactive' : '',
     className,
