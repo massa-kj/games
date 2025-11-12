@@ -8,114 +8,6 @@
      Button Component System
      ======================================== */
 
-  .btn {
-    /* Base button styles */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: var(--font-semibold);
-    border-radius: var(--radius-2xl);
-    border: none;
-    cursor: pointer;
-    transition: var(--transition-all);
-    text-decoration: none;
-    user-select: none;
-    touch-action: manipulation;
-
-    /* Minimum touch target */
-    min-height: var(--touch-target-min);
-    min-width: var(--touch-target-min);
-
-    /* Default state */
-    box-shadow: var(--shadow-button);
-  }
-
-  /* .btn:hover {
-    box-shadow: var(--shadow-hover);
-    transform: scale(var(--feedback-scale-hover));
-  }
-
-  .btn:active {
-    transform: scale(var(--feedback-scale-active));
-  }
-
-  .btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none !important;
-  } */
-
-  /* Button variants */
-  /* .btn-primary {
-    background-color: var(--color-interactive-primary);
-    color: var(--color-text);
-  }
-
-  .btn-primary:hover {
-    background-color: var(--color-interactive-primary-hover);
-  }
-
-  .btn-secondary {
-    background-color: var(--color-surface);
-    color: var(--color-text);
-    border: 2px solid var(--color-border);
-  }
-
-  .btn-secondary:hover {
-    background-color: var(--color-surface-secondary);
-    border-color: var(--color-border-secondary);
-  }
-
-  .btn-accent {
-    background-color: var(--color-interactive-secondary);
-    color: var(--color-text-inverse);
-  }
-
-  .btn-accent:hover {
-    background-color: var(--color-interactive-secondary-hover);
-  }
-
-  .btn-success {
-    background-color: var(--color-success);
-    color: var(--color-text-inverse);
-  }
-
-  .btn-warning {
-    background-color: var(--color-warning);
-    color: var(--color-text-inverse);
-  }
-
-  .btn-error {
-    background-color: var(--color-error);
-    color: var(--color-text-inverse);
-  } */
-
-  /* Button sizes */
-  /* .btn-sm {
-    padding: var(--space-2) var(--space-4);
-    font-size: var(--text-sm);
-    gap: var(--space-1);
-  }
-
-  .btn-md {
-    padding: var(--space-3) var(--space-6);
-    font-size: var(--text-base);
-    gap: var(--space-2);
-  }
-
-  .btn-lg {
-    padding: var(--space-4) var(--space-8);
-    font-size: var(--text-lg);
-    gap: var(--space-2);
-  }
-
-  .btn-xl {
-    padding: var(--space-5) var(--space-10);
-    font-size: var(--text-xl);
-    gap: var(--space-3);
-  } */
-
-  /* Legacy */
   .core-button {
     font-weight: bold;
     border-radius: var(--radius-4xl);
@@ -125,19 +17,36 @@
     cursor: pointer;
     outline: none;
     position: relative;
+
+    /* Base button styles */
+    /* display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-semibold);
+    border-radius: var(--radius-2xl);
+    transition: var(--transition-all);
+    text-decoration: none;
+    user-select: none;
+    touch-action: manipulation; */
+
+    /* Minimum touch target */
+    /* min-height: var(--touch-target-min);
+    min-width: var(--touch-target-min); */
   }
 
   .core-button:hover {
     box-shadow: var(--shadow-hover);
+    /* transform: scale(var(--feedback-scale-hover)); */
   }
 
   .core-button:active {
-    transform: scale(0.95);
+    transform: scale(var(--feedback-scale-active));
   }
 
   .core-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    transform: none !important;
   }
 
   .core-button:focus {
@@ -147,35 +56,45 @@
   /* Button Variants */
   .core-button.variant-primary {
     background-color: var(--color-primary);
+    /* background-color: var(--color-interactive-primary); */
     color: var(--color-text);
   }
 
   .core-button.variant-primary:hover {
     background-color: var(--color-primary-dark);
+    /* background-color: var(--color-interactive-primary-hover); */
   }
 
   .core-button.variant-secondary {
     background-color: var(--color-bg-secondary);
+    /* background-color: var(--color-surface); */
     color: var(--color-text);
     border: 2px solid #e5e7eb;
+    /* border: 2px solid var(--color-border); */
   }
 
   .core-button.variant-secondary:hover {
     background-color: #f3f4f6;
+    /* background-color: var(--color-surface-secondary);
+    border-color: var(--color-border-secondary); */
   }
 
   .core-button.variant-accent {
     background-color: var(--color-accent);
     color: var(--color-text-white);
+    /* background-color: var(--color-interactive-secondary);
+    color: var(--color-text-inverse); */
   }
 
   .core-button.variant-accent:hover {
     background-color: var(--color-accent-dark);
+    /* background-color: var(--color-interactive-secondary-hover); */
   }
 
   .core-button.variant-success {
     background-color: var(--color-success);
     color: var(--color-text-white);
+    /* color: var(--color-text-inverse); */
   }
 
   .core-button.variant-success:hover {
@@ -185,6 +104,7 @@
   .core-button.variant-warning {
     background-color: var(--color-warning);
     color: var(--color-text-white);
+    /* color: var(--color-text-inverse); */
   }
 
   .core-button.variant-warning:hover {
@@ -194,6 +114,7 @@
   .core-button.variant-error {
     background-color: var(--color-error);
     color: var(--color-text-white);
+    /* color: var(--color-text-inverse); */
   }
 
   .core-button.variant-error:hover {
@@ -204,21 +125,34 @@
   .core-button.size-sm {
     padding: var(--space-sm) var(--space-md);
     font-size: var(--text-sm);
+    /* .btn-sm */
+    /* padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    gap: var(--space-1); */
   }
 
   .core-button.size-md {
     padding: var(--space-md) var(--space-lg);
     font-size: var(--text-base);
+    /* padding: var(--space-3) var(--space-6);
+    font-size: var(--text-base);
+    gap: var(--space-2); */
   }
 
   .core-button.size-lg {
     padding: var(--space-md) var(--space-xl);
     font-size: var(--text-lg);
+    /* padding: var(--space-4) var(--space-8);
+    font-size: var(--text-lg);
+    gap: var(--space-2); */
   }
 
   .core-button.size-xl {
     padding: var(--space-lg) calc(var(--space-xl) + var(--space-sm));
     font-size: var(--text-xl);
+    /* padding: var(--space-5) var(--space-10);
+    font-size: var(--text-xl);
+    gap: var(--space-3); */
   }
 
   /* ========================================
@@ -444,43 +378,6 @@
   }
 
   /* Flip card implementation */
-  /* .flip-card {
-    perspective: 1000px;
-  }
-
-  .flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-  }
-
-  .flip-card-flipped .flip-card-inner {
-    transform: rotateY(180deg);
-  }
-
-  .flip-card-front,
-  .flip-card-back {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: var(--radius-lg);
-    border: 2px solid var(--color-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-surface);
-    box-shadow: var(--shadow-card);
-  }
-
-  .flip-card-back {
-    transform: rotateY(180deg);
-  } */
-
-  /* Legacy */
   .core-flip-card {
     position: relative;
     width: 100%;
@@ -510,7 +407,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    transition: transform var(--flip-duration, 500ms);
+    transition: transform 0.6s;
     transform-style: preserve-3d;
   }
 
@@ -525,7 +422,7 @@
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border-radius: var(--border-radius, var(--radius-2xl));
+    border-radius: var(--radius-2xl);
     box-shadow: var(--shadow-card);
     border: 2px solid;
     display: flex;
@@ -564,43 +461,6 @@
      Drag and Drop System
      ======================================== */
 
-  /* .draggable {
-    user-select: none;
-    touch-action: none;
-    cursor: grab;
-    transition: var(--transition-transform);
-  }
-
-  .draggable:active {
-    cursor: grabbing;
-  }
-
-  .draggable-dragging {
-    cursor: grabbing;
-    transform: scale(1.1);
-    box-shadow: var(--shadow-hover);
-    z-index: var(--z-50);
-  }
-
-  .drop-zone {
-    transition: var(--transition-all);
-    border-radius: var(--radius-lg);
-    min-height: var(--touch-target-comfortable);
-    min-width: var(--touch-target-comfortable);
-  }
-
-  .drop-zone-active {
-    background-color: color-mix(in srgb, var(--color-success) 20%, transparent);
-    border: 2px dashed var(--color-success);
-    transform: scale(var(--feedback-scale-hover));
-  }
-
-  .drop-zone-hover:not(.drop-zone-active) {
-    background-color: color-mix(in srgb, var(--color-primary-400) 20%, transparent);
-    border: 2px dashed var(--color-primary-400);
-  } */
-
-  /* Legacy */
   .core-draggable {
     user-select: none;
     -webkit-user-select: none;
@@ -609,34 +469,39 @@
     touch-action: none;
     cursor: grab;
     transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    /* transition: var(--transition-transform); */
   }
 
   .core-draggable:active {
     cursor: grabbing;
-    z-index: 1000;
+    z-index: var(--z-50);
   }
 
   .core-draggable.dragging {
     cursor: grabbing;
     transform: scale(1.1) !important;
     box-shadow: var(--shadow-hover);
-    z-index: 1000;
+    z-index: var(--z-50);
   }
 
   .core-drop-zone {
     transition: all var(--transition-fast);
     border-radius: var(--radius-2xl);
+    min-height: var(--touch-target-comfortable);
+    min-width: var(--touch-target-comfortable);
   }
 
   .core-drop-zone.drop-zone-active {
     /* background-color: rgba(var(--color-success-rgb, 76, 175, 80), 0.1);
+    background-color: color-mix(in srgb, var(--color-success) 20%, transparent);
     border: 2px dashed var(--color-success);
-    transform: scale(1.05); */
+    transform: scale(var(--feedback-scale-hover)); */
   }
 
   .core-drop-zone.drop-zone-hover:not(.drop-zone-active) {
     /* background-color: rgba(var(--color-primary-rgb, 255, 213, 79), 0.1);
-    border: 2px dashed var(--color-primary); */
+    background-color: color-mix(in srgb, var(--color-primary-400) 20%, transparent);
+    border: 2px dashed var(--color-primary-400); */
   }
 
   .core-drop-zone.drop-zone-dragging {

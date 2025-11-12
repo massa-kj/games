@@ -81,7 +81,7 @@
     --color-interactive-secondary: var(--color-accent-400);
     --color-interactive-secondary-hover: var(--color-accent-500);
 
-    /* Legacy */
+    /* Deprecated: Legacy */
     --color-primary: #FFD54F;
     --color-primary-dark: #FFC107;
     --color-accent: #FF7043;
@@ -310,9 +310,9 @@
      Dark Mode Support (Optional)
      ======================================== */
 
-  /* @media (prefers-color-scheme: dark) {
+  @media (prefers-color-scheme: dark) {
     :root {
-      --color-bg: var(--color-neutral-900);
+      /* --color-bg: var(--color-neutral-900);
       --color-bg-secondary: var(--color-neutral-800);
       --color-bg-elevated: var(--color-neutral-700);
 
@@ -326,7 +326,15 @@
       --color-text-inverse: var(--color-neutral-900);
 
       --color-border: var(--color-neutral-700);
-      --color-border-secondary: var(--color-neutral-600);
+      --color-border-secondary: var(--color-neutral-600); */
+
+      /* Deprecated: Legacy */
+      --color-primary: #FFD54F;
+      --color-primary-dark: #FFC107;
+      --color-accent: #FF7043;
+      --color-accent-dark: #FF5722;
+      --color-text-light: #666666;
+      --color-text-white: #FFFFFF;
     }
-  } */
+  }
 }

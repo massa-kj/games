@@ -15,10 +15,6 @@ export interface FlipCardProps {
   disabled?: boolean;
   /** Custom className */
   className?: string;
-  /** Animation duration in milliseconds */
-  flipDuration?: number;
-  /** Border radius for the card (CSS value) */
-  borderRadius?: string;
 }
 
 /**
@@ -34,8 +30,6 @@ export interface FlipCardProps {
  * @param onClick Click handler for card interaction
  * @param disabled Whether the card is disabled from interaction
  * @param className Additional CSS classes
- * @param flipDuration Animation duration in milliseconds
- * @param borderRadius Custom border radius CSS value
  *
  * @example
  * ```tsx
@@ -55,8 +49,6 @@ export function FlipCard({
   onClick,
   disabled = false,
   className = '',
-  flipDuration = 500,
-  borderRadius,
 }: FlipCardProps) {
   const handleClick = () => {
     if (!disabled && onClick) {
@@ -72,10 +64,6 @@ export function FlipCard({
         ${className}
       `}
       onClick={handleClick}
-      style={{
-        '--flip-duration': `${flipDuration}ms`,
-        '--border-radius': borderRadius,
-      } as React.CSSProperties}
     >
       <div
         className={`
