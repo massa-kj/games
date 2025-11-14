@@ -1,8 +1,7 @@
 import { Button, GameHeader } from '@core/ui';
 import { I18nProvider } from '@core/i18n';
 import { useSound } from '@core/hooks';
-import { GameBoard } from '@/components/GameBoard';
-import { ResultModal } from '@/components/ResultModal';
+import { GameBoard, DifficultyMenu, ResultModal } from '@/components';
 import { useGameLogic } from '@/hooks/useGameLogic';
 import { useL10n } from '@/locales';
 import { memoryCardSounds } from '@/audio/sounds';
@@ -45,34 +44,7 @@ function MemoryCardsGame() {
         {/* Game Content */}
         {!state.gameStarted ? (
           /* Start Screen */
-          <div className="text-center">
-            <div className="bg-white rounded-2xl shadow-lg p-4 mb-8 max-w-md mx-auto">
-              <div className="text-6xl mb-4">🎮</div>
-              <p className="text-lg text-gray-700 mb-6">
-                {t('clickToStart')}
-                <br />
-                {t('description')}
-              </p>
-
-              {/* Difficulty Selection */}
-              <div className="mb-6">
-                <h3 className="text-lg font-bold mb-4 text-gray-800">
-                  {t('selectDifficulty')}
-                </h3>
-                <div className="grid grid-cols-1 gap-3">
-                  {(['easy', 'medium', 'hard', 'expert'] as const).map((key) => (
-                    <Button
-                      key={key}
-                      onClick={() => handleStartGame(key as Difficulty)}
-                      className="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 text-lg"
-                    >
-                      {t(`difficulty.${key}`)}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+          <DifficultyMenu onStartGame={handleStartGame} />
         ) : (
           /* Game Screen */
           <div>
