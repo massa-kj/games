@@ -22,6 +22,9 @@ export type { GameSettingsModalProps, GameSettingControl } from './GameSettingsM
 export { HomeButton } from './HomeButton.js';
 export type { HomeButtonProps } from './HomeButton.js';
 
+export { MenuBoard } from './MenuBoard.js';
+export type { MenuBoardProps, MenuTab, MenuBoardMotion } from './MenuBoard.js';
+
 export { GameHeader } from './GameHeader.js';
 export type { GameHeaderProps, GameHeaderAction } from './GameHeader.js';
 
