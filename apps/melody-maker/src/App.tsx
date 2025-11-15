@@ -4,6 +4,7 @@ import { I18nProvider } from '@core/i18n';
 import { useL10n } from '@/locales';
 import type { NoteIdentifier } from '@core/audio/music';
 import { SimplePlayMode } from './components/SimplePlayMode';
+import { SimplePlayMode as SimplePlayModeChord } from './components/SimplePlayModeChord';
 import { AdvancedCompositionMode } from './components/AdvancedCompositionMode';
 import {
   AccessibilityProvider,
@@ -109,6 +110,12 @@ function GameContent() {
       label: 'Play Music',
       icon: '🎵',
       content: <SimplePlayMode />
+    },
+    {
+      id: 'simple-play-chord',
+      label: 'Play Music Chord',
+      icon: '🎵',
+      content: <SimplePlayModeChord />
     },
     {
       id: 'advanced-compose',
