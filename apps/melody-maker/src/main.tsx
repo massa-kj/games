@@ -1,0 +1,15 @@
+/**
+ * Melody Maker - Main Entry Point
+ * Author: 
+ * Created: 2025
+ */
+
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import App from '@/App';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);

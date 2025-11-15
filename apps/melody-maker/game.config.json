@@ -1,0 +1,19 @@
+{
+  "id": "melody-maker",
+  "title": {
+    "en": "Melody Maker",
+    "ja": "メロディメーカー"
+  },
+  "icon": "/apps/melody-maker/icon.svg",
+  "category": "music",
+  "description": {
+    "en": "Create your own melodies using colorful note blocks!",
+    "ja": "カラフルな音符ブロックを使って、自分だけのメロディを作ろう！"
+  },
+  "entry": "/apps/melody-maker/",
+  "languages": [
+    "en",
+    "ja"
+  ],
+  "minAge": 3
+}

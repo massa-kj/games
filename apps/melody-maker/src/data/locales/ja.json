@@ -1,0 +1,44 @@
+{
+  "title": "メロディメーカー",
+  "description": "カラフルな音符ブロックを使って、自分だけのメロディを作ろう！",
+  "ui": {
+    "buttons": {
+      "start": "ゲーム開始",
+      "playAgain": "もう一度",
+      "restart": "リスタート",
+      "continue": "続ける",
+      "pause": "一時停止",
+      "resume": "再開",
+      "quit": "終了"
+    },
+    "labels": {
+      "score": "スコア",
+      "level": "レベル",
+      "time": "時間",
+      "attempts": "試行回数"
+    }
+  },
+  "game": {
+    "states": {
+      "loading": "読み込み中...",
+      "ready": "準備完了",
+      "playing": "プレイ中",
+      "paused": "一時停止",
+      "gameOver": "ゲーム終了",
+      "completed": "クリア！"
+    },
+    "messages": {
+      "congratulations": "おめでとう！",
+      "wellDone": "よくできました！",
+      "tryAgain": "もう一度挑戦しよう！",
+      "newRecord": "新記録です！"
+    }
+  },
+  "playMusic": "えんそうしよう !",
+  "common": {
+    "error": "エラーが発生しました。もう一度お試しください。",
+    "retry": "再試行",
+    "cancel": "キャンセル",
+    "confirm": "確認"
+  }
+}

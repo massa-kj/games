@@ -1,0 +1,139 @@
+{
+  "title": "Melody Maker",
+  "description": "Create beautiful melodies with colorful note blocks",
+
+  "ui": {
+    "buttons": {
+      "play": "Play",
+      "pause": "Pause",
+      "stop": "Stop",
+      "save": "Save",
+      "load": "Load",
+      "clear": "Clear",
+      "newComposition": "New Composition",
+      "new": "New",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "export": "Export",
+      "import": "Import"
+    },
+    "labels": {
+      "tempo": "Tempo",
+      "scale": "Scale",
+      "octave": "Octave",
+      "instrument": "Instrument",
+      "composition": "Composition",
+      "duration": "Duration",
+      "volume": "Volume",
+      "notes": "Notes",
+      "bpm": "BPM",
+      "key": "Key",
+      "name": "Name"
+    },
+    "headings": {
+      "notePalette": "Note Palette",
+      "compositionSequencer": "Composition Sequencer",
+      "playbackControls": "Playback Controls",
+      "compositions": "Compositions",
+      "saveComposition": "Save Composition",
+      "deleteComposition": "Delete Composition"
+    },
+    "placeholders": {
+      "compositionName": "Enter composition name...",
+      "searchCompositions": "Search compositions..."
+    },
+    "tooltips": {
+      "playPause": "Play/Pause (Space)",
+      "stop": "Stop (ESC)",
+      "save": "Save current composition",
+      "load": "Load composition",
+      "delete": "Delete composition",
+      "newComposition": "Create new composition"
+    }
+  },
+
+  "notes": {
+    "names": {
+      "C": "Do",
+      "D": "Re",
+      "E": "Mi",
+      "F": "Fa",
+      "G": "Sol",
+      "A": "La",
+      "B": "Ti"
+    },
+    "durations": {
+      "1n": "Whole Note",
+      "2n": "Half Note",
+      "4n": "Quarter Note",
+      "8n": "Eighth Note",
+      "16n": "Sixteenth Note",
+      "32n": "Thirty-second Note"
+    }
+  },
+
+  "scales": {
+    "major": "Major Scale",
+    "pentatonic": "Pentatonic Scale",
+    "chromatic": "Chromatic Scale",
+    "minor": "Minor Scale",
+    "blues": "Blues Scale"
+  },
+
+  "instruments": {
+    "piano": "Piano",
+    "xylophone": "Xylophone",
+    "flute": "Flute",
+    "bell": "Bell"
+  },
+
+  "messages": {
+    "compositionSaved": "Composition saved successfully",
+    "compositionLoaded": "Composition loaded",
+    "compositionDeleted": "Composition deleted",
+    "invalidComposition": "Invalid composition format",
+    "emptyComposition": "Add some notes to create music",
+    "noCompositions": "No compositions saved yet.",
+    "createFirstMelody": "Create and save your first melody!",
+    "addNotesToCompose": "Add notes to enable playback",
+    "readyToPlay": "Ready to play",
+    "playing": "Playing",
+    "paused": "Paused",
+    "loadingCompositions": "Loading compositions...",
+    "dragNotesToSequencer": "Drag notes to the sequencer to compose",
+    "deleteConfirmation": "Are you sure you want to delete this composition? This action cannot be undone.",
+    "failedToSave": "Failed to save composition",
+    "failedToLoad": "Failed to load composition",
+    "failedToDelete": "Failed to delete composition",
+    "compositionNotFound": "Composition not found"
+  },
+
+  "playback": {
+    "status": {
+      "stopped": "Stopped",
+      "playing": "Playing",
+      "paused": "Paused"
+    },
+    "instructions": {
+      "spaceToPlay": "Press Space to play/pause",
+      "escapeToStop": "Press Escape to stop",
+      "clickProgress": "Click progress bar to seek"
+    }
+  },
+
+  "composition": {
+    "properties": {
+      "bars": "bars",
+      "beats": "beats",
+      "noteCount": "{count} notes",
+      "duration": "{duration}s",
+      "tempo": "{tempo} BPM",
+      "keySignature": "{root} {scale}"
+    },
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    }
+  }
+}

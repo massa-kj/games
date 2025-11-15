@@ -1,0 +1,139 @@
+{
+  "title": "メロディーメーカー",
+  "description": "カラフルな音符ブロックで美しいメロディーを作ろう",
+
+  "ui": {
+    "buttons": {
+      "play": "再生",
+      "pause": "一時停止",
+      "stop": "停止",
+      "save": "保存",
+      "load": "読み込み",
+      "clear": "クリア",
+      "newComposition": "新しい楽曲",
+      "new": "新規",
+      "cancel": "キャンセル",
+      "delete": "削除",
+      "export": "エクスポート",
+      "import": "インポート"
+    },
+    "labels": {
+      "tempo": "テンポ",
+      "scale": "スケール",
+      "octave": "オクターブ",
+      "instrument": "楽器",
+      "composition": "楽曲",
+      "duration": "長さ",
+      "volume": "音量",
+      "notes": "音符",
+      "bpm": "BPM",
+      "key": "調",
+      "name": "名前"
+    },
+    "headings": {
+      "notePalette": "音符パレット",
+      "compositionSequencer": "楽曲シーケンサー",
+      "playbackControls": "再生コントロール",
+      "compositions": "楽曲一覧",
+      "saveComposition": "楽曲を保存",
+      "deleteComposition": "楽曲を削除"
+    },
+    "placeholders": {
+      "compositionName": "楽曲名を入力...",
+      "searchCompositions": "楽曲を検索..."
+    },
+    "tooltips": {
+      "playPause": "再生/一時停止 (スペース)",
+      "stop": "停止 (ESC)",
+      "save": "現在の楽曲を保存",
+      "load": "楽曲を読み込み",
+      "delete": "楽曲を削除",
+      "newComposition": "新しい楽曲を作成"
+    }
+  },
+
+  "notes": {
+    "names": {
+      "C": "ド",
+      "D": "レ",
+      "E": "ミ",
+      "F": "ファ",
+      "G": "ソ",
+      "A": "ラ",
+      "B": "シ"
+    },
+    "durations": {
+      "1n": "全音符",
+      "2n": "二分音符",
+      "4n": "四分音符",
+      "8n": "八分音符",
+      "16n": "十六分音符",
+      "32n": "三十二分音符"
+    }
+  },
+
+  "scales": {
+    "major": "長調",
+    "pentatonic": "ペンタトニック",
+    "chromatic": "半音階",
+    "minor": "短調",
+    "blues": "ブルース"
+  },
+
+  "instruments": {
+    "piano": "ピアノ",
+    "xylophone": "シロフォン",
+    "flute": "フルート",
+    "bell": "ベル"
+  },
+
+  "messages": {
+    "compositionSaved": "楽曲を保存しました",
+    "compositionLoaded": "楽曲を読み込みました",
+    "compositionDeleted": "楽曲を削除しました",
+    "invalidComposition": "無効な楽曲形式です",
+    "emptyComposition": "音符を追加して音楽を作ってください",
+    "noCompositions": "保存された楽曲がありません。",
+    "createFirstMelody": "最初のメロディーを作って保存してください！",
+    "addNotesToCompose": "音符を追加すると再生できます",
+    "readyToPlay": "再生準備完了",
+    "playing": "再生中",
+    "paused": "一時停止",
+    "loadingCompositions": "楽曲を読み込み中...",
+    "dragNotesToSequencer": "音符をシーケンサーにドラッグして作曲してください",
+    "deleteConfirmation": "この楽曲を削除してもよろしいですか？この操作は元に戻せません。",
+    "failedToSave": "楽曲の保存に失敗しました",
+    "failedToLoad": "楽曲の読み込みに失敗しました",
+    "failedToDelete": "楽曲の削除に失敗しました",
+    "compositionNotFound": "楽曲が見つかりません"
+  },
+
+  "playback": {
+    "status": {
+      "stopped": "停止",
+      "playing": "再生中",
+      "paused": "一時停止"
+    },
+    "instructions": {
+      "spaceToPlay": "スペースキーで再生/一時停止",
+      "escapeToStop": "Escapeキーで停止",
+      "clickProgress": "プログレスバーをクリックでシーク"
+    }
+  },
+
+  "composition": {
+    "properties": {
+      "bars": "小節",
+      "beats": "拍",
+      "noteCount": "{count}個の音符",
+      "duration": "{duration}秒",
+      "tempo": "{tempo} BPM",
+      "keySignature": "{root} {scale}"
+    },
+    "difficulty": {
+      "beginner": "初級",
+      "intermediate": "中級",
+      "advanced": "上級"
+    }
+  }
+}

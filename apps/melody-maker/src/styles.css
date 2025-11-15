@@ -1,0 +1,79 @@
+/* Import core design tokens */
+@import '@core/themes/index.css';
+
+/* Import accessibility styles */
+@import './styles/accessibility.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Melody Maker Animations */
+@keyframes noteGlow {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+}
+
+@keyframes notePulse {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes smoothSlide {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Smooth transitions for interactive elements */
+.melody-maker-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.melody-maker-glow:hover {
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+}
+
+/* Enhanced drag and drop states */
+.drag-preview {
+  animation: fadeInUp 0.2s ease-out;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.drop-zone-active {
+  animation: pulse 1s infinite;
+  border-color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.1);
+}
