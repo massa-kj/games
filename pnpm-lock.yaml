@@ -143,6 +143,37 @@ importers:
         specifier: ^4.4.0
         version: 4.5.14(@types/node@20.19.21)
 
+  apps/melody-maker:
+    dependencies:
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.12
+        version: 18.3.26
+      '@types/react-dom':
+        specifier: ^18.3.7
+        version: 18.3.7(@types/react@18.3.26)
+      '@vitejs/plugin-react':
+        specifier: ^4.0.0
+        version: 4.7.0(vite@4.5.14)
+      autoprefixer:
+        specifier: ^10.4.16
+        version: 10.4.21(postcss@8.5.6)
+      tailwindcss:
+        specifier: ^3.4.1
+        version: 3.4.18(tsx@4.20.6)
+      typescript:
+        specifier: ^5.5.4
+        version: 5.9.3
+      vite:
+        specifier: ^4.4.0
+        version: 4.5.14(@types/node@20.19.21)
+
   apps/memory-cards:
     dependencies:
       react:
