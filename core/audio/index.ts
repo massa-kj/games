@@ -4,6 +4,10 @@ export { advancedSoundManager } from './hybridSoundManager';
 export { webAudioEngine } from './webAudioEngine';
 export { gameAudioTemplates, GameAudioUtils } from './gameAudioTemplates';
 
+// Chord player for harmony support
+export { chordPlayer, ChordPlayer } from './chordPlayer';
+export type { ChordNote, ChordOptions } from './chordPlayer';
+
 // Engine abstraction
 export { getAudioEngine, setEngineConfig, switchEngine, getAvailableEngines } from './engine/index.js';
 export type { AudioEngine, AudioEngineConfig } from './engine/index.js';
