@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
-import { Clock, GameHeader, type ClockTime } from '@core/ui';
+import { GameHeader } from '@core/ui';
+import { Clock, type ClockTime } from '@core/ui/clock';
 import '@/styles.css';
 
 type Language = 'ja' | 'en';
