@@ -1,0 +1,19 @@
+{
+  "id": "spin-the-clock",
+  "title": {
+    "en": "Spin the Clock",
+    "ja": "時計をまわそう"
+  },
+  "icon": "/apps/spin-the-clock/icon.svg",
+  "category": "learning",
+  "description": {
+    "en": "Move the hour and minute hands and watch the time change.",
+    "ja": "長い針と短い針を動かして、時刻の変化を見てみよう。"
+  },
+  "entry": "/apps/spin-the-clock/",
+  "languages": [
+    "en",
+    "ja"
+  ],
+  "minAge": 3
+}
