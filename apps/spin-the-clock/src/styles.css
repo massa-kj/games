@@ -62,7 +62,6 @@
     border-radius: var(--radius-lg);
     background: var(--color-neutral-900);
     color: var(--color-primary-300);
-    font-family: var(--font-mono);
     font-size: 4rem;
     font-weight: var(--font-black);
     line-height: var(--leading-none);
